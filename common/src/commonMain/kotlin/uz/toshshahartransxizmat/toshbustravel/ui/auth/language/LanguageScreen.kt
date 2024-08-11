@@ -1,0 +1,29 @@
+package uz.toshshahartransxizmat.toshbustravel.ui.auth.language
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+
+@Composable
+fun LanguageScreen() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { /* O'zbek tilini tanlash */ }) {
+            Text("O'zbekcha")
+        }
+        Button(onClick = { /* Ingliz tilini tanlash */ }) {
+            Text("English")
+        }
+        Button(onClick = { /* Rus tilini tanlash */ }) {
+            Text("Русский")
+        }
+    }
+}
