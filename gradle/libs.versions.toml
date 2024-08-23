@@ -1,32 +1,31 @@
 [versions]
-agp = "8.5.1"
-appcompat = "1.6.1"
-core = "1.10.1"
-datastore-preferences = "1.0.0"
+agp = "8.5.2"
+appcompat = "1.7.0"
+core = "1.13.1"
+datastore-preferences = "1.1.1"
 gradle-plugin = "1.5.5"
 kamel-image = "0.6.0"
 kotlin = "1.8.20"
 compose = "1.5.0"
-activity-compose = "1.7.2"
+activity-compose = "1.9.1"
 kotlinx-coroutines-core = "1.6.4"
 kotlinx-datetime = "0.4.0"
+ktor-client-json = "2.1.1"
 mvvm-core = "0.16.1"
 voyager = "1.0.0-rc06"
 ktor = "2.3.4"
-activity-ktx = "1.7.2"
+activity-ktx = "1.9.1"
 
 koin = "3.4.3"
 koin-compose = "1.0.4"
-core-ktx = "1.13.1"
-junit = "4.13.2"
-junit-version = "1.2.1"
-espresso-core = "3.6.1"
-material = "1.12.0"
 ui-android = "1.6.8"
+play-services-maps = "18.2.0"
+android-maps-utils = "2.0.3"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 android-driver = { module = "com.squareup.sqldelight:android-driver", version.ref = "gradle-plugin" }
+android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "android-maps-utils" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 core = { module = "androidx.core:core", version.ref = "core" }
 coroutines-extensions = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "gradle-plugin" }
@@ -35,11 +34,14 @@ gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref 
 kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamel-image" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+ktor-client-json = { module = "io.ktor:ktor-client-json", version.ref = "ktor-client-json" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor-client-json" }
 mvvm-compose = { module = "dev.icerock.moko:mvvm-compose", version.ref = "mvvm-core" }
 mvvm-core = { module = "dev.icerock.moko:mvvm-core", version.ref = "mvvm-core" }
 mvvm-flow = { module = "dev.icerock.moko:mvvm-flow", version.ref = "mvvm-core" }
 mvvm-flow-compose = { module = "dev.icerock.moko:mvvm-flow-compose", version.ref = "mvvm-core" }
 native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "gradle-plugin" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
 runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "gradle-plugin" }
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
@@ -58,14 +60,11 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose"}
-
-androidx-annotation = "androidx.annotation:annotation:1.7.1"
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-version" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "ui-android" }
+
+osmdroid = { module = "org.osmdroid:osmdroid-android", version = "6.1.10" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version = "0.24.5-alpha" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -67,3 +67,6 @@ ehthumbs_vista.db
 
 # Docker
 *.env
+
+# Explicit ignore of the Pods directory
+toshBusIosApp/Pods/*

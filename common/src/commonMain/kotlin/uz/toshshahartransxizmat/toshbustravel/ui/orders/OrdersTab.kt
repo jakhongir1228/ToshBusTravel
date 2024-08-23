@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 internal object OrdersTab: Tab {
 
@@ -17,15 +19,16 @@ internal object OrdersTab: Tab {
         )
     }
 
+    @OptIn(ExperimentalResourceApi::class)
     override val options: TabOptions
 
         @Composable
         get() {
-            val icon = rememberVectorPainter(Icons.Default.HomeWork)
+            val icon = painterResource("drawable/arrowDownIcon.png")
 
             return TabOptions(
                 index = 1u,
-                title = "Orders",
+                title = "",
                 icon = icon
             )
         }

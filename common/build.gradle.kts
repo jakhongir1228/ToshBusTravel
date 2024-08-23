@@ -37,6 +37,14 @@ kotlin {
             baseName = "common"
             isStatic = true
         }
+
+//        pod("GoogleMaps") {
+//            version = "9.1.0" // Podfile bilan mos versiya
+//            extraOpts += listOf("-compiler-option", "-fmodules")
+//        }
+
+        pod("GoogleMaps")
+
     }
 
     sourceSets {
@@ -66,6 +74,8 @@ kotlin {
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.client.logging)
                 implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.ktor.client.json)
+                implementation(libs.ktor.client.serialization)
 
 
                 implementation(libs.runtime)
@@ -85,6 +95,15 @@ kotlin {
 
                 implementation(libs.koin.android)
                 implementation(libs.datastore.preferences)
+
+                // OSMDroid va Accompanist Permissions kutubxonalarini qo'shish
+                implementation(libs.osmdroid)
+                implementation(libs.accompanist.permissions)
+
+                // Maps SDK for Android
+                implementation(libs.play.services.maps)
+                implementation(libs.android.maps.utils)
+                implementation("com.google.android.gms:play-services-location:18.0.0")
             }
         }
         val iosX64Main by getting
@@ -98,6 +117,7 @@ kotlin {
             dependencies {
                 implementation(libs.native.driver)
                 implementation(libs.ktor.client.darwin)
+               // implementation("platform.google.maps:GMSMapView:3.10.0")
             }
         }
     }
@@ -109,6 +129,18 @@ android {
     defaultConfig {
         minSdk = 22
     }
+
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    sourceSets["main"].res.srcDirs("src/androidMain/res")
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/versions/**"
+        }
+    }
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -123,9 +155,4 @@ dependencies {
     commonMainApi(libs.mvvm.compose)
     commonMainApi(libs.mvvm.flow)
     commonMainApi(libs.mvvm.flow.compose)
-
-    // resource
-    implementation(projects.resource.strings)
-
-  //  implementation(project(":icons"))
 }
