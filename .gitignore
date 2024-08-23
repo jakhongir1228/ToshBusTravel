@@ -1,0 +1,69 @@
+# Gradle build files
+.gradle/
+build/
+*/build/
+common/build/
+
+# Gradle Wrapper
+gradle/wrapper/gradle-wrapper.properties
+gradle/wrapper/gradle-wrapper.jar
+
+# IDEA project files
+.idea/
+*.iml
+
+# Kotlin specific
+*.kotlin_module
+*.class
+
+# macOS
+.DS_Store
+
+# Linux
+*.swp
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Log files
+*.log
+
+# Bytecode files
+*.jar
+
+# Application files
+*.war
+*.ear
+
+# Cache
+**/.idea/*
+
+# IntelliJ IDEA
+*.iws
+*.ipr
+
+# Android Studio
+*.apk
+*.ap_
+
+# Caches
+*.projects
+*.classpath
+*.cproject
+*.project
+
+# Local configuration file
+local.properties
+
+# Windows image file caches
+ehthumbs_vista.db
+
+# macOS artifacts
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Docker
+*.env
