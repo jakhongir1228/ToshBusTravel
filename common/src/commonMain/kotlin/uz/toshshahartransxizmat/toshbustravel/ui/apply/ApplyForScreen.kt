@@ -30,5 +30,6 @@ internal class ApplyForScreen : Screen {
 //            }
 //        }
         Text("  Kartani shu Screenda chiqarishimiz kerak.")
+
     }
 }
