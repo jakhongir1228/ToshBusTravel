@@ -162,7 +162,7 @@ internal class OtpConfirmationScreen: Screen {
                 size = ButtonSize.Large,
                 enabled = true,
                 onClick = {
-
+                    navigator.push(HomeScreen())
                 }
             )
         }

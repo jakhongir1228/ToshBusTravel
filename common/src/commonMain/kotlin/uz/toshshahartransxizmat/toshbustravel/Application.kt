@@ -39,8 +39,8 @@ fun Application(
                   //  LogInScreen()
                   //  AuthScreen()
                   //  ForgotPasswordScreen()
-                    OtpConfirmationScreen()
-                   //   HomeScreen()
+                  //  OtpConfirmationScreen()
+                      HomeScreen()
                    // ApplyForScreen()
                 )
             }

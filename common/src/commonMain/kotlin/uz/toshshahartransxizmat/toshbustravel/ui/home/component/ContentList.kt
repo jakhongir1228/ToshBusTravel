@@ -1,54 +1,49 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.home.component
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import uz.toshshahartransxizmat.toshbustravel.domain.model.News
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun ContentList(
     modifier: Modifier = Modifier,
-    list: List<News>,
-    onClick: (News) -> Unit
+    list: List<Transports>,
+    onClick: (Transports) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn(
+        modifier = modifier
+    ) {
         items(
             items = list
-        ) { currentNews ->
-            ListItem(
-                modifier = modifier.clickable {
-                    onClick(currentNews)
-                },
-                leadingContent = {
-                    NetworkImage(
-                        modifier = Modifier.size(height = 100.dp, width = 150.dp),
-                        url = "${currentNews.urlToImage}"
-                    )
-                },
-                headlineContent = {
-                    Text(
-                        text = currentNews.title ?: "Title",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontSize = 20.sp
-                    )
-                },
-                supportingContent = {
-                    Text(
-                        text = currentNews.description ?: "Description",
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis,
-                        fontSize = 14.sp
-                    )
-                }
+        ) { transport ->
+            val iconTransport = when (transport.typeTransport) {
+                "MINI" -> painterResource("drawable/iconMini.png")
+                "BIG" -> painterResource("drawable/iconBig.png")
+                else -> painterResource("drawable/iconMini.png")
+            }
+            val transportImage = when (transport.typeTransport) {
+                "MINI" -> painterResource("drawable/mini.png")
+                "BIG" -> painterResource("drawable/big.png")
+                else -> painterResource("drawable/mini.png")
+            }
+            TransportItem(
+                transport = transport,
+                transportIcon = iconTransport,
+                transportImage = transportImage,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp)
+                    .padding(4.dp)
+                    .clickable { onClick(transport) }
             )
         }
     }
