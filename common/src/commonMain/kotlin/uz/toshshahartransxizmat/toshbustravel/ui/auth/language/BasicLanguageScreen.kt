@@ -79,7 +79,7 @@ fun BasicLanguageScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp),
-                        painterResource(res = "drawable/UZ.png"),
+                        painterResource(res = "drawable/EN.png"),
                         languageName = "English"
                     ){
                         navigateToAuthScreen.invoke()

@@ -44,6 +44,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
+import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.gray900
 import uz.toshshahartransxizmat.toshbustravel.theme.red500
@@ -163,7 +164,7 @@ private fun CharContainer(
     val isFocused = text.length == index
     val char = if (index < text.length) text[index] else '•'
     val backgroundColor = when {
-        isFocused && !otpError -> silver500
+        isFocused && !otpError -> blueA220
         otpError -> red500
         else -> white100
     }

@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
+import uz.toshshahartransxizmat.toshbustravel.components.otp.OtpConfirmationScreen
 import uz.toshshahartransxizmat.toshbustravel.theme.ToshBusTravelTheme
 import uz.toshshahartransxizmat.toshbustravel.ui.apply.ApplyForScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.AuthScreen
@@ -34,13 +35,13 @@ fun Application(
                 })
             } else {
                 Navigator(
-                   // LanguageScreen()
+                  //  LanguageScreen()
                   //  LogInScreen()
                   //  AuthScreen()
                   //  ForgotPasswordScreen()
-                  //  OtpConfirmationScreen()
+                    OtpConfirmationScreen()
                    //   HomeScreen()
-                    ApplyForScreen()
+                   // ApplyForScreen()
                 )
             }
         }

@@ -20,11 +20,13 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
+import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.components.input.text.TextInput
-import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputPasswordComponent
+import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputConfirmPassword
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputPhone
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 
@@ -37,13 +39,16 @@ internal class AuthScreen: Screen {
         var firstName by remember { mutableStateOf("") }
         var showError by remember { mutableStateOf(false) }
         var phoneNumber by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+        var confirmPassword by remember { mutableStateOf("") }
+        var passwordError by remember { mutableStateOf(false) }
         val isPhoneNumberValid = phoneNumber.length == 9
 
         Column(
             modifier = Modifier
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             PageHeader(
                 type = PageHeaderType.Heading(text = "Регистрация"),
                 modifier = Modifier
@@ -64,6 +69,7 @@ internal class AuthScreen: Screen {
                 keyboardActions = KeyboardActions(),
                 placeholder = TextValue("Введите ФИО")
             )
+
             InputPhone(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -71,16 +77,22 @@ internal class AuthScreen: Screen {
                 onPhoneNumberChange = { phoneNumber = it }
             )
 
-            InputPasswordComponent(
+            InputConfirmPassword(
+                title = "Пароль",
                 modifier = Modifier
                     .fillMaxWidth(),
-                title = "Пароль"
+                value = password, // Parolning qiymatini uzatish
+                onValueChange = { password = it },
+                isError = passwordError && password != confirmPassword // Parollar mos kelmasa xato ko'rsatish
             )
 
-            InputPasswordComponent(
+            InputConfirmPassword(
+                title = "Подтвердите пароль",
                 modifier = Modifier
                     .fillMaxWidth(),
-                title = "Подтвердите пароль"
+                value = confirmPassword, // Tasdiqlash parolining qiymatini uzatish
+                onValueChange = { confirmPassword = it },
+                isError = passwordError && password != confirmPassword // Parollar mos kelmasa xato ko'rsatish
             )
 
             TextAuth(
@@ -103,12 +115,12 @@ internal class AuthScreen: Screen {
                 enabled = isPhoneNumberValid,
                 onClick = {
                     showError = firstName.isEmpty()
-                    if (!showError) {
+                    passwordError = password != confirmPassword
+                    if (!showError && !passwordError && password.length >= 8) {
                         navigator.push(ForgotPasswordScreen())
                     }
                 }
             )
         }
     }
-
 }

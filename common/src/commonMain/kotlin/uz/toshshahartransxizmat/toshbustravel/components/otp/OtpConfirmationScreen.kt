@@ -3,6 +3,7 @@ package uz.toshshahartransxizmat.toshbustravel.components.otp
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -34,11 +35,13 @@ import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.components.navigator.BottomItem
 import uz.toshshahartransxizmat.toshbustravel.components.otp.state.OtpConfirmationState
+import uz.toshshahartransxizmat.toshbustravel.theme.black100
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.theme.gray150
 import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.red500
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.ForgotPasswordScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeTab
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.OrdersTab
@@ -52,7 +55,7 @@ internal class OtpConfirmationScreen: Screen {
         val navigator = LocalNavigator.currentOrThrow
 
         val state = OtpConfirmationState(
-            phoneNumber = "+998999251582",
+            phoneNumber = "+998 9* *** ** 99",
             requiredTimeout = 2,
             requiredValueLength = 4
         )
@@ -75,6 +78,7 @@ internal class OtpConfirmationScreen: Screen {
                     .padding(horizontal = 16.dp, vertical = 16.dp),
                 onNavigationClick = {
                     // accept(Intent.ExitScreen(Commands.ExitScreen))
+                    navigator.pop()
                 }
             )
 
@@ -88,7 +92,7 @@ internal class OtpConfirmationScreen: Screen {
             Text(
                 modifier = Modifier.padding(top = 2.dp),
                 text = TextValue(state.phoneNumber), //state.phoneNumber
-                color = gray650,
+                color = black100,
                 fontSize = 16.sp
             )
 
@@ -147,6 +151,20 @@ internal class OtpConfirmationScreen: Screen {
                     )
                 }
             }
+            Spacer(modifier = Modifier.weight(weight = 1f))
+
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 56.dp),
+                text = TextValue("Продолжить"),
+                size = ButtonSize.Large,
+                enabled = true,
+                onClick = {
+
+                }
+            )
         }
     }
 
