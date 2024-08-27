@@ -75,6 +75,7 @@ fun BasicLanguageScreen(
                     ){
                         navigateToAuthScreen.invoke()
                     }
+                    Spacer(modifier = Modifier.height(2.dp))
                     LanguageButton(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -84,6 +85,7 @@ fun BasicLanguageScreen(
                     ){
                         navigateToAuthScreen.invoke()
                     }
+                    Spacer(modifier = Modifier.height(2.dp))
                     LanguageButton(
                         modifier = Modifier
                             .fillMaxWidth()

@@ -35,12 +35,12 @@ fun Application(
                 })
             } else {
                 Navigator(
-                  //  LanguageScreen()
+                    LanguageScreen()
                   //  LogInScreen()
                   //  AuthScreen()
                   //  ForgotPasswordScreen()
                   //  OtpConfirmationScreen()
-                      HomeScreen()
+                   //   HomeScreen()
                    // ApplyForScreen()
                 )
             }

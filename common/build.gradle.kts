@@ -43,7 +43,7 @@ kotlin {
 //            extraOpts += listOf("-compiler-option", "-fmodules")
 //        }
 
-        pod("GoogleMaps")
+     //   pod("GoogleMaps")
 
     }
 

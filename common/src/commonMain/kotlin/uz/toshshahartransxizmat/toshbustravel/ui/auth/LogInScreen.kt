@@ -72,7 +72,7 @@ internal class LogInScreen: Screen {
             )
             Text(
                 modifier = Modifier.clickable {
-                        navigator.pop()
+                        navigator.push(ForgotPasswordScreen())
                     },
                 text = TextValue("Забыл пароль"),
                 color = Color(0xFF007AFF),
