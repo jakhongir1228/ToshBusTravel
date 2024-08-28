@@ -103,7 +103,7 @@ kotlin {
                 // Maps SDK for Android
                 implementation(libs.play.services.maps)
                 implementation(libs.android.maps.utils)
-                implementation("com.google.android.gms:play-services-location:18.0.0")
+                implementation(libs.play.services.location)
             }
         }
         val iosX64Main by getting

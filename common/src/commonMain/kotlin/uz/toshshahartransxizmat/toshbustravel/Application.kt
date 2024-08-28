@@ -17,6 +17,7 @@ import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.language.LanguageScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.logo.LogoScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.TransportDetailsScreen
 
 @Composable
 fun Application(
@@ -42,6 +43,7 @@ fun Application(
                   //  OtpConfirmationScreen()
                       HomeScreen()
                    // ApplyForScreen()
+                  //  TransportDetailsScreen()
                 )
             }
         }
