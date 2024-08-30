@@ -38,10 +38,10 @@ fun Application(
                 Navigator(
                   //  LanguageScreen()
                   //  LogInScreen()
-                  //  AuthScreen()
+                    AuthScreen()
                   //  ForgotPasswordScreen()
                   //  OtpConfirmationScreen()
-                      HomeScreen()
+                   //   HomeScreen()
                    // ApplyForScreen()
                   //  TransportDetailsScreen()
                 )

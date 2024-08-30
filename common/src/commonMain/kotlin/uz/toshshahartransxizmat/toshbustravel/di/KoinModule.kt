@@ -13,6 +13,9 @@ import uz.toshshahartransxizmat.toshbustravel.data.repository.NetworkRepositoryI
 import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepository
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetNewsUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetTransportsUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignUpUseCase
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
 
 val appModule = module {
@@ -35,11 +38,17 @@ val appModule = module {
 
     factory {
         AllUseCases(
-            getNewsUseCase = GetNewsUseCase()
+            getNewsUseCase = GetNewsUseCase(),
+            getTransportsUseCase = GetTransportsUseCase(),
+            postSignUpUseCase = PostSignUpUseCase()
         )
     }
 
     factory {
         HomeViewModel(get())
+    }
+
+    factory {
+        AuthViewModel(get())
     }
 }
