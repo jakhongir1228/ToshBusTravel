@@ -11,7 +11,9 @@ activity-compose = "1.9.1"
 kotlinx-coroutines-core = "1.6.4"
 kotlinx-datetime = "0.4.0"
 ktor-client-json = "2.1.1"
+multiplatform-settings = "0.8.1"
 mvvm-core = "0.16.1"
+play-services-location = "18.0.0"
 voyager = "1.0.0-rc06"
 ktor = "2.3.4"
 activity-ktx = "1.9.1"
@@ -21,6 +23,7 @@ koin-compose = "1.0.4"
 ui-android = "1.6.8"
 play-services-maps = "18.2.0"
 android-maps-utils = "2.0.3"
+preference-ktx = "1.2.1"
 
 [libraries]
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
@@ -36,11 +39,14 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 ktor-client-json = { module = "io.ktor:ktor-client-json", version.ref = "ktor-client-json" }
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor-client-json" }
+multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
+multiplatform-settings-no-arg = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatform-settings" }
 mvvm-compose = { module = "dev.icerock.moko:mvvm-compose", version.ref = "mvvm-core" }
 mvvm-core = { module = "dev.icerock.moko:mvvm-core", version.ref = "mvvm-core" }
 mvvm-flow = { module = "dev.icerock.moko:mvvm-flow", version.ref = "mvvm-core" }
 mvvm-flow-compose = { module = "dev.icerock.moko:mvvm-flow-compose", version.ref = "mvvm-core" }
 native-driver = { module = "com.squareup.sqldelight:native-driver", version.ref = "gradle-plugin" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
 runtime = { module = "com.squareup.sqldelight:runtime", version.ref = "gradle-plugin" }
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
@@ -64,6 +70,7 @@ androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", vers
 
 osmdroid = { module = "org.osmdroid:osmdroid-android", version = "6.1.10" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version = "0.24.5-alpha" }
+androidx-preference-ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "preference-ktx" }
 
 
 [plugins]

@@ -169,6 +169,8 @@ fun TextInput(
                     ) {
                         if (placeholder != null && value.isBlank()) {
                             Text(
+                                modifier = Modifier
+                                    .padding(top = 2.dp),
                                 text = placeholder,
                                 color = colors.placeholderColor(isError).value
                             )

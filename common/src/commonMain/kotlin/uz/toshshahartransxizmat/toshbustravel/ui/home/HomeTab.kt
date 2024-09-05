@@ -32,10 +32,6 @@ import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.rememberKoinInject
-import uz.toshshahartransxizmat.toshbustravel.ui.home.component.ContentList
-import uz.toshshahartransxizmat.toshbustravel.ui.home.component.Loading
-import uz.toshshahartransxizmat.toshbustravel.ui.home.state.HomeState
-import uz.toshshahartransxizmat.toshbustravel.ui.home.topBar.TopBarItem
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
 
 internal object HomeTab: Tab {

@@ -9,7 +9,9 @@ import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepositor
 typealias GetNewsBaseUseCase = BaseUseCase<String,Flow<List<News>>>
 
 class GetNewsUseCase : KoinComponent, GetNewsBaseUseCase {
+
     private val repository: NetworkRepository by inject()
+
     override suspend fun invoke(parameter: String): Flow<List<News>> {
         return repository.getNews(parameter)
     }

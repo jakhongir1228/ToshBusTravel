@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.Navigator
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.AuthScreen
 
 @Composable
 fun TextAuth(
@@ -37,7 +38,7 @@ fun TextAuth(
             )
             Text(
                 modifier = Modifier.clickable {
-                    navigator.pop()
+                    navigator.push(AuthScreen())
                 },
                 text = TextValue(textClick),
                 color = Color(0xFF007AFF),

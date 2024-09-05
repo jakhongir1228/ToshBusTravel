@@ -4,12 +4,12 @@ sealed class TopBarItem(
     val label: String
 ) {
     object General: TopBarItem(
-        label = "General"
+        label = "Все"
     )
-    object Business: TopBarItem(
-        label = "Businessrrrrr"
+    object  Business: TopBarItem(
+        label = "Микроавтобус"
     )
     object Traveling: TopBarItem(
-        label = "Technologyrrrrrr"
+        label = "Автобус"
     )
 }
