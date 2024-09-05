@@ -73,7 +73,7 @@ internal class ForgotPasswordScreen: Screen {
                 size = ButtonSize.Large,
                 enabled = isPhoneNumberValid,
                 onClick = {
-                    navigator.push(OtpConfirmationScreen())
+                  // navigator.push(OtpConfirmationScreen())
                 }
             )
         }

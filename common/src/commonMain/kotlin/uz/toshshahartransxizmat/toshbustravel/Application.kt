@@ -37,8 +37,8 @@ fun Application(
             } else {
                 Navigator(
                   //  LanguageScreen()
-                  //  LogInScreen()
-                    AuthScreen()
+                    LogInScreen()
+                  //  AuthScreen()
                   //  ForgotPasswordScreen()
                   //  OtpConfirmationScreen()
                    //   HomeScreen()

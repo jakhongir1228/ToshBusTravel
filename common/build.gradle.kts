@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     kotlin("plugin.serialization") version "1.8.21"
+    id("kotlin-parcelize")
 }
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
@@ -83,6 +84,10 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
 
                 implementation(libs.kamel.image)
+
+                // Multiplatform Settings kutubxonasini qo'shish
+                implementation(libs.multiplatform.settings)
+                implementation(libs.multiplatform.settings.no.arg)
             }
         }
 
@@ -151,6 +156,7 @@ dependencies {
     implementation(libs.core)
     implementation(libs.activity.ktx)
     implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.preference.ktx)
     commonMainApi(libs.mvvm.core)
     commonMainApi(libs.mvvm.compose)
     commonMainApi(libs.mvvm.flow)

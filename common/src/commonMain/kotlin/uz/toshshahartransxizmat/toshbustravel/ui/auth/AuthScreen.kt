@@ -1,5 +1,6 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.auth
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -28,7 +30,9 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextVa
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.components.input.text.TextInput
+import uz.toshshahartransxizmat.toshbustravel.components.otp.OtpConfirmationScreen
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
+import uz.toshshahartransxizmat.toshbustravel.share.provideDeviceId
 import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputConfirmPassword
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputPhone
@@ -42,8 +46,6 @@ internal class AuthScreen: Screen {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = rememberKoinInject<AuthViewModel>()
         val state = viewModel.state.collectAsState()
-
-        println("hash--->"+state.value.success.hash)
 
         var firstName by remember { mutableStateOf("") }
         var showError by remember { mutableStateOf(false) }
@@ -91,18 +93,18 @@ internal class AuthScreen: Screen {
                     title = "Пароль",
                     modifier = Modifier
                         .fillMaxWidth(),
-                    value = password, // Parolning qiymatini uzatish
+                    value = password,
                     onValueChange = { password = it },
-                    isError = passwordError && password != confirmPassword // Parollar mos kelmasa xato ko'rsatish
+                    isError = passwordError && password != confirmPassword
                 )
 
                 InputConfirmPassword(
                     title = "Подтвердите пароль",
                     modifier = Modifier
                         .fillMaxWidth(),
-                    value = confirmPassword, // Tasdiqlash parolining qiymatini uzatish
+                    value = confirmPassword,
                     onValueChange = { confirmPassword = it },
-                    isError = passwordError && password != confirmPassword // Parollar mos kelmasa xato ko'rsatish
+                    isError = passwordError && password != confirmPassword
                 )
 
                 TextAuth(
@@ -123,6 +125,7 @@ internal class AuthScreen: Screen {
                     text = TextValue("Продолжить"),
                     size = ButtonSize.Large,
                     enabled = true,
+                    loading = state.value.isLoading,
                     onClick = {
 //                        showError = firstName.isEmpty()
 //                        passwordError = password != confirmPassword
@@ -131,16 +134,33 @@ internal class AuthScreen: Screen {
 //
 //                        }
                         val signUpEntity = SignUpEntity(
-                            username = "string1fg23",
-                            password = "string2",
+                            username = "string1fg234",
+                            password = "string22",
                             code = "",
                             hash = "",
-                            deviceId = "string"
+                            deviceId = provideDeviceId()
                         )
                         viewModel.loadAuth(signUpEntity)
                     }
                 )
             }
         }
+
+        if (state.value.error.isNotBlank()) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                androidx.compose.material3.Text(text = state.value.error, fontSize = 25.sp)
+            }
+        }
+
+        if (state.value.isLoaded){
+            navigator.push(OtpConfirmationScreen(
+                userName = "string1fg234",
+                password = "string22",
+                code = state.value.success.code,
+                hash = state.value.success.hash,
+                deviceId = provideDeviceId()
+            ))
+        }
+
     }
 }

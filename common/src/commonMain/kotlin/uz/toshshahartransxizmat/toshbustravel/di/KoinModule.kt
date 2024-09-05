@@ -14,6 +14,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepositor
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetNewsUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetTransportsUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignInUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignUpUseCase
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
@@ -40,7 +41,8 @@ val appModule = module {
         AllUseCases(
             getNewsUseCase = GetNewsUseCase(),
             getTransportsUseCase = GetTransportsUseCase(),
-            postSignUpUseCase = PostSignUpUseCase()
+            postSignUpUseCase = PostSignUpUseCase(),
+            postSignInUseCase = PostSignInUseCase()
         )
     }
 

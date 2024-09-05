@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
@@ -35,6 +37,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.components.navigator.BottomItem
 import uz.toshshahartransxizmat.toshbustravel.components.otp.state.OtpConfirmationState
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.theme.black100
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.theme.gray150
@@ -42,22 +45,32 @@ import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.red500
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.ForgotPasswordScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeTab
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.OrdersTab
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.ProfileTab
 
-internal class OtpConfirmationScreen: Screen {
+internal class OtpConfirmationScreen(
+    private val userName:String,
+    private val password:String,
+    private val code:String,
+    private val hash:String,
+    private val deviceId:String
+): Screen {
 
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
+        val viewModel = rememberKoinInject<AuthViewModel>()
+        val stateAuth = viewModel.state.collectAsState()
 
         val state = OtpConfirmationState(
-            phoneNumber = "+998 9* *** ** 99",
+            phoneNumber = userName,
             requiredTimeout = 2,
-            requiredValueLength = 4
+            requiredValueLength = code.length
         )
         val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -77,7 +90,6 @@ internal class OtpConfirmationScreen: Screen {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 16.dp),
                 onNavigationClick = {
-                    // accept(Intent.ExitScreen(Commands.ExitScreen))
                     navigator.pop()
                 }
             )
@@ -100,7 +112,7 @@ internal class OtpConfirmationScreen: Screen {
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)
                     .padding(top = 55.dp),
-                text = state.value,
+                text = code,
                 length = state.requiredValueLength,
                 onTextChanged = { value, _ ->
                     //accept(Intent.OtpValueChanged(value))
@@ -161,10 +173,21 @@ internal class OtpConfirmationScreen: Screen {
                 text = TextValue("Продолжить"),
                 size = ButtonSize.Large,
                 enabled = true,
+                loading = stateAuth.value.isLoading,
                 onClick = {
-                    navigator.push(HomeScreen())
+                   // viewModel.loadAuth(signUpEntity)
                 }
             )
+        }
+
+        if (stateAuth.value.error.isNotBlank()){
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                androidx.compose.material3.Text(text = stateAuth.value.error, fontSize = 25.sp)
+            }
+        }
+
+        if (stateAuth.value.isLoaded){
+            navigator.push(LogInScreen())
         }
     }
 

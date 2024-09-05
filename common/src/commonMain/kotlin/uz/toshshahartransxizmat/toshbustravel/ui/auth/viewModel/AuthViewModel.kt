@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.state.AuthState
@@ -31,8 +32,7 @@ class AuthViewModel(
                         it.copy(isLoading = true, isLoaded = false)
                     }
                 }
-                .catch {t->
-                    println("tttt->${t.message}")
+                .catch {
                     _state.update {
                         it.copy(
                             isLoading = false,
@@ -45,6 +45,35 @@ class AuthViewModel(
                         it.copy(
                             isLoading = false,
                             success = result,
+                            isLoaded = true
+                        )
+                    }
+                }
+        }
+    }
+
+    fun loadLoginIn(signInEntity: SignInEntity){
+        viewModelScope.launch {
+            useCases.postSignInUseCase(signInEntity)
+                .onStart {
+                    _state.update {
+                        it.copy(isLoading = true, isLoaded = false)
+                    }
+                }
+                .catch {tt->
+                    println("kkk-->"+tt)
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            error = "Error has occurred",
+                            isLoaded = false
+                        )
+                    }
+                }.collectLatest { result->
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            successLogIn = result,
                             isLoaded = true
                         )
                     }
