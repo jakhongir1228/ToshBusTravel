@@ -103,7 +103,11 @@ kotlin {
                 // Maps SDK for Android
                 implementation(libs.play.services.maps)
                 implementation(libs.android.maps.utils)
-                implementation("com.google.android.gms:play-services-location:18.0.0")
+                implementation("com.google.android.gms:play-services-location:18.0.0" )
+                implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+                implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+                implementation ("com.google.maps.android:maps-compose:2.4.0") // or the latest version
+
             }
         }
         val iosX64Main by getting

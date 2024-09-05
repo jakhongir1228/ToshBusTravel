@@ -1,6 +1,6 @@
-import SwiftUI
-import common
-
+//import SwiftUI
+//import common
+//
 //struct ContentView: View {
 ////	let greet = Greeting().greet()
 //

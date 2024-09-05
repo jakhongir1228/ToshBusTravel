@@ -2,40 +2,50 @@ package uz.toshshahartransxizmat.toshbustravel.map
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import platform.CoreLocation.CLLocationCoordinate2D
-import platform.MapKit.MKMapView
-import platform.MapKit.MKAnnotationView
+import androidx.compose.ui.interop.UIKitView
+import platform.CoreLocation.CLLocationCoordinate2DMake
+import cocoapods.GoogleMaps.GMSCameraUpdate
+import cocoapods.GoogleMaps.GMSMapStyle
+import cocoapods.GoogleMaps.GMSMapView
+import cocoapods.GoogleMaps.animateWithCameraUpdate
 
 @Composable
 actual fun ComposeMapView(
     locationProvider: LocationProvider,
     modifier: Modifier
 ) {
-    var mapLocation by remember { mutableStateOf<Location?>(null) }
-
-    LaunchedEffect(Unit) {
-        mapLocation = locationProvider.getCurrentLocation()
+    // Create a `GMSMapView` instance and configure it
+    val googleMapView = remember {
+        GMSMapView().apply {
+            setMyLocationEnabled(true)
+            settings.setMyLocationButton(true)
+            settings.setScrollGestures(true)
+            settings.setZoomGestures(true)
+            settings.setCompassButton(false)
+            // Optionally, set map style
+           /* this.setMapStyle(
+                GMSMapStyle.styleWithJSONString(mapStyle1(), error = null)
+            )*/
+        }
     }
 
-//    mapLocation?.let { location ->
-//        val coordinate = CLLocationCoordinate2D(location.latitude, location.longitude)
-//        val mapView = MKMapView().apply {
-//            setRegion(coordinate, animated = true)
-//            addAnnotation(MKAnnotation(coordinate))
-//        }
-//        mapView // You need to integrate it efficiently with SwiftUI.
-//    } ?: run {
-//        // Handle loading state
-//    }
-}
+    // Launch effect to update the map based on location
+    LaunchedEffect(locationProvider) {
+        val location = locationProvider.getCurrentLocation()
+        location?.let {
+            googleMapView.animateWithCameraUpdate(
+                GMSCameraUpdate.setTarget(
+                    CLLocationCoordinate2DMake(it.latitude, it.longitude)
+                )
+            )
+        }
+    }
 
-//actual class LocationProviderImpl actual constructor() : LocationProvider {
-//    override suspend fun getCurrentLocation(): Location? {
-//
-//    }
-//}
+    // Use UIKitView to integrate GMSMapView into Compose
+    UIKitView(
+        factory = { googleMapView },
+        modifier = modifier
+    )
+}

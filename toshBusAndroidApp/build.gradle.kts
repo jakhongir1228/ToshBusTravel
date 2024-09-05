@@ -48,4 +48,5 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.compose)
     implementation(libs.koin.android)
+    implementation ("androidx.activity:activity-ktx:1.7.2")
 }
