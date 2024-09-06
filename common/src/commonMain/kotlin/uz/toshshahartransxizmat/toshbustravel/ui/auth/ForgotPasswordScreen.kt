@@ -59,7 +59,9 @@ internal class ForgotPasswordScreen: Screen {
                     .fillMaxWidth(),
                 text = "У вас есть аккаунт?",
                 textClick = "Войти",
-                navigator = navigator
+                navigator = {
+                    navigator.pop()
+                }
             )
 
             Spacer(modifier = Modifier.weight(weight = 1f))

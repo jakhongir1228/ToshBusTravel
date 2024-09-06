@@ -44,7 +44,8 @@ internal class OtpConfirmationScreen(
     private val userName:String,
     private val password:String,
     private val hash:String,
-    private val deviceId:String
+    private val deviceId:String,
+    private val languageCode:String
 ): Screen {
 
     @OptIn(ExperimentalComposeUiApi::class)
@@ -179,8 +180,7 @@ internal class OtpConfirmationScreen(
         }
 
         if (stateAuth.value.isLoaded){
-            println("sss---->>>"+stateAuth.value.success)
-            navigator.push(LogInScreen())
+            navigator.push(LogInScreen(languageCode = languageCode))
         }
     }
 

@@ -39,13 +39,12 @@ import uz.toshshahartransxizmat.toshbustravel.theme.white100
 internal fun InputConfirmPassword(
     title: String,
     modifier: Modifier = Modifier,
-    value: String, // Parol qiymatini hisobga olish uchun
-    onValueChange: (String) -> Unit, // Parol qiymatini o'zgartirish funksiyasi
-    isError: Boolean = false // Xato holatini ko'rsatish uchun
+    value: String,
+    onValueChange: (String) -> Unit,
+    isError: Boolean = false
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
-    // borderColor xato holatidan kelib chiqib ranglash
-    val borderColor = if (isError) errorLight else if (value.length < 8 && value.isNotEmpty()) errorLight else Color(0xFFD0D5DD)
+    val borderColor = if (isError) errorLight else if (value.length < 4 && value.isNotEmpty()) errorLight else Color(0xFFD0D5DD)
 
     Column(
         modifier = modifier
@@ -85,24 +84,24 @@ internal fun InputConfirmPassword(
                 },
                 isError = isError,
                 colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.Transparent, // Orqa fondan rang olib tashlash
-                    focusedIndicatorColor = Color.Transparent, // Tagidagi chiziqni olib tashlash (fokuzlangan holatda)
-                    unfocusedIndicatorColor = Color.Transparent, // Tagidagi chiziqni olib tashlash (fokuzlanmagan holatda)
-                    errorIndicatorColor = Color.Transparent // Xato holatidagi chiziqni olib tashlash
+                    containerColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent
                 )
             )
         }
-        if (isError) { // Xato xabari ko'rsatish
+        if (isError) {
             Text(
                 modifier = modifier.padding(start = 16.dp, end = 16.dp),
-                text = TextValue("Пароли не совпадают"), // Xato xabari matni
+                text = TextValue("Пароли не совпадают"),
                 color = errorLight,
                 fontSize = 12.sp
             )
-        } else if (value.length < 8 && value.isNotEmpty()) { // Parol kamida 8 belgidan iborat bo'lishi tekshiruvi
+        } else if (value.length < 4 && value.isNotEmpty()) {
             Text(
                 modifier = modifier.padding(start = 16.dp, end = 16.dp),
-                text = TextValue("Введите не менее 8 символов"),
+                text = TextValue("Введите не менее 4 символов"),
                 color = errorLight,
                 fontSize = 12.sp
             )

@@ -35,10 +35,11 @@ import uz.toshshahartransxizmat.toshbustravel.theme.white100
 internal fun InputPasswordComponent(
     title:String,
     modifier: Modifier = Modifier,
+    password: TextFieldValue,
+    onPasswordChange: (TextFieldValue) -> Unit
 ) {
-    var password by remember { mutableStateOf(TextFieldValue("")) }
     var passwordVisible by remember { mutableStateOf(false) }
-    val borderColor = if (password.text.length < 8 && password.text.isNotEmpty()) errorLight else Color(0xFFD0D5DD)
+    val borderColor = if (password.text.length < 4 && password.text.isNotEmpty()) errorLight else Color(0xFFD0D5DD)
 
     Column(
         modifier = modifier
@@ -53,7 +54,7 @@ internal fun InputPasswordComponent(
         Box {
             BasicTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = onPasswordChange,
                 singleLine = true,
                 textStyle = MaterialTheme.typography.bodyLarge,
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -93,10 +94,10 @@ internal fun InputPasswordComponent(
                 }
             )
         }
-        if (password.text.length < 8 && password.text.isNotEmpty()) {
+        if (password.text.length < 4 && password.text.isNotEmpty()) {
             Text(
                 modifier = modifier.padding(start = 16.dp, end = 16.dp),
-                text = TextValue("Введите не менее 8 символов"),
+                text = TextValue("Введите не менее 4 символов"),
                 color = errorLight,
                 fontSize = 12.sp
             )

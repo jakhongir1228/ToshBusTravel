@@ -39,7 +39,9 @@ import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputPhone
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 
-internal class AuthScreen: Screen {
+internal class AuthScreen(
+    private val languageCode:String
+): Screen {
 
     @Composable
     override fun Content() {
@@ -54,6 +56,11 @@ internal class AuthScreen: Screen {
         var confirmPassword by remember { mutableStateOf("") }
         var passwordError by remember { mutableStateOf(false) }
         val isPhoneNumberValid = phoneNumber.length == 9
+        val isPasswordValid = password.length >= 4
+        val isPasswordsMatch = password == confirmPassword
+        val isFirstNameValid = firstName.isNotEmpty()
+
+        val isFormValid = isFirstNameValid && isPhoneNumberValid && isPasswordValid && isPasswordsMatch
 
         Scaffold {
             Column(
@@ -112,7 +119,9 @@ internal class AuthScreen: Screen {
                         .fillMaxWidth(),
                     text = "У вас есть аккаунт?",
                     textClick = "Войти",
-                    navigator = navigator
+                    navigator = {
+                        navigator.pop()
+                    }
                 )
 
                 Spacer(modifier = Modifier.weight(weight = 1f))
@@ -124,15 +133,15 @@ internal class AuthScreen: Screen {
                         .padding(bottom = 56.dp),
                     text = TextValue("Продолжить"),
                     size = ButtonSize.Large,
-                    enabled = true,
+                    enabled = isFormValid,
                     loading = state.value.isLoading,
                     onClick = {
                         showError = firstName.isEmpty()
                         passwordError = password != confirmPassword
-                        if (!showError && !passwordError && password.length >= 8) {
+                        if (!showError && !passwordError && password.length >= 4) {
                            // navigator.push(ForgotPasswordScreen())
                             val signUpEntity = SignUpEntity(
-                                username = phoneNumber,
+                                username = "998$phoneNumber",
                                 password = password,
                                 code = "",
                                 hash = "",
@@ -155,10 +164,11 @@ internal class AuthScreen: Screen {
         if (state.value.isLoaded){
             navigator.push(
                 OtpConfirmationScreen(
-                    userName = phoneNumber,
+                    userName = "998$phoneNumber",
                     password = password,
                     hash = state.value.success.hash,
-                    deviceId = provideDeviceId()
+                    deviceId = provideDeviceId(),
+                    languageCode = languageCode
                 )
             )
         }

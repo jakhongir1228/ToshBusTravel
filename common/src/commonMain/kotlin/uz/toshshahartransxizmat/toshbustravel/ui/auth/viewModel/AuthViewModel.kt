@@ -32,7 +32,8 @@ class AuthViewModel(
                         it.copy(isLoading = true, isLoaded = false)
                     }
                 }
-                .catch {
+                .catch {t->
+                    println("eerrr-->> "+t)
                     _state.update {
                         it.copy(
                             isLoading = false,

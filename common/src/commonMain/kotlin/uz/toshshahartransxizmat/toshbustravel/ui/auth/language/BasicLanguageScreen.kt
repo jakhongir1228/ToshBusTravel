@@ -31,7 +31,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
 @Composable
 fun BasicLanguageScreen(
     modifier: Modifier = Modifier,
-    navigateToAuthScreen: () -> Unit
+    navigateToAuthScreen: (String) -> Unit
 ) {
     Scaffold(
         content = {
@@ -73,7 +73,7 @@ fun BasicLanguageScreen(
                         painterResource(res = "drawable/UZ.png"),
                         languageName = "O`zbekcha"
                     ){
-                        navigateToAuthScreen.invoke()
+                        navigateToAuthScreen.invoke("uz")
                     }
                     Spacer(modifier = Modifier.height(2.dp))
                     LanguageButton(
@@ -83,7 +83,7 @@ fun BasicLanguageScreen(
                         painterResource(res = "drawable/EN.png"),
                         languageName = "English"
                     ){
-                        navigateToAuthScreen.invoke()
+                        navigateToAuthScreen.invoke("en")
                     }
                     Spacer(modifier = Modifier.height(2.dp))
                     LanguageButton(
@@ -93,7 +93,7 @@ fun BasicLanguageScreen(
                         painterResource(res = "drawable/RU.png"),
                         languageName = "Русский"
                     ){
-                        navigateToAuthScreen.invoke()
+                        navigateToAuthScreen.invoke("ru")
                     }
                 }
 

@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
@@ -29,7 +30,6 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextVa
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
-import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.share.Platform
 import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
 import uz.toshshahartransxizmat.toshbustravel.share.provideDeviceId
@@ -40,12 +40,15 @@ import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
 
-internal class LogInScreen: Screen {
+internal class LogInScreen(
+    private val languageCode:String
+): Screen {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         var phoneNumber by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf(TextFieldValue("")) }
         val isPhoneNumberValid = phoneNumber.length == 9
         val settings = remember { getSettingsSource() }
         val viewModel = rememberKoinInject<AuthViewModel>()
@@ -75,7 +78,9 @@ internal class LogInScreen: Screen {
             InputPasswordComponent(
                 modifier = Modifier
                     .fillMaxWidth(),
-                title = "Пароль"
+                title = "Пароль",
+                password = password,
+                onPasswordChange = { password = it }
             )
 
             TextAuth(
@@ -83,7 +88,9 @@ internal class LogInScreen: Screen {
                 .fillMaxWidth(),
                 text = "У вас нет аккаунта?",
                 textClick = "Регистрация",
-                navigator = navigator
+                navigator = {
+                    navigator.push(AuthScreen(languageCode = languageCode))
+                }
             )
             Text(
                 modifier = Modifier.clickable {
@@ -102,20 +109,18 @@ internal class LogInScreen: Screen {
                     .padding(bottom = 56.dp),
                 text = TextValue("Продолжить"),
                 size = ButtonSize.Large,
-                enabled = true,
+                enabled = isPhoneNumberValid && password.text.length >= 4,
                 loading = state.value.isLoading,
                 onClick = {
-                   // navigator.push(AuthScreen())
-
                     val signInEntity = SignInEntity(
-                        username = "string1fg234",
-                        password = "string22",
+                        username = "998$phoneNumber",
+                        password = password.text,
                         platform = platformName.name,
                         code = "",
                         hash = "",
                         deviceId = provideDeviceId(),
                         version = "string",
-                        lang = "string",
+                        lang = languageCode,
                         deviceName = platformName.name,
                         ipAddress = "string"
                     )
@@ -131,7 +136,6 @@ internal class LogInScreen: Screen {
         }
 
         if (state.value.isLoaded){
-            println("sss---->"+state.value.successLogIn)
             settings.saveValue(ACCESS_TOKEN_KEY, state.value.successLogIn.accessToken)
             navigator.push(HomeScreen())
         }
