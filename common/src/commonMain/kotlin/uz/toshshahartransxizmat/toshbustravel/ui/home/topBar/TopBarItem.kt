@@ -3,13 +3,13 @@ package uz.toshshahartransxizmat.toshbustravel.ui.home.topBar
 sealed class TopBarItem(
     val label: String
 ) {
-    object General: TopBarItem(
+    object All: TopBarItem(
         label = "Все"
     )
-    object  Business: TopBarItem(
+    object  Bus: TopBarItem(
         label = "Микроавтобус"
     )
-    object Traveling: TopBarItem(
+    object MiniBus: TopBarItem(
         label = "Автобус"
     )
 }

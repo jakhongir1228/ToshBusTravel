@@ -25,14 +25,14 @@ internal fun ContentList(
         items(
             items = list
         ) { transport ->
-            val iconTransport = when (transport.typeTransport) {
-                "MINI" -> painterResource("drawable/iconMini.png")
-                "BIG" -> painterResource("drawable/iconBig.png")
+            val iconTransport = when (transport.type) {
+                "MINI_BUS" -> painterResource("drawable/iconMini.png")
+                "BUS" -> painterResource("drawable/iconBig.png")
                 else -> painterResource("drawable/iconMini.png")
             }
-            val transportImage = when (transport.typeTransport) {
-                "MINI" -> painterResource("drawable/mini.png")
-                "BIG" -> painterResource("drawable/big.png")
+            val transportImage = when (transport.type) {
+                "MINI_BUS" -> painterResource("drawable/mini.png")
+                "BUS" -> painterResource("drawable/big.png")
                 else -> painterResource("drawable/mini.png")
             }
             TransportItem(

@@ -3,7 +3,8 @@ package uz.toshshahartransxizmat.toshbustravel.data.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Source(
-    val id: String?,
-    val name: String?
+data class Sort(
+    val empty:Boolean,
+    val unsorted:Boolean,
+    val sorted:Boolean
 )

@@ -7,15 +7,17 @@ import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import uz.toshshahartransxizmat.toshbustravel.components.otp.viewModel.OtpViewModel
 import uz.toshshahartransxizmat.toshbustravel.data.network.KtorClient
 import uz.toshshahartransxizmat.toshbustravel.data.network.KtorService
 import uz.toshshahartransxizmat.toshbustravel.data.repository.NetworkRepositoryImpl
 import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepository
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
-import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetNewsUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetTransportsUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignInUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignUpUseCase
+import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
+import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
 
@@ -30,16 +32,21 @@ val appModule = module {
             }
         }
     }
-    factory<KtorService> {
-        KtorClient(get())
+
+    single<SettingsSource> {
+        getSettingsSource()
     }
+
+    factory<KtorService> {
+        KtorClient(client = get(), settings = get())
+    }
+
     singleOf(::NetworkRepositoryImpl) {
         bind<NetworkRepository>()
     }
 
     factory {
         AllUseCases(
-            getNewsUseCase = GetNewsUseCase(),
             getTransportsUseCase = GetTransportsUseCase(),
             postSignUpUseCase = PostSignUpUseCase(),
             postSignInUseCase = PostSignInUseCase()
@@ -52,5 +59,9 @@ val appModule = module {
 
     factory {
         AuthViewModel(get())
+    }
+
+    factory {
+        OtpViewModel()
     }
 }

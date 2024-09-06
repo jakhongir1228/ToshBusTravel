@@ -37,11 +37,6 @@ fun TransportItem(
     transportImage: Painter,
     modifier: Modifier = Modifier
 ) {
-    val backgroundColor = when (transport.colorTransport) {
-        "White" -> white100
-        "Black" -> black100
-        else ->  white100
-    }
     Column (
         modifier = modifier
             .background(color = white100, shape = RoundedCornerShape(12.dp))
@@ -63,7 +58,7 @@ fun TransportItem(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = transport.nameTransport ?: "Unknown Transport",
+                    text = transport.modelName,
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
@@ -83,14 +78,7 @@ fun TransportItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = transport.transmission ?: "Unknown",
-                color = gray650
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Text(
-                text = "${transport.passengerCapacity ?: 0} мест",
+                text = "${transport.passengerCapacity} мест",
                 color = gray650
             )
 
@@ -103,7 +91,7 @@ fun TransportItem(
             )
 
             Text(
-                text = transport.rateTransport ?: "N/A"
+                text = "4.9" ?: "N/A"
             )
         }
     }

@@ -37,10 +37,10 @@ import uz.toshshahartransxizmat.toshbustravel.ui.home.topBar.TopBarItem
 @Composable
 internal fun BasicHomeScreen(
     state: State<HomeState>,
-    loadNews: (Int) -> Unit
+    loadTransports: (Int) -> Unit
 ){
     var selectedTabIndex by remember { mutableStateOf(0) }
-    val tabs = listOf(TopBarItem.General, TopBarItem.Business, TopBarItem.Traveling)
+    val tabs = listOf(TopBarItem.All, TopBarItem.Bus, TopBarItem.MiniBus)
     val nav = LocalNavigator.currentOrThrow
 
     TabRow(
@@ -62,7 +62,7 @@ internal fun BasicHomeScreen(
                     selected = selectedTabIndex == index,
                     onClick = {
                         selectedTabIndex = index
-                        loadNews(selectedTabIndex)
+                        loadTransports(selectedTabIndex)
                     },
                     selectedContentColor = Color.White
                 ) {
@@ -103,74 +103,8 @@ internal fun BasicHomeScreen(
         Loading()
     }
     if (state.value.isLoaded) {
-        val transports= listOf(
-            Transports(
-                nameTransport = "JAC TL700",
-                typeTransport = "MINI",
-                passengerCapacity = 15,
-                transmission = "Автомат",
-                colorTransport = "White",
-                rateTransport = "4.9"
-            ),
-            Transports(
-                nameTransport = "MAN 700AC",
-                typeTransport = "BIG",
-                passengerCapacity = 45,
-                transmission = "Автомат",
-                colorTransport = "White",
-                rateTransport = "4.9"
-            ),
-            Transports(
-                nameTransport = "JAC TL700",
-                typeTransport = "MINI",
-                passengerCapacity = 15,
-                transmission = "Автомат",
-                colorTransport = "White",
-                rateTransport = "4.9"
-            ),
-            Transports(
-                nameTransport = "MAN 708AC",
-                typeTransport = "BIG",
-                passengerCapacity = 45,
-                transmission = "Автомат",
-                colorTransport = "White",
-                rateTransport = "4.9"
-            ),
-            Transports(
-                nameTransport = "JAC TL700",
-                typeTransport = "MINI",
-                passengerCapacity = 15,
-                transmission = "Автомат",
-                colorTransport = "White",
-                rateTransport = "4.9"
-            ),
-            Transports(
-                nameTransport = "MAN 700AC",
-                typeTransport = "BIG",
-                passengerCapacity = 45,
-                transmission = "Автомат",
-                colorTransport = "White",
-                rateTransport = "4.9"
-            ),
-            Transports(
-                nameTransport = "JAC TL700",
-                typeTransport = "MINI",
-                passengerCapacity = 15,
-                transmission = "Автомат",
-                colorTransport = "White",
-                rateTransport = "4.9"
-            ),
-            Transports(
-                nameTransport = "MAN 708AC",
-                typeTransport = "BIG",
-                passengerCapacity = 45,
-                transmission = "Автомат",
-                colorTransport = "White",
-                rateTransport = "4.9"
-            ),
-        )
         ContentList(
-            list = transports,
+            list = state.value.success[selectedTabIndex],
             onClick = { news ->
                 //  nav.push(DetailScreen(news))
             }

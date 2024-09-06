@@ -1,21 +1,19 @@
 package uz.toshshahartransxizmat.toshbustravel.data.mapper
 
-import uz.toshshahartransxizmat.toshbustravel.data.model.Article
+import uz.toshshahartransxizmat.toshbustravel.data.model.Vehicles
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.Data
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataLogIn
-import uz.toshshahartransxizmat.toshbustravel.domain.model.News
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignInData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignUpData
 
-fun Article.toNews(): News {
-    return News(
-        author = author,
-        content = content,
-        description = description,
-        publishedAt = publishedAt,
-        sourceName = source?.name,
-        sourceId = source?.id,
-        title = title,
+fun Vehicles.toTransports(): Transports {
+    return Transports(
+        id = id,
+        modelName = modelName,
+        number = number,
+        type = type,
+        passengerCapacity = passengerCapacity,
         url = url,
         urlToImage = urlToImage
     )
@@ -23,7 +21,6 @@ fun Article.toNews(): News {
 
 fun Data.toSignUpData():SignUpData{
     return SignUpData(
-        code = code,
         hash = hash
     )
 }

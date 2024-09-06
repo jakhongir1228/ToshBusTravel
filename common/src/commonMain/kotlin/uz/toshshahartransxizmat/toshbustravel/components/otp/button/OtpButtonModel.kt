@@ -7,7 +7,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 
 @Immutable
-internal data class OtpButtonModel(
+data class OtpButtonModel(
     override val text: TextValue = TextValue("Отправить еще раз"),
     override val type: ButtonType = ButtonType.Primary,
     override val enabled: Boolean = true

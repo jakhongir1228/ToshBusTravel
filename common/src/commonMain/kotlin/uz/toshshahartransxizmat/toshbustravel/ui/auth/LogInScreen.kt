@@ -37,6 +37,7 @@ import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputPasswordCom
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputPhone
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
+import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
 
 internal class LogInScreen: Screen {
@@ -132,6 +133,7 @@ internal class LogInScreen: Screen {
         if (state.value.isLoaded){
             println("sss---->"+state.value.successLogIn)
             settings.saveValue(ACCESS_TOKEN_KEY, state.value.successLogIn.accessToken)
+            navigator.push(HomeScreen())
         }
     }
 

@@ -66,7 +66,7 @@ internal object HomeTab: Tab {
 
                 BasicHomeScreen(
                     state = state,
-                    loadNews = vm::loadNews
+                    loadTransports = vm::loadTransports
                 )
 
             }

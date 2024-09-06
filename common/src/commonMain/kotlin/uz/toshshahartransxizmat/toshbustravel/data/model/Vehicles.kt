@@ -1,6 +1,9 @@
-package uz.toshshahartransxizmat.toshbustravel.domain.model
+package uz.toshshahartransxizmat.toshbustravel.data.model
 
-data class Transports(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Vehicles(
     val id: Int,
     val modelName: String,
     val number: String,

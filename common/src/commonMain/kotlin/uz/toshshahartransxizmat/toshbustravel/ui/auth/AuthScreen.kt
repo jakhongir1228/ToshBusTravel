@@ -127,20 +127,20 @@ internal class AuthScreen: Screen {
                     enabled = true,
                     loading = state.value.isLoading,
                     onClick = {
-//                        showError = firstName.isEmpty()
-//                        passwordError = password != confirmPassword
-//                        if (!showError && !passwordError && password.length >= 8) {
-//                           // navigator.push(ForgotPasswordScreen())
-//
-//                        }
-                        val signUpEntity = SignUpEntity(
-                            username = "string1fg234",
-                            password = "string22",
-                            code = "",
-                            hash = "",
-                            deviceId = provideDeviceId()
-                        )
-                        viewModel.loadAuth(signUpEntity)
+                        showError = firstName.isEmpty()
+                        passwordError = password != confirmPassword
+                        if (!showError && !passwordError && password.length >= 8) {
+                           // navigator.push(ForgotPasswordScreen())
+                            val signUpEntity = SignUpEntity(
+                                username = phoneNumber,
+                                password = password,
+                                code = "",
+                                hash = "",
+                                deviceId = provideDeviceId()
+                            )
+                            viewModel.loadAuth(signUpEntity)
+                        }
+
                     }
                 )
             }
@@ -153,13 +153,14 @@ internal class AuthScreen: Screen {
         }
 
         if (state.value.isLoaded){
-            navigator.push(OtpConfirmationScreen(
-                userName = "string1fg234",
-                password = "string22",
-                code = state.value.success.code,
-                hash = state.value.success.hash,
-                deviceId = provideDeviceId()
-            ))
+            navigator.push(
+                OtpConfirmationScreen(
+                    userName = phoneNumber,
+                    password = password,
+                    hash = state.value.success.hash,
+                    deviceId = provideDeviceId()
+                )
+            )
         }
 
     }

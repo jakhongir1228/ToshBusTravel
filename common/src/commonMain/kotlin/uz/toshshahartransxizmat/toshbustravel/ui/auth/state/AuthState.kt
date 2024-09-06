@@ -5,7 +5,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignInData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignUpData
 
 data class AuthState(
-    val success: SignUpData = SignUpData("",""),
+    val success: SignUpData = SignUpData(""),
     val successLogIn:SignInData = SignInData(""),
     val isLoading: Boolean = false,
     val error: String = "",

@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import uz.toshshahartransxizmat.toshbustravel.domain.model.News
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.VehicleQueryParams
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
 import uz.toshshahartransxizmat.toshbustravel.ui.home.state.HomeState
 
@@ -18,47 +19,62 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
     val state get() = _state.asStateFlow()
 
-    private val generalList = mutableListOf<News>()
-    private val businessList = mutableListOf<News>()
-    private val techList = mutableListOf<News>()
+    private val allList = mutableListOf<Transports>()
+    private val busList = mutableListOf<Transports>()
+    private val miniBusList = mutableListOf<Transports>()
 
     init {
         println("@@@init")
-        loadNews(0)
+        loadTransports(0)
     }
 
-    fun loadNews(index: Int) {
+     fun loadTransports(index: Int) {
         when (index) {
             0 -> {
-                if (generalList.isEmpty()) {
-                    fetchNews(generalList, "general")
+                if (allList.isEmpty()) {
+                    val params= VehicleQueryParams(
+                        query = "ALL",
+                        page = 0,
+                        size = 10
+                    )
+                    fetchNews(allList, params)
                 }
             }
 
             1 -> {
-                if (businessList.isEmpty()) {
-                    fetchNews(businessList, "business")
+                if (busList.isEmpty()) {
+                    val params= VehicleQueryParams(
+                        query = "BUS",
+                        page = 0,
+                        size = 10
+                    )
+                    fetchNews(busList, params)
                 }
             }
 
             else -> {
-                if (techList.isEmpty()) {
-                    fetchNews(techList, "technology")
+                if (miniBusList.isEmpty()) {
+                    val params= VehicleQueryParams(
+                        query = "MINI_BUS",
+                        page = 0,
+                        size = 10
+                    )
+                    fetchNews(miniBusList, params)
                 }
             }
         }
     }
 
-    private fun fetchNews(newsList: MutableList<News>, query: String) {
+    private fun fetchNews(vehicleList: MutableList<Transports>, query: VehicleQueryParams) {
         viewModelScope.launch {
-            allUseCases.getNewsUseCase(query)
+            allUseCases.getTransportsUseCase(query)
                 .onStart {
                     _state.update {
                         it.copy(isLoading = true, isLoaded = false)
                     }
                 }
                 .catch { t ->
-                    println("@@@${t.message}")
+                    println("@@@--->${t.message}")
                     _state.update {
                         it.copy(
                             isLoading = false,
@@ -68,12 +84,12 @@ class HomeViewModel(
                     }
                 }.collectLatest { list ->
 
-                    newsList.addAll(list)
+                    vehicleList.addAll(list)
 
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            success = listOf(generalList, businessList, techList),
+                            success = listOf(allList, busList, miniBusList),
                             isLoaded = true
                         )
                     }
