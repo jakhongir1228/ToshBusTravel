@@ -161,7 +161,7 @@ internal class AuthScreen(
             }
         }
 
-        if (state.value.isLoaded){
+        if (!state.value.isLoaded){
             navigator.push(
                 OtpConfirmationScreen(
                     userName = "998$phoneNumber",

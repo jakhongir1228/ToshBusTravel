@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -22,22 +23,18 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
-import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.components.otp.viewModel.OtpViewModel
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
-import uz.toshshahartransxizmat.toshbustravel.share.provideDeviceId
 import uz.toshshahartransxizmat.toshbustravel.theme.black100
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
-import uz.toshshahartransxizmat.toshbustravel.theme.gray150
 import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.red500
-import uz.toshshahartransxizmat.toshbustravel.theme.white100
-import uz.toshshahartransxizmat.toshbustravel.ui.auth.ForgotPasswordScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 
 internal class OtpConfirmationScreen(
@@ -61,6 +58,10 @@ internal class OtpConfirmationScreen(
 
         keyboardController?.apply {
             if (state.value.isTimerCompleted) hide() else show()
+        }
+
+        LaunchedEffect(Unit) {
+            viewModel.startTimer()
         }
 
         Column(
@@ -88,7 +89,7 @@ internal class OtpConfirmationScreen(
 
             Text(
                 modifier = Modifier.padding(top = 2.dp),
-                text = TextValue("+998 $userName"),
+                text = TextValue("+$userName"),
                 color = black100,
                 fontSize = 16.sp
             )
@@ -124,30 +125,31 @@ internal class OtpConfirmationScreen(
                     .padding(start = 52.dp, top = 24.dp, end = 52.dp)
                     .align(alignment = Alignment.CenterHorizontally)
             ) {
-                state.value.timerText?.let { value ->
-                    Text(
+                if (state.value.isTimerCompleted) {
+                    TextAuth(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .alpha(1f),
-                        textAlign = TextAlign.Center,
-                        text = value,
-                        color = blueA220,
-                        fontSize = 12.sp
-                    )
-                }
-
-                if (state.value.isResendAvailable) {
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = TextValue("Отправить еще раз"),
-                        size = ButtonSize.Medium,
-                        type = ButtonType.Primary,
-                        onClick = {
-                           // accept(Intent.ResendOtpValue(Commands.RequestOtp))
+                            .fillMaxWidth(),
+                        text = "",
+                        textClick = "Отправить еще раз",
+                        navigator = {
+                            viewModel.resendOtp()
                         }
                     )
+                } else {
+                    state.value.timerText?.let { value ->
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .alpha(1f),
+                            textAlign = TextAlign.Center,
+                            text = value,
+                            color = blueA220,
+                            fontSize = 12.sp
+                        )
+                    }
                 }
             }
+
             Spacer(modifier = Modifier.weight(weight = 1f))
 
             Button(
@@ -157,7 +159,7 @@ internal class OtpConfirmationScreen(
                     .padding(bottom = 56.dp),
                 text = TextValue("Продолжить"),
                 size = ButtonSize.Large,
-                enabled = true,
+                enabled = state.value.isInputCompleted,
                 loading = stateAuth.value.isLoading,
                 onClick = {
                     val signUpEntity = SignUpEntity(
@@ -165,7 +167,7 @@ internal class OtpConfirmationScreen(
                         password = password,
                         code = state.value.value,
                         hash = hash,
-                        deviceId = provideDeviceId()
+                        deviceId = deviceId
                     )
 
                     vmAuth.loadAuth(signUpEntity)
@@ -183,5 +185,4 @@ internal class OtpConfirmationScreen(
             navigator.push(LogInScreen(languageCode = languageCode))
         }
     }
-
 }
