@@ -25,7 +25,7 @@ internal class ApplyForScreen(private val locationProvider: LocationProvider) : 
     override fun Content() {
         val modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(5.dp)
 
             ComposeMapView(
                 locationProvider = locationProvider,
