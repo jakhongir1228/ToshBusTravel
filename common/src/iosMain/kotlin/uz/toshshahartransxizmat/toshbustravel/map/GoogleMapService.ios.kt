@@ -20,10 +20,10 @@ actual fun ComposeMapView(
     val googleMapView = remember {
         GMSMapView().apply {
             setMyLocationEnabled(true)
-            settings.setMyLocationButton(true)
-            settings.setScrollGestures(true)
+//            settings.setMyLocationButton(true)
+            /*settings.setScrollGestures(true)
             settings.setZoomGestures(true)
-            settings.setCompassButton(false)
+            settings.setCompassButton(false)*/
             // Optionally, set map style
            /* this.setMapStyle(
                 GMSMapStyle.styleWithJSONString(mapStyle1(), error = null)
