@@ -25,7 +25,6 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
-import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
@@ -33,11 +32,11 @@ import uz.toshshahartransxizmat.toshbustravel.components.input.text.TextInput
 import uz.toshshahartransxizmat.toshbustravel.components.otp.OtpConfirmationScreen
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.share.provideDeviceId
-import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputConfirmPassword
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputPhone
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal class AuthScreen(
     private val languageCode:String
@@ -69,7 +68,7 @@ internal class AuthScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PageHeader(
-                    type = PageHeaderType.Heading(text = "Регистрация"),
+                    type = PageHeaderType.Heading(text = getStrings("register")),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 16.dp),
@@ -82,22 +81,22 @@ internal class AuthScreen(
                         .padding(start = 16.dp, end = 16.dp),
                     value = firstName,
                     onValueChange = { firstName = it },
-                    label = TextValue("ФИО"),
+                    label = TextValue(getStrings("full_name")),
                     isError = showError && firstName.isEmpty(),
                     keyboardOptions = KeyboardOptions.Default,
                     keyboardActions = KeyboardActions(),
-                    placeholder = TextValue("Введите ФИО")
+                    placeholder = TextValue(getStrings("enter_full_name"))
                 )
 
                 InputPhone(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    title = "Номер телефона",
+                    title = getStrings("phone_number"),
                     onPhoneNumberChange = { phoneNumber = it }
                 )
 
                 InputConfirmPassword(
-                    title = "Пароль",
+                    title = getStrings("password"),
                     modifier = Modifier
                         .fillMaxWidth(),
                     value = password,
@@ -106,7 +105,7 @@ internal class AuthScreen(
                 )
 
                 InputConfirmPassword(
-                    title = "Подтвердите пароль",
+                    title = getStrings("confirm_password"),
                     modifier = Modifier
                         .fillMaxWidth(),
                     value = confirmPassword,
@@ -117,8 +116,8 @@ internal class AuthScreen(
                 TextAuth(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = "У вас есть аккаунт?",
-                    textClick = "Войти",
+                    text = getStrings("have_account"),
+                    textClick = getStrings("sign_in"),
                     navigator = {
                         navigator.pop()
                     }
@@ -131,7 +130,7 @@ internal class AuthScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                         .padding(bottom = 56.dp),
-                    text = TextValue("Продолжить"),
+                    text = TextValue(getStrings("continue")),
                     size = ButtonSize.Large,
                     enabled = isFormValid,
                     loading = state.value.isLoading,
@@ -161,7 +160,7 @@ internal class AuthScreen(
             }
         }
 
-        if (!state.value.isLoaded){
+        if (state.value.isLoaded){
             navigator.push(
                 OtpConfirmationScreen(
                     userName = "998$phoneNumber",

@@ -24,8 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
-import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
+import uz.toshshahartransxizmat.toshbustravel.util.LanguageManager
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -62,10 +62,10 @@ fun BasicLanguageScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 16.dp),
-                        text = "Выберите язык",
-                        style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold)
+                        text = getStrings("select_language"),
+                        style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)
                     )
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                     LanguageButton(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -73,6 +73,7 @@ fun BasicLanguageScreen(
                         painterResource(res = "drawable/UZ.png"),
                         languageName = "O`zbekcha"
                     ){
+                        LanguageManager.setLanguage("uz")
                         navigateToAuthScreen.invoke("uz")
                     }
                     Spacer(modifier = Modifier.height(2.dp))
@@ -83,6 +84,7 @@ fun BasicLanguageScreen(
                         painterResource(res = "drawable/EN.png"),
                         languageName = "English"
                     ){
+                        LanguageManager.setLanguage("en")
                         navigateToAuthScreen.invoke("en")
                     }
                     Spacer(modifier = Modifier.height(2.dp))
@@ -93,6 +95,7 @@ fun BasicLanguageScreen(
                         painterResource(res = "drawable/RU.png"),
                         languageName = "Русский"
                     ){
+                        LanguageManager.setLanguage("ru")
                         navigateToAuthScreen.invoke("ru")
                     }
                 }

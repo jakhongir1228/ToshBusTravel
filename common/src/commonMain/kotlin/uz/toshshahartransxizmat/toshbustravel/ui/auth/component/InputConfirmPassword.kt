@@ -33,6 +33,7 @@ import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
 import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,7 +80,7 @@ internal fun InputConfirmPassword(
                 },
                 placeholder = {
                     if (value.isEmpty()) {
-                        Text(TextValue("Введите пароль"), color = grayA220)
+                        Text(TextValue(getStrings("enter_password")), color = grayA220)
                     }
                 },
                 isError = isError,
@@ -94,14 +95,14 @@ internal fun InputConfirmPassword(
         if (isError) {
             Text(
                 modifier = modifier.padding(start = 16.dp, end = 16.dp),
-                text = TextValue("Пароли не совпадают"),
+                text = TextValue(getStrings("passwords_do_not_match")),
                 color = errorLight,
                 fontSize = 12.sp
             )
         } else if (value.length < 4 && value.isNotEmpty()) {
             Text(
                 modifier = modifier.padding(start = 16.dp, end = 16.dp),
-                text = TextValue("Введите не менее 4 символов"),
+                text = TextValue(getStrings("enter_at_least_4_characters")),
                 color = errorLight,
                 fontSize = 12.sp
             )

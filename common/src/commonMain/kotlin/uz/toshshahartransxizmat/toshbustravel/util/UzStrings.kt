@@ -1,0 +1,26 @@
+package uz.toshshahartransxizmat.toshbustravel.util
+
+val uzStrings = mapOf(
+    "welcome" to "Xush kelibsiz",
+    "select_language" to "Til tanlang",
+    "login" to "Kirish",
+    "phone_number" to "Telefon raqam",
+    "password" to "Parol",
+    "no_account" to "Akkauntingiz yo'qmi?",
+    "register" to "Ro'yxatdan o'tish",
+    "forgot_password" to "Parolni unutdingizmi",
+    "continue" to "Davom etish",
+    "enter_phone_number" to "Telefon raqamni kiriting",
+    "enter_password" to "Parolni kiriting",
+    "enter_at_least_4_characters" to "Kamida 4 ta belgi kiriting",
+    "full_name" to "F.I.Sh.",
+    "enter_full_name" to "F.I.Sh. ni kiriting",
+    "confirm_password" to "Parolni tasdiqlang",
+    "have_account" to "Akkauntingiz bormi?",
+    "sign_in" to "Kirish",
+    "sms_verification" to "SMS orqali tasdiqlash",
+    "sent_to_number" to "Raqamga yuborildi",
+    "resend" to "Qayta yuborish",
+    "retry_in" to "Qayta urinish",
+    "passwords_do_not_match" to "Parollar mos emas"
+)

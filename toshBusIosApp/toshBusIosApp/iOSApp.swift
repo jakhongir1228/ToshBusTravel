@@ -8,6 +8,7 @@ struct iOSApp: App {
     init() {
         InitKoinKt.doInitKoin(appDeclaration: {_ in })
          GMSServices.provideAPIKey("AIzaSyCx3s1gHi5ldALIGVEXNk3Lb7Fym0DwATI")
+         initializeIOSDeviceIdProvider()
 
     }
 

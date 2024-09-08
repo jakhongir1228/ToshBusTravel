@@ -1,0 +1,26 @@
+package uz.toshshahartransxizmat.toshbustravel.util
+
+val ruStrings = mapOf(
+    "welcome" to "Добро пожаловать",
+    "select_language" to "Выберите язык",
+    "login" to "Вход",
+    "phone_number" to "Номер телефона",
+    "password" to "Пароль",
+    "no_account" to "У вас нет аккаунта?",
+    "register" to "Регистрация",
+    "forgot_password" to "Забыл пароль",
+    "continue" to "Продолжить",
+    "enter_phone_number" to "Введите номер телефона",
+    "enter_password" to "Введите пароль",
+    "enter_at_least_4_characters" to "Введите не менее 4 символов",
+    "full_name" to "ФИО",
+    "enter_full_name" to "Введите ФИО",
+    "confirm_password" to "Подтвердите пароль",
+    "have_account" to "У вас есть аккаунт?",
+    "sign_in" to "Войти",
+    "sms_verification" to "СМС-подтверждение",
+    "sent_to_number" to "Отправили на номер",
+    "resend" to "Отправить еще раз",
+    "retry_in" to "Повтор через",
+    "passwords_do_not_match" to "Пароли не совпадают"
+)

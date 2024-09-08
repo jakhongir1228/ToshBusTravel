@@ -36,6 +36,7 @@ import uz.toshshahartransxizmat.toshbustravel.theme.red500
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal class OtpConfirmationScreen(
     private val userName:String,
@@ -71,7 +72,7 @@ internal class OtpConfirmationScreen(
         ) {
 
             PageHeader(
-                type = PageHeaderType.Heading(text = "СМС-подтверждение"),
+                type = PageHeaderType.Heading(text = getStrings("sms_verification")),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 16.dp),
@@ -82,7 +83,7 @@ internal class OtpConfirmationScreen(
 
             Text(
                 modifier = Modifier.padding(top = 32.dp),
-                text = TextValue("Отправили на номер"),
+                text = TextValue(getStrings("sent_to_number")),
                 color = gray650,
                 fontSize = 16.sp
             )
@@ -130,7 +131,7 @@ internal class OtpConfirmationScreen(
                         modifier = Modifier
                             .fillMaxWidth(),
                         text = "",
-                        textClick = "Отправить еще раз",
+                        textClick = getStrings("resend"),
                         navigator = {
                             viewModel.resendOtp()
                         }

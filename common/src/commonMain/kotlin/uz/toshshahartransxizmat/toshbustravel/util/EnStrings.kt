@@ -1,0 +1,27 @@
+package uz.toshshahartransxizmat.toshbustravel.util
+
+// Example string resources
+val enStrings = mapOf(
+    "welcome" to "Welcome",
+    "select_language" to "Select Language",
+    "login" to "Login",
+    "phone_number" to "Phone Number",
+    "password" to "Password",
+    "no_account" to "Don't have an account?",
+    "register" to "Register",
+    "forgot_password" to "Forgot Password",
+    "continue" to "Continue",
+    "enter_phone_number" to "Enter phone number",
+    "enter_password" to "Enter password",
+    "enter_at_least_4_characters" to "Enter at least 4 characters",
+    "full_name" to "Full Name",
+    "enter_full_name" to "Enter Full Name",
+    "confirm_password" to "Confirm Password",
+    "have_account" to "Already have an account?",
+    "sign_in" to "Sign In",
+    "sms_verification" to "SMS Verification",
+    "sent_to_number" to "Sent to number",
+    "resend" to "Resend",
+    "retry_in" to "Retry in",
+    "passwords_do_not_match" to "Passwords do not match"
+)

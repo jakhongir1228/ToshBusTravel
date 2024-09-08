@@ -39,6 +39,7 @@ import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal class LogInScreen(
     private val languageCode:String
@@ -61,7 +62,7 @@ internal class LogInScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             PageHeader(
-                type = PageHeaderType.Heading(text = "Вход"),
+                type = PageHeaderType.Heading(text = getStrings("login")),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 16.dp),
@@ -71,14 +72,14 @@ internal class LogInScreen(
             InputPhone(
                 modifier = Modifier
                     .fillMaxWidth(),
-                title = "Номер телефона",
+                title = getStrings("phone_number"),
                 onPhoneNumberChange = { phoneNumber = it }
             )
 
             InputPasswordComponent(
                 modifier = Modifier
                     .fillMaxWidth(),
-                title = "Пароль",
+                title = getStrings("password"),
                 password = password,
                 onPasswordChange = { password = it }
             )
@@ -86,8 +87,8 @@ internal class LogInScreen(
             TextAuth(
                 modifier = Modifier
                 .fillMaxWidth(),
-                text = "У вас нет аккаунта?",
-                textClick = "Регистрация",
+                text = getStrings("no_account"),
+                textClick = getStrings("register"),
                 navigator = {
                     navigator.push(AuthScreen(languageCode = languageCode))
                 }
@@ -96,7 +97,7 @@ internal class LogInScreen(
                 modifier = Modifier.clickable {
                         navigator.push(ForgotPasswordScreen())
                     },
-                text = TextValue("Забыл пароль"),
+                text = TextValue(getStrings("forgot_password")),
                 color = Color(0xFF007AFF),
                 fontSize = 16.sp
             )
@@ -107,7 +108,7 @@ internal class LogInScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 56.dp),
-                text = TextValue("Продолжить"),
+                text = TextValue(getStrings("continue")),
                 size = ButtonSize.Large,
                 enabled = isPhoneNumberValid && password.text.length >= 4,
                 loading = state.value.isLoading,

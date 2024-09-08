@@ -24,6 +24,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.components.otp.OtpConfirmationScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputPhone
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal class ForgotPasswordScreen: Screen {
 
@@ -39,7 +40,7 @@ internal class ForgotPasswordScreen: Screen {
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             PageHeader(
-                type = PageHeaderType.Heading(text = "Забыли пароль"),
+                type = PageHeaderType.Heading(text = getStrings("forgot_password")),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 16.dp),
@@ -49,7 +50,7 @@ internal class ForgotPasswordScreen: Screen {
             InputPhone(
                 modifier = Modifier
                     .fillMaxWidth(),
-                title = "Номер телефона",
+                title = getStrings("phone_number"),
                 onPhoneNumberChange = { phoneNumber = it }
             )
 
@@ -57,8 +58,8 @@ internal class ForgotPasswordScreen: Screen {
             TextAuth(
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = "У вас есть аккаунт?",
-                textClick = "Войти",
+                text = getStrings("have_account"),
+                textClick = getStrings("sign_in"),
                 navigator = {
                     navigator.pop()
                 }
@@ -71,7 +72,7 @@ internal class ForgotPasswordScreen: Screen {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 56.dp),
-                text = TextValue("Продолжить"),
+                text = TextValue(getStrings("continue")),
                 size = ButtonSize.Large,
                 enabled = isPhoneNumberValid,
                 onClick = {
