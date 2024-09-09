@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
 import uz.toshshahartransxizmat.toshbustravel.theme.blue650
+import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 
 @Composable
 internal fun LoadingIndicator(modifier: Modifier = Modifier) {
@@ -34,7 +35,7 @@ internal fun LoadingIndicator(modifier: Modifier = Modifier) {
         val lineLength = size.minDimension / 6
         val lineWidth = size.minDimension / 20
         val colors = (0 until lineCount).map {
-            blue650.copy(alpha = it / lineCount.toFloat())
+            gray650.copy(alpha = it / lineCount.toFloat())
         }
 
         (0 until lineCount).forEach { i ->

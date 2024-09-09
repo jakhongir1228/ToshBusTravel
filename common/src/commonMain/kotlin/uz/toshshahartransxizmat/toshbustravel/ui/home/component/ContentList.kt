@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,10 +18,12 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
 internal fun ContentList(
     modifier: Modifier = Modifier,
     list: List<Transports>,
-    onClick: (Transports) -> Unit
+    onClick: (Transports) -> Unit,
+    listState: LazyListState
 ) {
     LazyColumn(
-        modifier = modifier
+        modifier = modifier,
+        state = listState
     ) {
         items(
             items = list

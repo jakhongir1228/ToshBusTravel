@@ -23,49 +23,58 @@ class HomeViewModel(
     private val busList = mutableListOf<Transports>()
     private val miniBusList = mutableListOf<Transports>()
 
+    private var allPage = 0
+    private var busPage = 0
+    private var miniBusPage = 0
+
+    private var oldItemCount = 0
+
     init {
         println("@@@init")
         loadTransports(0)
     }
 
-     fun loadTransports(index: Int) {
+    fun loadTransports(index: Int, nextPage: Boolean = false) {
         when (index) {
             0 -> {
-                if (allList.isEmpty()) {
-                    val params= VehicleQueryParams(
+                if (allList.isEmpty() || (nextPage && allList.size > oldItemCount + 9)) {
+                    val params = VehicleQueryParams(
                         query = "ALL",
-                        page = 0,
+                        page = if (nextPage) ++allPage else allPage,
                         size = 10
                     )
-                    fetchNews(allList, params)
+                    fetchTransports(allList, params)
                 }
             }
-
             1 -> {
-                if (busList.isEmpty()) {
-                    val params= VehicleQueryParams(
+                if (busList.isEmpty() || (nextPage && busList.size > oldItemCount + 9)) {
+                    val params = VehicleQueryParams(
                         query = "BUS",
-                        page = 0,
+                        page = if (nextPage) ++busPage else busPage,
                         size = 10
                     )
-                    fetchNews(busList, params)
+                    fetchTransports(busList, params)
                 }
             }
-
             else -> {
-                if (miniBusList.isEmpty()) {
-                    val params= VehicleQueryParams(
+                if (miniBusList.isEmpty() || (nextPage && miniBusList.size > oldItemCount + 9)) {
+                    val params = VehicleQueryParams(
                         query = "MINI_BUS",
-                        page = 0,
+                        page = if (nextPage) ++miniBusPage else miniBusPage,
                         size = 10
                     )
-                    fetchNews(miniBusList, params)
+                    fetchTransports(miniBusList, params)
                 }
             }
         }
+        oldItemCount = when (index) {
+            0 -> allList.size
+            1 -> busList.size
+            else -> miniBusList.size
+        }
     }
 
-    private fun fetchNews(vehicleList: MutableList<Transports>, query: VehicleQueryParams) {
+    private fun fetchTransports(vehicleList: MutableList<Transports>, query: VehicleQueryParams) {
         viewModelScope.launch {
             allUseCases.getTransportsUseCase(query)
                 .onStart {
@@ -78,14 +87,12 @@ class HomeViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = "Error has occurred",
+                            error = "Xatolik yuz berdi",
                             isLoaded = false
                         )
                     }
                 }.collectLatest { list ->
-
                     vehicleList.addAll(list)
-
                     _state.update {
                         it.copy(
                             isLoading = false,

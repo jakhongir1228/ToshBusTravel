@@ -7,13 +7,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,21 +31,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
 import uz.toshshahartransxizmat.toshbustravel.theme.blue650
 import uz.toshshahartransxizmat.toshbustravel.ui.home.component.ContentList
 import uz.toshshahartransxizmat.toshbustravel.ui.home.component.Loading
+import uz.toshshahartransxizmat.toshbustravel.ui.home.component.TransportItem
 import uz.toshshahartransxizmat.toshbustravel.ui.home.state.HomeState
 import uz.toshshahartransxizmat.toshbustravel.ui.home.topBar.TopBarItem
 
 @Composable
 internal fun BasicHomeScreen(
     state: State<HomeState>,
-    loadTransports: (Int) -> Unit
+    loadTransports: (Int, Boolean) -> Unit
 ){
     var selectedTabIndex by remember { mutableStateOf(0) }
     val tabs = listOf(TopBarItem.All, TopBarItem.Bus, TopBarItem.MiniBus)
-    val nav = LocalNavigator.currentOrThrow
+    val navigator = LocalNavigator.currentOrThrow
+    val listState = rememberLazyListState()
+
+    val shouldLoadMore = remember {
+        derivedStateOf {
+            listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == listState.layoutInfo.totalItemsCount - 1
+        }
+    }
 
     TabRow(
         modifier = Modifier
@@ -62,7 +73,7 @@ internal fun BasicHomeScreen(
                     selected = selectedTabIndex == index,
                     onClick = {
                         selectedTabIndex = index
-                        loadTransports(selectedTabIndex)
+                        loadTransports(selectedTabIndex, false) // Boshidan yuklash
                     },
                     selectedContentColor = Color.White
                 ) {
@@ -102,12 +113,20 @@ internal fun BasicHomeScreen(
     if (state.value.isLoading) {
         Loading()
     }
+
     if (state.value.isLoaded) {
+        LaunchedEffect(shouldLoadMore.value) {
+            if (shouldLoadMore.value) {
+                loadTransports(selectedTabIndex, true)
+            }
+        }
+
         ContentList(
             list = state.value.success[selectedTabIndex],
-            onClick = { news ->
-                //  nav.push(DetailScreen(news))
-            }
+            onClick = { transport ->
+                // Transport obyektini ko'rsatish uchun o'rnatilgan onClick
+            },
+            listState = listState
         )
     }
 }
