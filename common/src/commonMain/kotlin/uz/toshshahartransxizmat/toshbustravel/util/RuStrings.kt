@@ -22,5 +22,8 @@ val ruStrings = mapOf(
     "sent_to_number" to "Отправили на номер",
     "resend" to "Отправить еще раз",
     "retry_in" to "Повтор через",
-    "passwords_do_not_match" to "Пароли не совпадают"
+    "passwords_do_not_match" to "Пароли не совпадают",
+    "available_cars" to "Свободные машины",
+    "best_quality_booking" to "Бронирование лучшего качества",
+    "learn_more" to "Подробнее"
 )

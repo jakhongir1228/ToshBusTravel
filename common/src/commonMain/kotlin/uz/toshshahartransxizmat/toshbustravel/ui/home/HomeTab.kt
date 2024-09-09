@@ -1,11 +1,14 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.MaterialTheme
@@ -32,7 +35,10 @@ import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.rememberKoinInject
+import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
+import uz.toshshahartransxizmat.toshbustravel.ui.home.component.BannerComponent
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal object HomeTab: Tab {
 
@@ -49,18 +55,20 @@ internal object HomeTab: Tab {
                     .padding(it)
                     .padding(bottom = 72.dp)
             ) {
-                Image(
+
+                BannerComponent(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 16.dp, top = 16.dp, end = 16.dp),
-                    painter = painterResource("drawable/banner.png"),
-                    contentDescription = "banner"
+                        .padding(start = 16.dp, top = 12.dp, end = 16.dp)
+                        .height(154.dp)
+                        .background(blueA220, shape = RoundedCornerShape(12.dp))
                 )
+
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, top = 16.dp, end = 16.dp),
-                    text = "Свободные машины",
+                    text = getStrings("available_cars"),
                     style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
                 )
 

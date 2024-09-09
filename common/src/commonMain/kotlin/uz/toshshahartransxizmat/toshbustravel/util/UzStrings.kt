@@ -22,5 +22,8 @@ val uzStrings = mapOf(
     "sent_to_number" to "Raqamga yuborildi",
     "resend" to "Qayta yuborish",
     "retry_in" to "Qayta urinish",
-    "passwords_do_not_match" to "Parollar mos emas"
+    "passwords_do_not_match" to "Parollar mos emas",
+    "available_cars" to "Bo'sh mashinalar",
+    "best_quality_booking" to "Eng sifatli bron qilish",
+    "learn_more" to "Batafsil"
 )
