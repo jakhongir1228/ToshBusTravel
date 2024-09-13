@@ -25,5 +25,10 @@ val uzStrings = mapOf(
     "passwords_do_not_match" to "Parollar mos emas",
     "available_cars" to "Bo'sh mashinalar",
     "best_quality_booking" to "Eng sifatli bron qilish",
-    "learn_more" to "Batafsil"
+    "learn_more" to "Batafsil",
+    "create_password" to "Parol yaratish",
+    "number_of_seats" to "O‘rinlar soni",
+    "seats" to "O‘rinlar",
+    "amenities" to "Qulayliklar",
+    "booked" to "Band qilingan"
 )

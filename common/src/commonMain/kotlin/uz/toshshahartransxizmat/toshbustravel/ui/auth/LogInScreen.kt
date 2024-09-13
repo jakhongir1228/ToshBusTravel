@@ -29,6 +29,8 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
+import uz.toshshahartransxizmat.toshbustravel.components.otp.OtpConfirmationScreen
+import uz.toshshahartransxizmat.toshbustravel.components.otp.OtpType
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.share.Platform
 import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
@@ -137,8 +139,27 @@ internal class LogInScreen(
         }
 
         if (state.value.isLoaded){
-            settings.saveValue(ACCESS_TOKEN_KEY, state.value.successLogIn.accessToken)
-            navigator.push(HomeScreen())
+            if (state.value.success.data.sentOtp){
+                val hashLogIn = state.value.success.data.hash
+                if (hashLogIn!=null){
+                    navigator.push(
+                        OtpConfirmationScreen(
+                            userName = "998$phoneNumber",
+                            password = password.text,
+                            hash = hashLogIn,
+                            deviceId = provideDeviceId(),
+                            languageCode = languageCode,
+                            otpType = OtpType.SIGN_IN
+                        )
+                    )
+                }else{
+                    println("hash is null")
+                }
+
+            }else{
+                state.value.success.data.accessToken?.let { settings.saveValue(ACCESS_TOKEN_KEY, it) }
+                navigator.push(HomeScreen())
+            }
         }
     }
 

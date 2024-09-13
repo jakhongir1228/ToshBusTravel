@@ -1,6 +1,5 @@
 package uz.toshshahartransxizmat.toshbustravel.data.network
 
-import androidx.compose.ui.unit.Constraints
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -14,7 +13,6 @@ import io.ktor.http.contentType
 import io.ktor.http.parameters
 import uz.toshshahartransxizmat.toshbustravel.data.model.VehicleDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.LogInDTO
-import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportsDTO
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.util.API_VEHICLE_ALL
@@ -56,7 +54,7 @@ class KtorClient(
         return response.body()
     }
 
-    override suspend fun postSignUp(signUpEntity: SignUpEntity): TransportsDTO {
+    override suspend fun postSignUp(signUpEntity: SignUpEntity): LogInDTO {
         val url = BASE_URL + SIGN_UP_ENDPOINT
         val r = client.post(url) {
             contentType(ContentType.Application.Json)

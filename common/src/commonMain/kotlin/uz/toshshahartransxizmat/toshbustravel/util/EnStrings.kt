@@ -26,5 +26,10 @@ val enStrings = mapOf(
     "passwords_do_not_match" to "Passwords do not match",
     "available_cars" to "Available Cars",
     "best_quality_booking" to "Best Quality Booking",
-    "learn_more" to "Learn More"
+    "learn_more" to "Learn More",
+    "create_password" to "Create Password",
+    "number_of_seats" to "Number of Seats",
+    "seats" to "Seats",
+    "amenities" to "Amenities",
+    "booked" to "Booked"
 )

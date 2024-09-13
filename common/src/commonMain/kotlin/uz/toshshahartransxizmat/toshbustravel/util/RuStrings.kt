@@ -25,5 +25,10 @@ val ruStrings = mapOf(
     "passwords_do_not_match" to "Пароли не совпадают",
     "available_cars" to "Свободные машины",
     "best_quality_booking" to "Бронирование лучшего качества",
-    "learn_more" to "Подробнее"
+    "learn_more" to "Подробнее",
+    "create_password" to "Создать пароль",
+    "number_of_seats" to "Кол-во мест",
+    "seats" to "мест",
+    "amenities" to "Удобства",
+    "booked" to "Бронирован"
 )

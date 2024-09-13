@@ -42,7 +42,6 @@ import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal object HomeTab: Tab {
 
-    @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
 
@@ -59,7 +58,11 @@ internal object HomeTab: Tab {
                 BannerComponent(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 16.dp, top = 12.dp, end = 16.dp)
+                        .padding(
+                            start = 16.dp,
+                            top = 12.dp,
+                            end = 16.dp
+                        )
                         .height(154.dp)
                         .background(blueA220, shape = RoundedCornerShape(12.dp))
                 )

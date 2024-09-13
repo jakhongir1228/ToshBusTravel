@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -28,7 +29,10 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextVa
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.components.otp.viewModel.OtpViewModel
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
+import uz.toshshahartransxizmat.toshbustravel.share.Platform
+import uz.toshshahartransxizmat.toshbustravel.share.provideDeviceId
 import uz.toshshahartransxizmat.toshbustravel.theme.black100
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.theme.gray650
@@ -43,7 +47,8 @@ internal class OtpConfirmationScreen(
     private val password:String,
     private val hash:String,
     private val deviceId:String,
-    private val languageCode:String
+    private val languageCode:String,
+    private val otpType: OtpType
 ): Screen {
 
     @OptIn(ExperimentalComposeUiApi::class)
@@ -54,6 +59,7 @@ internal class OtpConfirmationScreen(
         val stateAuth = vmAuth.state.collectAsState()
         val viewModel = rememberKoinInject<OtpViewModel>()
         val state = viewModel.state.collectAsState()
+        val platformName = remember { Platform() }
 
         val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -163,15 +169,34 @@ internal class OtpConfirmationScreen(
                 enabled = state.value.isInputCompleted,
                 loading = stateAuth.value.isLoading,
                 onClick = {
-                    val signUpEntity = SignUpEntity(
-                        username = userName,
-                        password = password,
-                        code = state.value.value,
-                        hash = hash,
-                        deviceId = deviceId
-                    )
+                    when(otpType){
+                        OtpType.SIGN_UP-> {
+                            val signUpEntity = SignUpEntity(
+                                username = userName,
+                                password = password,
+                                code = state.value.value,
+                                hash = hash,
+                                deviceId = deviceId
+                            )
+                            vmAuth.loadAuth(signUpEntity)
+                        }
+                        OtpType.SIGN_IN-> {
+                            val signInEntity = SignInEntity(
+                                username = userName,
+                                password = password,
+                                platform = platformName.name,
+                                code = state.value.value,
+                                hash = hash,
+                                deviceId = deviceId,
+                                version = "string",
+                                lang = languageCode,
+                                deviceName = platformName.name,
+                                ipAddress = "string"
+                            )
+                            vmAuth.loadLoginIn(signInEntity)
+                        }
+                    }
 
-                    vmAuth.loadAuth(signUpEntity)
                 }
             )
         }

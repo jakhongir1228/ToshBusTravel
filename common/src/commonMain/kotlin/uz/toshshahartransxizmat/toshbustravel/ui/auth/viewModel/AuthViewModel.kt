@@ -34,10 +34,10 @@ class AuthViewModel(
                 }
                 .catch {t->
                     println("eerrr-->> "+t)
-                    _state.update {
-                        it.copy(
+                    _state.update { res->
+                        res.copy(
                             isLoading = false,
-                            error = "Error has occurred",
+                            error = res.success.message.toString(),
                             isLoaded = false
                         )
                     }
@@ -66,7 +66,7 @@ class AuthViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = "Error has occurred",
+                            error = it.success.message.toString(),
                             isLoaded = false
                         )
                     }
@@ -74,7 +74,7 @@ class AuthViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            successLogIn = result,
+                            success = result,
                             isLoaded = true
                         )
                     }
