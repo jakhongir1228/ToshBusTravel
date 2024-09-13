@@ -139,7 +139,6 @@ internal class AuthScreen(
                         showError = firstName.isEmpty()
                         passwordError = password != confirmPassword
                         if (!showError && !passwordError && password.length >= 4) {
-                           // navigator.push(ForgotPasswordScreen())
                             val signUpEntity = SignUpEntity(
                                 username = "998$phoneNumber",
                                 password = password,

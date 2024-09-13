@@ -13,6 +13,7 @@ import uz.toshshahartransxizmat.toshbustravel.data.network.KtorService
 import uz.toshshahartransxizmat.toshbustravel.data.repository.NetworkRepositoryImpl
 import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepository
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetDetailsUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetTransportsUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignInUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignUpUseCase
@@ -20,6 +21,7 @@ import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
+import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.viewModel.DetailsViewModel
 
 val appModule = module {
     single {
@@ -49,7 +51,8 @@ val appModule = module {
         AllUseCases(
             getTransportsUseCase = GetTransportsUseCase(),
             postSignUpUseCase = PostSignUpUseCase(),
-            postSignInUseCase = PostSignInUseCase()
+            postSignInUseCase = PostSignInUseCase(),
+            getDetailsUseCase = GetDetailsUseCase()
         )
     }
 
@@ -63,5 +66,9 @@ val appModule = module {
 
     factory {
         OtpViewModel()
+    }
+
+    factory {
+        DetailsViewModel(get())
     }
 }

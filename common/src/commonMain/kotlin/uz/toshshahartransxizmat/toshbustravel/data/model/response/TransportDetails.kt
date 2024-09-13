@@ -1,11 +1,9 @@
-package uz.toshshahartransxizmat.toshbustravel.domain.model.response
+package uz.toshshahartransxizmat.toshbustravel.data.model.response
 
 import kotlinx.serialization.Serializable
-import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderChart
-import uz.toshshahartransxizmat.toshbustravel.data.model.response.VehicleDetail
 
 @Serializable
-data class TransportDetailsData(
+data class TransportDetails(
     val vehicleId: Int,
     val busTypeId: Int,
     val modelName: String,

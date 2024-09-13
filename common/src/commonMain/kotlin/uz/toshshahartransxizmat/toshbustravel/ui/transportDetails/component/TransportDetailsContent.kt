@@ -83,11 +83,13 @@ fun TransportDetailsContent(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Text(
-                        text = getStrings("amenities"),
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
+                    if (transportDetailsData.vehicleDetails.isNotEmpty()){
+                        Text(
+                            text = getStrings("amenities"),
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
 
                     Column {
                         transportDetailsData.vehicleDetails.forEach { detail ->
@@ -115,11 +117,13 @@ fun TransportDetailsContent(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Text(
-                        text = getStrings("booked"),
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                        modifier = Modifier.padding(bottom = 8.dp)
-                    )
+                    if (transportDetailsData.orderCharts.isNotEmpty()){
+                        Text(
+                            text = getStrings("booked"),
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
 
                     Column {
                         transportDetailsData.orderCharts.forEach { order ->

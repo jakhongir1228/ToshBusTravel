@@ -37,6 +37,7 @@ import uz.toshshahartransxizmat.toshbustravel.ui.home.component.Loading
 import uz.toshshahartransxizmat.toshbustravel.ui.home.component.TransportItem
 import uz.toshshahartransxizmat.toshbustravel.ui.home.state.HomeState
 import uz.toshshahartransxizmat.toshbustravel.ui.home.topBar.TopBarItem
+import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.TransportDetailsScreen
 
 @Composable
 internal fun BasicHomeScreen(
@@ -124,7 +125,9 @@ internal fun BasicHomeScreen(
         ContentList(
             list = state.value.success[selectedTabIndex],
             onClick = { transport ->
-                // Transport obyektini ko'rsatish uchun o'rnatilgan onClick
+                navigator.push(TransportDetailsScreen(
+                    vehicleId = transport.id
+                ))
             },
             listState = listState
         )

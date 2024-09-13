@@ -43,7 +43,7 @@ fun Application(
                   //  ForgotPasswordScreen()
                   //  OtpConfirmationScreen()
                    //   HomeScreen()
-                     TransportDetailsScreen()
+                     TransportDetailsScreen(vehicleId = 1)
                    // ApplyForScreen(locationProvider)
                 )
             }

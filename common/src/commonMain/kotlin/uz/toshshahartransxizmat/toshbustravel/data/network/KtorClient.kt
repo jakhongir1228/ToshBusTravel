@@ -20,8 +20,10 @@ import uz.toshshahartransxizmat.toshbustravel.util.BASE_URL
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_IN_ENDPOINT
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_UP_ENDPOINT
 import io.ktor.client.request.headers
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
+import uz.toshshahartransxizmat.toshbustravel.util.API_VEHICLE_DETAILS
 
 class KtorClient(
     private val client: HttpClient,
@@ -42,8 +44,6 @@ class KtorClient(
                 parameter("size", size)
             }
         }
-
-        println("Response status---->: ${response.status}")
         val responseBodyText = response.bodyAsText()
         println("Response content--->: $responseBodyText")
 
@@ -79,6 +79,28 @@ class KtorClient(
         }
 
         return r.body()
+    }
+
+    override suspend fun getDetails(id: Int): TransportDTO {
+        val url = "$BASE_URL$API_VEHICLE_DETAILS"
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
+
+        val response: HttpResponse = client.get(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+            parameters {
+                parameter("id", id)
+            }
+        }
+        val responseBodyText = response.bodyAsText()
+        println("Response content--->: $responseBodyText")
+
+        if (response.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${response.contentType()}")
+        }
+
+        return response.body()
     }
 
     override fun close() {
