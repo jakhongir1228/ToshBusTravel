@@ -1,7 +1,7 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.auth.state
 
-import kotlinx.coroutines.flow.emptyFlow
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignData
 
 data class AuthState(
@@ -15,6 +15,7 @@ data class AuthState(
         error = null,
         success = false
     ),
+    val successReset: ResetData = ResetData(otpSent = false,completed = false,null),
     val isLoading: Boolean = false,
     val error: String = "",
     val isLoaded: Boolean = false

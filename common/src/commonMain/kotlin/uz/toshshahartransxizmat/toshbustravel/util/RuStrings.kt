@@ -30,5 +30,10 @@ val ruStrings = mapOf(
     "number_of_seats" to "Кол-во мест",
     "seats" to "мест",
     "amenities" to "Удобства",
-    "booked" to "Бронирован"
+    "booked" to "Бронирован",
+    "your_orders" to "Ваши заказы",                     // New text
+    "profile" to "Профиль",                             // New text
+    "edit_profile" to "Редактировать профиль",          // New text
+    "language" to "Язык",                               // New text
+    "log_out" to "Выйти"
 )

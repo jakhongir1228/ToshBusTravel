@@ -20,9 +20,13 @@ import uz.toshshahartransxizmat.toshbustravel.util.BASE_URL
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_IN_ENDPOINT
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_UP_ENDPOINT
 import io.ktor.client.request.headers
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
+import uz.toshshahartransxizmat.toshbustravel.util.API_RESET_PASSWORD
+import uz.toshshahartransxizmat.toshbustravel.util.API_RESET_PASSWORD_VERIFY
 import uz.toshshahartransxizmat.toshbustravel.util.API_VEHICLE_DETAILS
 
 class KtorClient(
@@ -71,8 +75,35 @@ class KtorClient(
             setBody(signInEntity)
         }
 
-        println("Response status---->: ${r.status}")
-        println("Response content--->: ${r.bodyAsText()}")
+        if (r.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${r.contentType()}")
+        }
+
+        return r.body()
+    }
+
+    override suspend fun postResetPassword(resetEntity: ResetEntity): ResetDTO {
+        val url = "$BASE_URL$API_RESET_PASSWORD"
+
+        val r = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(resetEntity)
+        }
+
+        if (r.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${r.contentType()}")
+        }
+
+        return r.body()
+    }
+
+    override suspend fun postPasswordVerify(resetEntity: ResetEntity): ResetDTO {
+        val url = "$BASE_URL$API_RESET_PASSWORD_VERIFY"
+
+        val r = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(resetEntity)
+        }
 
         if (r.contentType() != ContentType.Application.Json) {
             throw IllegalArgumentException("Unexpected content type: ${r.contentType()}")

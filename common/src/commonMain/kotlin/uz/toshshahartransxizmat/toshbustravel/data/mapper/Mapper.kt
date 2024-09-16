@@ -2,12 +2,14 @@ package uz.toshshahartransxizmat.toshbustravel.data.mapper
 
 import uz.toshshahartransxizmat.toshbustravel.data.model.Vehicles
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataLogIn
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataReset
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.LogInDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDetails
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.TransportDetailsData
 
@@ -57,5 +59,13 @@ fun TransportDetails.toTransportDetailsData(): TransportDetailsData{
         passengerCapacity = passengerCapacity,
         vehicleDetails = vehicleDetails,
         orderCharts = orderCharts
+    )
+}
+
+fun DataReset.toResetData(): ResetData{
+    return ResetData(
+        otpSent = otpSent,
+        completed = completed,
+        hash = hash
     )
 }

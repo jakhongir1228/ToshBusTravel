@@ -4,5 +4,7 @@ data class AllUseCases(
     val getTransportsUseCase: GetTransportsUseCase,
     val postSignUpUseCase: PostSignUpUseCase,
     val postSignInUseCase: PostSignInUseCase,
-    val getDetailsUseCase: GetDetailsUseCase
+    val getDetailsUseCase: GetDetailsUseCase,
+    val resetPasswordUseCase: ResetPasswordUseCase,
+    val passwordVerifyUseCase: PasswordVerifyUseCase
 )

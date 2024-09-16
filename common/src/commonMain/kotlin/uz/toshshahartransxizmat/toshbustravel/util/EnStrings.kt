@@ -31,5 +31,10 @@ val enStrings = mapOf(
     "number_of_seats" to "Number of Seats",
     "seats" to "Seats",
     "amenities" to "Amenities",
-    "booked" to "Booked"
+    "booked" to "Booked",
+    "your_orders" to "Your Orders",                     // New text
+    "profile" to "Profile",                             // New text
+    "edit_profile" to "Edit Profile",                   // New text
+    "language" to "Language",                           // New text
+    "log_out" to "Log Out"
 )

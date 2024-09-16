@@ -37,13 +37,13 @@ fun Application(
                 })
             } else {
                 Navigator(
-                   // LanguageScreen()
+                    LanguageScreen()
                   //  LogInScreen()
                   //  AuthScreen()
                   //  ForgotPasswordScreen()
                   //  OtpConfirmationScreen()
                    //   HomeScreen()
-                     TransportDetailsScreen(vehicleId = 1)
+                   //  TransportDetailsScreen(vehicleId = 1)
                    // ApplyForScreen(locationProvider)
                 )
             }

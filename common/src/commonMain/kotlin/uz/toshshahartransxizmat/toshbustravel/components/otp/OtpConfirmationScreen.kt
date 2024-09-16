@@ -29,6 +29,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextVa
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.components.otp.viewModel.OtpViewModel
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.share.Platform
@@ -38,6 +39,7 @@ import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.red500
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.NewPasswordScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
@@ -195,6 +197,16 @@ internal class OtpConfirmationScreen(
                             )
                             vmAuth.loadLoginIn(signInEntity)
                         }
+                        OtpType.RESET_PASSWORD-> {
+                            val resetEntity = ResetEntity(
+                                username = userName,
+                                newPassword = "",
+                                code = state.value.value,
+                                hash = hash,
+                                deviceId = provideDeviceId()
+                            )
+                            vmAuth.loadResetPassword(resetEntity)
+                        }
                     }
 
                 }
@@ -208,7 +220,16 @@ internal class OtpConfirmationScreen(
         }
 
         if (stateAuth.value.isLoaded){
-            navigator.push(LogInScreen(languageCode = languageCode))
+            println("completed --->"+stateAuth.value.successReset.completed)
+            if (stateAuth.value.successReset.completed){
+                navigator.push(NewPasswordScreen(
+                    username = userName,
+                    hash = hash,
+                    languageCode = languageCode
+                ))
+            }else{
+                navigator.push(LogInScreen(languageCode = languageCode))
+            }
         }
     }
 }

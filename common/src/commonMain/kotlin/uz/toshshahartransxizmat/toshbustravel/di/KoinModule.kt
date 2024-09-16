@@ -15,8 +15,10 @@ import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepositor
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetDetailsUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.GetTransportsUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PasswordVerifyUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignInUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignUpUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.ResetPasswordUseCase
 import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
@@ -52,7 +54,9 @@ val appModule = module {
             getTransportsUseCase = GetTransportsUseCase(),
             postSignUpUseCase = PostSignUpUseCase(),
             postSignInUseCase = PostSignInUseCase(),
-            getDetailsUseCase = GetDetailsUseCase()
+            getDetailsUseCase = GetDetailsUseCase(),
+            resetPasswordUseCase = ResetPasswordUseCase(),
+            passwordVerifyUseCase = PasswordVerifyUseCase()
         )
     }
 

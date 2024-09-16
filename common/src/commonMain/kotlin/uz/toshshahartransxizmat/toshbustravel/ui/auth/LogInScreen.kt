@@ -97,7 +97,9 @@ internal class LogInScreen(
             )
             Text(
                 modifier = Modifier.clickable {
-                        navigator.push(ForgotPasswordScreen())
+                        navigator.push(ForgotPasswordScreen(
+                            languageCode = languageCode
+                        ))
                     },
                 text = TextValue(getStrings("forgot_password")),
                 color = Color(0xFF007AFF),

@@ -30,5 +30,10 @@ val uzStrings = mapOf(
     "number_of_seats" to "O‘rinlar soni",
     "seats" to "O‘rinlar",
     "amenities" to "Qulayliklar",
-    "booked" to "Band qilingan"
+    "booked" to "Band qilingan",
+    "your_orders" to "Buyurtmalaringiz",                // New text
+    "profile" to "Profil",                              // New text
+    "edit_profile" to "Profilni tahrirlash",            // New text
+    "language" to "Til",                                // New text
+    "log_out" to "Chiqish"
 )
