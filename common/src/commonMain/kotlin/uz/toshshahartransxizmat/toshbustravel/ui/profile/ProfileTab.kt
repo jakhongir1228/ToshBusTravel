@@ -1,13 +1,18 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.profile
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -16,14 +21,23 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.component.ProfileCardItem
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.component.UserProfileCard
+import uz.toshshahartransxizmat.toshbustravel.ui.profile.viewModel.ProfileViewModel
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal object ProfileTab: Tab {
 
     @Composable
     override fun Content() {
+        val viewModel = rememberKoinInject<ProfileViewModel>()
+        val state = viewModel.state.collectAsState()
+
+        LaunchedEffect(Unit) {
+            viewModel.loadGetClient()
+        }
+
         Scaffold {
             Column(
                 modifier = Modifier
@@ -41,14 +55,26 @@ internal object ProfileTab: Tab {
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                UserProfileCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp),
-                    userName = "Nikolayev Nikolay",
-                    userPhone = "+998 90 800 80 50",
-                    imageUrl = "drawable/profileIcon.png"
-                )
+                if (state.value.isLoaded){
+                    UserProfileCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp),
+                        userName = state.value.success.fullName,
+                        userPhone = "+${state.value.success.phoneNumber}",
+                        imagePath = "drawable/profileIcon.png"
+                    )
+                }
+                else {
+                    UserProfileCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp),
+                        userName = "",
+                        userPhone = "",
+                        imagePath = "drawable/profileIcon.png"
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
@@ -79,6 +105,11 @@ internal object ProfileTab: Tab {
                     name = getStrings("log_out"),
                     iconUrl = "drawable/profileUserLogOut.png"
                 )
+            }
+        }
+        if (state.value.error.isNotBlank()) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(text = state.value.error, fontSize = 25.sp)
             }
         }
     }

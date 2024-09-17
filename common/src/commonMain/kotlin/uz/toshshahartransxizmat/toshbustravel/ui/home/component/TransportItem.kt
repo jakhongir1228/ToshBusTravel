@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.Icon
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.IconValue
@@ -31,7 +32,7 @@ import uz.toshshahartransxizmat.toshbustravel.theme.white100
 import uz.toshshahartransxizmat.toshbustravel.theme.yellowLight
 
 @Composable
-fun TransportItem(
+internal fun TransportItem(
     transport: Transports,
     transportIcon: Painter,
     transportImage: Painter,
@@ -59,11 +60,10 @@ fun TransportItem(
 
                 Text(
                     text = transport.modelName,
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.bodyLarge.copy( fontWeight = FontWeight.SemiBold)
                 )
             }
 
-            // Transport image
             Image(
                 painter = transportImage,
                 contentDescription = "Transport Image",
@@ -73,7 +73,7 @@ fun TransportItem(
         }
         Row(
             modifier = Modifier
-                .padding(top = 4.dp),
+                .padding(top = 2.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

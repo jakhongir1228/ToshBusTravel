@@ -20,11 +20,14 @@ import uz.toshshahartransxizmat.toshbustravel.util.BASE_URL
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_IN_ENDPOINT
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_UP_ENDPOINT
 import io.ktor.client.request.headers
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
 import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
+import uz.toshshahartransxizmat.toshbustravel.util.API_CLIENT
 import uz.toshshahartransxizmat.toshbustravel.util.API_RESET_PASSWORD
 import uz.toshshahartransxizmat.toshbustravel.util.API_RESET_PASSWORD_VERIFY
 import uz.toshshahartransxizmat.toshbustravel.util.API_VEHICLE_DETAILS
@@ -48,8 +51,6 @@ class KtorClient(
                 parameter("size", size)
             }
         }
-        val responseBodyText = response.bodyAsText()
-        println("Response content--->: $responseBodyText")
 
         if (response.contentType() != ContentType.Application.Json) {
             throw IllegalArgumentException("Unexpected content type: ${response.contentType()}")
@@ -124,14 +125,44 @@ class KtorClient(
                 parameter("id", id)
             }
         }
-        val responseBodyText = response.bodyAsText()
-        println("Response content--->: $responseBodyText")
 
         if (response.contentType() != ContentType.Application.Json) {
             throw IllegalArgumentException("Unexpected content type: ${response.contentType()}")
         }
 
         return response.body()
+    }
+
+    override suspend fun getClientInfo(): ClientDTO {
+        val url = "$BASE_URL$API_CLIENT/info"
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
+
+        val response: HttpResponse = client.get(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }
+
+        if (response.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${response.contentType()}")
+        }
+
+        return response.body()
+    }
+
+    override suspend fun postUpdateClient(userProfileEntity: UserProfileEntity): ClientDTO {
+        val url = "$BASE_URL$API_RESET_PASSWORD_VERIFY"
+
+        val r = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(userProfileEntity)
+        }
+
+        if (r.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${r.contentType()}")
+        }
+
+        return r.body()
     }
 
     override fun close() {

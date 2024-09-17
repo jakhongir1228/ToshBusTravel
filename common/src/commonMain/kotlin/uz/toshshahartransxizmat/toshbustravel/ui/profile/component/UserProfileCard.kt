@@ -25,7 +25,7 @@ import uz.toshshahartransxizmat.toshbustravel.theme.gray200
 internal fun UserProfileCard(
     userName: String,
     userPhone: String,
-    imageUrl: String,
+    imagePath: String,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -41,7 +41,7 @@ internal fun UserProfileCard(
                 .padding(16.dp)
         ) {
             Image(
-                painter = painterResource(res = imageUrl),
+                painter = painterResource(res = imagePath),
                 contentDescription = "Profile Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

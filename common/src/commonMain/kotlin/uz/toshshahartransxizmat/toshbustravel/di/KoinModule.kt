@@ -19,10 +19,13 @@ import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PasswordVerifyUseCa
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignInUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignUpUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.ResetPasswordUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.profile.GetClientUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.profile.UpdateClientUseCase
 import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
+import uz.toshshahartransxizmat.toshbustravel.ui.profile.viewModel.ProfileViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.viewModel.DetailsViewModel
 
 val appModule = module {
@@ -56,7 +59,9 @@ val appModule = module {
             postSignInUseCase = PostSignInUseCase(),
             getDetailsUseCase = GetDetailsUseCase(),
             resetPasswordUseCase = ResetPasswordUseCase(),
-            passwordVerifyUseCase = PasswordVerifyUseCase()
+            passwordVerifyUseCase = PasswordVerifyUseCase(),
+            getClientUseCase = GetClientUseCase(),
+            updateClientUseCase = UpdateClientUseCase()
         )
     }
 
@@ -74,5 +79,9 @@ val appModule = module {
 
     factory {
         DetailsViewModel(get())
+    }
+
+    factory {
+        ProfileViewModel(get())
     }
 }

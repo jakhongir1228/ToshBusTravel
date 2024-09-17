@@ -5,7 +5,10 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientUpdateData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 
@@ -21,4 +24,8 @@ interface NetworkRepository {
     suspend fun postPasswordVerify(resetEntity: ResetEntity): Flow<ResetData>
 
     suspend fun getDetails(id:Int): Flow<DetailsResponseData>
+
+    suspend fun getClientInfo(): Flow<ClientData>
+
+    suspend fun postUpdateClient(userProfileEntity: UserProfileEntity): Flow<ClientUpdateData>
 }

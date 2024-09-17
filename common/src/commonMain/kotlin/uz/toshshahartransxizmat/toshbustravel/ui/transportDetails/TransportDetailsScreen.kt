@@ -37,8 +37,6 @@ internal class TransportDetailsScreen(
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val settings = remember { getSettingsSource() }
-        settings.saveValue(ACCESS_TOKEN_KEY,"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOlt7ImF1dGhvcml0eSI6IlJPTEVfQ0xJRU5UIn1dLCJ0eXAiOiJiZWFyZXIiLCJsYW5nIjoidXoiLCJkZXZpY2VJZCI6IjY3NjciLCJzdWIiOiI5OTg5OTkyNTE1MTkiLCJpYXQiOjE3MjYyMDI1MjAsImV4cCI6MTcyOTgwMjUyMH0.nPg91MYxyHmorJnHhJHc7K59uZWv23ClWjdEC9yhrLc")
         val viewModel = rememberKoinInject<DetailsViewModel>()
         val state = viewModel.state.collectAsState()
 

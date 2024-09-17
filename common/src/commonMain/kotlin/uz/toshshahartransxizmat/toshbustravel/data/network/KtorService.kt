@@ -1,12 +1,14 @@
 package uz.toshshahartransxizmat.toshbustravel.data.network
 
 import uz.toshshahartransxizmat.toshbustravel.data.model.VehicleDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.LogInDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
 
 interface KtorService {
 
@@ -21,6 +23,10 @@ interface KtorService {
     suspend fun postPasswordVerify(resetEntity: ResetEntity): ResetDTO
 
     suspend fun getDetails(id: Int): TransportDTO
+
+    suspend fun getClientInfo(): ClientDTO
+
+    suspend fun postUpdateClient(userProfileEntity : UserProfileEntity): ClientDTO
 
     fun close()
 }
