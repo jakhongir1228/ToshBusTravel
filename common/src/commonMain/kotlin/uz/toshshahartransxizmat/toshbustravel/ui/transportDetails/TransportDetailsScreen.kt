@@ -29,10 +29,15 @@ import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.component.Slid
 import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.component.TransportDetailsContent
 import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.viewModel.DetailsViewModel
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
+import uz.toshshahartransxizmat.toshbustravel.util.Other
 
 internal class TransportDetailsScreen(
     private val vehicleId:Int
 ): Screen {
+
+    init {
+        Other.isBottomBarVisible = false
+    }
 
     @Composable
     override fun Content() {
@@ -55,7 +60,11 @@ internal class TransportDetailsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 16.dp),
-                    onNavigationClick = { navigator.pop() }
+                    onNavigationClick = {
+                         //navigator.popUntilRoot()
+                        navigator.pop()
+                        Other.isBottomBarVisible = true
+                    }
                 )
 
                 SlideTransports(

@@ -15,9 +15,11 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
+import uz.toshshahartransxizmat.toshbustravel.components.navigator.AnimVisible
 import uz.toshshahartransxizmat.toshbustravel.components.navigator.BottomItem
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.OrdersTab
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.ProfileTab
+import uz.toshshahartransxizmat.toshbustravel.util.Other
 
 internal class HomeScreen: Screen {
 
@@ -27,22 +29,26 @@ internal class HomeScreen: Screen {
         TabNavigator(HomeTab) {
             Scaffold (
                 bottomBar = {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(82.dp)
-                            .background(Color.White, shape = RoundedCornerShape(32.dp))
-                            .padding(8.dp)
-                    ) {
-                        NavigationBar(
-                            containerColor = Color.White,
-                            contentColor = Color.Gray,
-                            tonalElevation = 0.dp,
-                            modifier = Modifier.background(Color.White)
+                    AnimVisible(
+                        isVisible = Other.isBottomBarVisible
+                    ){
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(82.dp)
+                                .background(Color.White, shape = RoundedCornerShape(32.dp))
+                                .padding(8.dp)
                         ) {
-                            BottomItem(HomeTab)
-                            BottomItem(OrdersTab)
-                            BottomItem(ProfileTab)
+                            NavigationBar(
+                                containerColor = Color.White,
+                                contentColor = Color.Gray,
+                                tonalElevation = 0.dp,
+                                modifier = Modifier.background(Color.White)
+                            ) {
+                                BottomItem(HomeTab)
+                                BottomItem(OrdersTab)
+                                BottomItem(ProfileTab)
+                            }
                         }
                     }
                 }

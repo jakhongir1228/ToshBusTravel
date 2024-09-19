@@ -4,8 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ResetDTO(
-    val status: Status? = null,
-    val details: Details? = null,
     val data: DataReset,
     val error: String?,
     val message: String,

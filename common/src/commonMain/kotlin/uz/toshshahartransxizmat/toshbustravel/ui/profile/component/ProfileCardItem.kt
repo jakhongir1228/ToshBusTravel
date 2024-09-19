@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -29,7 +28,8 @@ import uz.toshshahartransxizmat.toshbustravel.theme.white100
 internal fun ProfileCardItem(
     name: String,
     iconUrl: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickListener: () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -63,8 +63,9 @@ internal fun ProfileCardItem(
 
             IconButton(
                 onClick = {
-
-                }) {
+                    onClickListener.invoke()
+                }
+            ) {
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
                     contentDescription = "Edit Icon",

@@ -44,6 +44,7 @@ import uz.toshshahartransxizmat.toshbustravel.ui.home.component.TransportItem
 import uz.toshshahartransxizmat.toshbustravel.ui.home.state.HomeState
 import uz.toshshahartransxizmat.toshbustravel.ui.home.topBar.TopBarItem
 import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.TransportDetailsScreen
+import uz.toshshahartransxizmat.toshbustravel.util.Other
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 

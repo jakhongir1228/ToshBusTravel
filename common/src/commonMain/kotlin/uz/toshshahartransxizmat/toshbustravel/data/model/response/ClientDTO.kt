@@ -4,8 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ClientDTO(
-    val status: Status,
-    val details: Details?,
     val data: DataClient? = null,
     val error: String?,
     val message: String,

@@ -4,8 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TransportDTO(
-    val status: Status,
-    val details: Details?,
     val data: TransportDetails,
     val error: String?,
     val message: String,
