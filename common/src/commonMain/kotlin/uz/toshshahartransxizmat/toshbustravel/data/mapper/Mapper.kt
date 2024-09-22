@@ -2,17 +2,23 @@ package uz.toshshahartransxizmat.toshbustravel.data.mapper
 
 import uz.toshshahartransxizmat.toshbustravel.data.model.Vehicles
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.ContentItem
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataClient
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataLogIn
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataOrder
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataReset
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.LogInDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDetails
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientUpdateData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.TransportDetailsData
@@ -79,7 +85,6 @@ fun DataClient.toClientData(): ClientData {
         id = id,
         phoneNumber = phoneNumber,
         fullName = fullName,
-        imgBase64 = imgBase64,
         imgPath = imgPath
     )
 }
@@ -89,5 +94,35 @@ fun ClientDTO.toClientUpdateData(): ClientUpdateData{
         message = message,
         error = error,
         success = success
+    )
+}
+
+fun OrderDTO.toOrderResData(): OrderResponseData{
+    return OrderResponseData(
+        data = data?.toOrderData(),
+        message = message,
+        error = error,
+        success = success
+    )
+}
+
+fun DataOrder.toOrderData(): OrderData{
+    return OrderData(
+        content = content,
+        totalCount = totalCount,
+        totalPages = totalPages,
+        page = page
+    )
+}
+
+fun ContentItem.toOrders():Orders {
+    return Orders(
+        id = id,
+        modelName = modelName,
+        vehicleNumber = vehicleNumber,
+        startDate = startDate,
+        endDate = endDate,
+        amount = amount,
+        status = status
     )
 }

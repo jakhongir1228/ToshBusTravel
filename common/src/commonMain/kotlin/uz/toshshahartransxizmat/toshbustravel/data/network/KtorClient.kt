@@ -21,13 +21,17 @@ import uz.toshshahartransxizmat.toshbustravel.util.SIGN_IN_ENDPOINT
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_UP_ENDPOINT
 import io.ktor.client.request.headers
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
 import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
 import uz.toshshahartransxizmat.toshbustravel.util.API_CLIENT
+import uz.toshshahartransxizmat.toshbustravel.util.API_ORDER
 import uz.toshshahartransxizmat.toshbustravel.util.API_RESET_PASSWORD
 import uz.toshshahartransxizmat.toshbustravel.util.API_RESET_PASSWORD_VERIFY
 import uz.toshshahartransxizmat.toshbustravel.util.API_VEHICLE_DETAILS
@@ -151,9 +155,13 @@ class KtorClient(
     }
 
     override suspend fun postUpdateClient(userProfileEntity: UserProfileEntity): ClientDTO {
-        val url = "$BASE_URL$API_RESET_PASSWORD_VERIFY"
+        val url = "$BASE_URL$API_CLIENT/update"
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
 
         val r = client.post(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
             contentType(ContentType.Application.Json)
             setBody(userProfileEntity)
         }
@@ -163,6 +171,80 @@ class KtorClient(
         }
 
         return r.body()
+    }
+
+    override suspend fun postCreateOrder(createOrderEntity: CreateOrderEntity): OrderDTO {
+        val url = "$BASE_URL$API_ORDER"
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
+
+        val r = client.post(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+            contentType(ContentType.Application.Json)
+            setBody(createOrderEntity)
+        }
+
+        if (r.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${r.contentType()}")
+        }
+
+        return r.body()
+    }
+
+    override suspend fun getActiveOrder(): OrderDTO {
+        val url = "$BASE_URL$API_ORDER/active"
+
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
+
+        val response: HttpResponse = client.get(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }
+
+        if (response.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${response.contentType()}")
+        }
+
+        return response.body()
+    }
+
+    override suspend fun postPayOrder(payOrderEntity: PayOrderEntity): OrderDTO {
+        val url = "$BASE_URL$API_ORDER/pay"
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
+
+        val r = client.post(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+            contentType(ContentType.Application.Json)
+            setBody(payOrderEntity)
+        }
+
+        if (r.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${r.contentType()}")
+        }
+
+        return r.body()
+    }
+
+    override suspend fun getOrders(): OrderDTO {
+        val url = "$BASE_URL$API_ORDER"
+
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
+
+        val response: HttpResponse = client.get(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }
+
+        if (response.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${response.contentType()}")
+        }
+
+        return response.body()
     }
 
     override fun close() {

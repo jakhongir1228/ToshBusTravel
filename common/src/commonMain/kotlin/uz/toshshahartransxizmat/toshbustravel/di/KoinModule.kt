@@ -19,12 +19,17 @@ import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PasswordVerifyUseCa
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignInUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignUpUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.ResetPasswordUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.ActiveOrderUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.CreateOrderUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.GetOrdersUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.PayOrderUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.profile.GetClientUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.profile.UpdateClientUseCase
 import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
+import uz.toshshahartransxizmat.toshbustravel.ui.orders.viewModel.OrderViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.viewModel.ProfileViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.viewModel.DetailsViewModel
 
@@ -61,7 +66,11 @@ val appModule = module {
             resetPasswordUseCase = ResetPasswordUseCase(),
             passwordVerifyUseCase = PasswordVerifyUseCase(),
             getClientUseCase = GetClientUseCase(),
-            updateClientUseCase = UpdateClientUseCase()
+            updateClientUseCase = UpdateClientUseCase(),
+            createOrderUseCase = CreateOrderUseCase(),
+            activeOrderUseCase = ActiveOrderUseCase(),
+            payOrderUseCase = PayOrderUseCase(),
+            getOrdersUseCase = GetOrdersUseCase()
         )
     }
 
@@ -83,5 +92,9 @@ val appModule = module {
 
     factory {
         ProfileViewModel(get())
+    }
+
+    factory {
+        OrderViewModel(get())
     }
 }

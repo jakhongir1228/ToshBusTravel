@@ -61,12 +61,12 @@ class ProfileViewModel (
                         it.copy(isLoading = true, isLoaded = false)
                     }
                 }
-                .catch {t->
-                    println("signError-->> $t")
+                .catch {tt->
+                    println("signError-->> ${tt.message}")
                     _state.update { res->
                         res.copy(
                             isLoading = false,
-                            error = "User not found",
+                            error = tt.message.toString(),
                             isLoaded = false
                         )
                     }

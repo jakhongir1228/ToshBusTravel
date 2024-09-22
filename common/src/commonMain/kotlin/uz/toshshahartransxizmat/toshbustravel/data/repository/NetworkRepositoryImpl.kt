@@ -6,10 +6,15 @@ import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAuthData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientUpdateData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toDetailsData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toOrderResData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toOrders
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toResetData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toTransports
 import uz.toshshahartransxizmat.toshbustravel.data.network.KtorService
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
@@ -18,6 +23,8 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponse
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientUpdateData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderContentData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepository
 
@@ -63,4 +70,25 @@ class NetworkRepositoryImpl(
         val r = ktorService.postUpdateClient(userProfileEntity)
         emit(r.toClientUpdateData())
     }
+
+    override suspend fun postCreateOrder(createOrderEntity: CreateOrderEntity): Flow<OrderResponseData> = flow {
+        val r = ktorService.postCreateOrder(createOrderEntity)
+        emit(r.toOrderResData())
+    }
+
+    override suspend fun getActiveOrder(): Flow<OrderResponseData> = flow {
+        val r = ktorService.getActiveOrder()
+        emit(r.toOrderResData())
+    }
+
+    override suspend fun postPayOrder(payOrderEntity: PayOrderEntity): Flow<OrderResponseData> = flow {
+        val r = ktorService.postPayOrder(payOrderEntity)
+        emit(r.toOrderResData())
+    }
+
+    override suspend fun getOrders(): Flow<List<Orders>> = flow {
+        val r = ktorService.getOrders()
+        r.data?.content?.map { it.toOrders() }?.let { emit(it) }
+    }
+
 }

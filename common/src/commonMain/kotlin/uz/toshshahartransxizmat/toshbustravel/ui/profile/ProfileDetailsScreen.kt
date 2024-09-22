@@ -140,6 +140,7 @@ internal class ProfileDetailsScreen: Screen {
             }
             if (state.value.isLoaded){
                 navigator.pop()
+                Other.isBottomBarVisible = true
             }
         }
     }
