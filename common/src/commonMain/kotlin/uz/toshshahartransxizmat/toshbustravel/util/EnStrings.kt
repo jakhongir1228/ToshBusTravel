@@ -32,9 +32,19 @@ val enStrings = mapOf(
     "seats" to "Seats",
     "amenities" to "Amenities",
     "booked" to "Booked",
-    "your_orders" to "Your Orders",                     // New text
-    "profile" to "Profile",                             // New text
-    "edit_profile" to "Edit Profile",                   // New text
-    "language" to "Language",                           // New text
-    "log_out" to "Log Out"
+    "your_orders" to "Your Orders",
+    "profile" to "Profile",
+    "edit_profile" to "Edit Profile",
+    "language" to "Language",
+    "log_out" to "Log Out",
+    "view_total_amount" to "View Total Amount",             // New text
+    "total_distance" to "Total Distance:",                   // New text
+    "select_order_type" to "Select Order Type:",             // New text
+    "order_within_city" to "Order within the city",         // New text
+    "order_outside_city" to "Order outside the city",       // New text
+    "enter_date_time_for_order" to "Enter Date and Time for Your Order:", // New text
+    "start_date" to "Start Date",                           // New text
+    "start_time" to "Start Time",                           // New text
+    "end_date" to "End Date",                               // New text
+    "end_time" to "End Time"                                // New text
 )

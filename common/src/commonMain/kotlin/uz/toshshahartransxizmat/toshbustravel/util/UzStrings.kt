@@ -31,9 +31,19 @@ val uzStrings = mapOf(
     "seats" to "O‘rinlar",
     "amenities" to "Qulayliklar",
     "booked" to "Band qilingan",
-    "your_orders" to "Buyurtmalaringiz",                // New text
-    "profile" to "Profil",                              // New text
-    "edit_profile" to "Profilni tahrirlash",            // New text
-    "language" to "Til",                                // New text
-    "log_out" to "Chiqish"
+    "your_orders" to "Buyurtmalaringiz",
+    "profile" to "Profil",
+    "edit_profile" to "Profilni tahrirlash",
+    "language" to "Til",
+    "log_out" to "Chiqish",
+    "view_total_amount" to "Summani ko'rish",
+    "total_distance" to "Umumiy masofa:",
+    "select_order_type" to "Buyurtma turini tanlang:",
+    "order_within_city" to "Shahar ichida buyurtma",
+    "order_outside_city" to "Shahar tashqarisida buyurtma",
+    "enter_date_time_for_order" to "Buyurtma uchun sana va vaqtni kiriting:",
+    "start_date" to "Boshlanish sanasi",
+    "start_time" to "Boshlanish vaqti",
+    "end_date" to "Tugatish sanasi",
+    "end_time" to "Tugatish vaqti"
 )

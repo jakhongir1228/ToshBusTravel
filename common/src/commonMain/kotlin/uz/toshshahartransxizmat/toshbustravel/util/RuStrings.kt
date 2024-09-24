@@ -31,9 +31,19 @@ val ruStrings = mapOf(
     "seats" to "мест",
     "amenities" to "Удобства",
     "booked" to "Бронирован",
-    "your_orders" to "Ваши заказы",                     // New text
-    "profile" to "Профиль",                             // New text
-    "edit_profile" to "Редактировать профиль",          // New text
-    "language" to "Язык",                               // New text
-    "log_out" to "Выйти"
+    "your_orders" to "Ваши заказы",
+    "profile" to "Профиль",
+    "edit_profile" to "Редактировать профиль",
+    "language" to "Язык",
+    "log_out" to "Выйти",
+    "view_total_amount" to "Посмотреть сумму",             // New text
+    "total_distance" to "Общее расстояние:",                // New text
+    "select_order_type" to "Выберите тип заказа:",          // New text
+    "order_within_city" to "Заказ внутри города",          // New text
+    "order_outside_city" to "Заказ за городом",            // New text
+    "enter_date_time_for_order" to "Введите дату и время для вашего заказа:", // New text
+    "start_date" to "Дата начала",                         // New text
+    "start_time" to "Время начала",                        // New text
+    "end_date" to "Дата окончания",                        // New text
+    "end_time" to "Время окончания"                        // New text
 )

@@ -10,6 +10,7 @@ import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
 import uz.toshshahartransxizmat.toshbustravel.map.LocationProvider
 import uz.toshshahartransxizmat.toshbustravel.theme.ToshBusTravelTheme
+import uz.toshshahartransxizmat.toshbustravel.ui.amount.SeeAmountScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.apply.ApplyForScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.AuthScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.ForgotPasswordScreen
@@ -37,7 +38,7 @@ fun Application(
                 })
             } else {
                 Navigator(
-                    LanguageScreen()
+                 //   LanguageScreen()
                   //  LogInScreen()
                   //  AuthScreen()
                   //  ForgotPasswordScreen()
@@ -45,6 +46,7 @@ fun Application(
                    //   HomeScreen()
                    //  TransportDetailsScreen(vehicleId = 1)
                    // ApplyForScreen(locationProvider)
+                    SeeAmountScreen()
                 )
             }
         }

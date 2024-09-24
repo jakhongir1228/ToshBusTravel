@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,8 +29,13 @@ import androidx.compose.ui.unit.dp
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
 import uz.toshshahartransxizmat.toshbustravel.components.button.theme.ButtonRippleTheme
+import uz.toshshahartransxizmat.toshbustravel.theme.blue725
+import uz.toshshahartransxizmat.toshbustravel.theme.gray300
 import uz.toshshahartransxizmat.toshbustravel.theme.gray500
+import uz.toshshahartransxizmat.toshbustravel.theme.gray700
+import uz.toshshahartransxizmat.toshbustravel.theme.silver100
 import uz.toshshahartransxizmat.toshbustravel.theme.silver400
+import uz.toshshahartransxizmat.toshbustravel.theme.silver950
 
 @Composable
 fun LanguageButton(
@@ -44,20 +50,22 @@ fun LanguageButton(
 )= ButtonRippleTheme{
     Button(
         modifier = modifier
+            .height(56.dp)
             .border(
                 width = 1.dp,
                 color = type.borderColor(enabled = !loading && enabled).value,
                 shape = size.shape
             )
             .clip(size.shape)
+            .background(if (!loading && enabled) Color(0xFFF1F5F9) else Color.Transparent)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(bounded = false, color = gray500),
+                indication = rememberRipple(bounded = false, color = Color.Cyan),
                 enabled = !loading && enabled,
                 onClick = navigateToAuthScreen
             ),
         onClick = { navigateToAuthScreen.invoke() } ,
-        colors = ButtonDefaults.buttonColors(Color(0xFFF1F5F9)),
+        colors = ButtonDefaults.buttonColors(Color.Transparent),
         shape = RoundedCornerShape(8.dp)
     ){
         Row(

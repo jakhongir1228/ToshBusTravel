@@ -1,13 +1,13 @@
 import SwiftUI
 import common
-import GoogleMaps
+//import GoogleMaps
 
 @main
 struct iOSApp: App {
 
     init() {
         InitKoinKt.doInitKoin(appDeclaration: {_ in })
-        GMSServices.provideAPIKey("AIzaSyCx3s1gHi5ldALIGVEXNk3Lb7Fym0DwATI")
+      //  GMSServices.provideAPIKey("AIzaSyCx3s1gHi5ldALIGVEXNk3Lb7Fym0DwATI")
 
     }
 
