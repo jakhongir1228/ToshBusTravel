@@ -37,14 +37,24 @@ val enStrings = mapOf(
     "edit_profile" to "Edit Profile",
     "language" to "Language",
     "log_out" to "Log Out",
-    "view_total_amount" to "View Total Amount",             // New text
-    "total_distance" to "Total Distance:",                   // New text
-    "select_order_type" to "Select Order Type:",             // New text
-    "order_within_city" to "Order within the city",         // New text
-    "order_outside_city" to "Order outside the city",       // New text
-    "enter_date_time_for_order" to "Enter Date and Time for Your Order:", // New text
-    "start_date" to "Start Date",                           // New text
-    "start_time" to "Start Time",                           // New text
-    "end_date" to "End Date",                               // New text
-    "end_time" to "End Time"                                // New text
+    "view_total_amount" to "View Total Amount",
+    "total_distance" to "Total Distance:",
+    "select_order_type" to "Select Order Type:",
+    "order_within_city" to "Order within the city",
+    "order_outside_city" to "Order outside the city",
+    "enter_date_time_for_order" to "Enter Date and Time for Your Order:",
+    "start_date" to "Start Date",
+    "start_time" to "Start Time",
+    "end_date" to "End Date",
+    "end_time" to "End Time",
+    "total_time" to "Total Time:",
+    "payment" to "Payment",
+    "card_number" to "Card Number",
+    "card_expiry" to "Card Expiry",
+    "amount_due" to "Amount Due:",
+    "sum" to "sum",
+    "your_request_will_be_processed_for_this_amount" to "Your request will be processed for this amount",
+    "cancel" to "Cancel",
+    "confirm" to "Confirm",
+    "pay" to "Pay"
 )

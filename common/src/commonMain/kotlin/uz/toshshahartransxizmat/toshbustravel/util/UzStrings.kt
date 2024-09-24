@@ -45,5 +45,15 @@ val uzStrings = mapOf(
     "start_date" to "Boshlanish sanasi",
     "start_time" to "Boshlanish vaqti",
     "end_date" to "Tugatish sanasi",
-    "end_time" to "Tugatish vaqti"
+    "end_time" to "Tugatish vaqti",
+    "total_time" to "Umumiy vaqt:",
+    "payment" to "To'lov",
+    "card_number" to "Karta raqami",
+    "card_expiry" to "Karta muddati",
+    "amount_due" to "To'lanadigan summa:",
+    "sum" to "sum",
+    "your_request_will_be_processed_for_this_amount" to "Sizning so'rovingiz ushbu summa uchun qayta ishlanadi",
+    "cancel" to "Bekor qilish",
+    "confirm" to "Tasdiqlang",
+    "pay" to "To'lash"
 )

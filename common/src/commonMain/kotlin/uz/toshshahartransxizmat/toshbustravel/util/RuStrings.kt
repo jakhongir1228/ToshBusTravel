@@ -36,14 +36,24 @@ val ruStrings = mapOf(
     "edit_profile" to "Редактировать профиль",
     "language" to "Язык",
     "log_out" to "Выйти",
-    "view_total_amount" to "Посмотреть сумму",             // New text
-    "total_distance" to "Общее расстояние:",                // New text
-    "select_order_type" to "Выберите тип заказа:",          // New text
-    "order_within_city" to "Заказ внутри города",          // New text
-    "order_outside_city" to "Заказ за городом",            // New text
-    "enter_date_time_for_order" to "Введите дату и время для вашего заказа:", // New text
-    "start_date" to "Дата начала",                         // New text
-    "start_time" to "Время начала",                        // New text
-    "end_date" to "Дата окончания",                        // New text
-    "end_time" to "Время окончания"                        // New text
+    "view_total_amount" to "Посмотреть сумму",
+    "total_distance" to "Общее расстояние:",
+    "select_order_type" to "Выберите тип заказа:",
+    "order_within_city" to "Заказ внутри города",
+    "order_outside_city" to "Заказ за городом",
+    "enter_date_time_for_order" to "Введите дату и время для вашего заказа:",
+    "start_date" to "Дата начала",
+    "start_time" to "Время начала",
+    "end_date" to "Дата окончания",
+    "end_time" to "Время окончания",
+    "total_time" to "Общее время:",
+    "payment" to "Оплата",
+    "card_number" to "Номер карты",
+    "card_expiry" to "Срок карты",
+    "amount_due" to "Сумма к оплате:",
+    "sum" to "сум",
+    "your_request_will_be_processed_for_this_amount" to "Ваша заявка будет обработана за эту сумму", // New text
+    "cancel" to "Отменить",
+    "confirm" to "Подтвердить",
+    "pay" to "Оплатить"
 )

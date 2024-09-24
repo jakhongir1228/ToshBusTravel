@@ -45,7 +45,10 @@ internal fun TimeInput(
         if (showDialog) {
             AdvancedTimePicker(
                 onConfirm = { timePickerState ->
-                    val time = "${timePickerState.hour}:${timePickerState.minute}"
+                    val hour = timePickerState.hour.toString().padStart(2, '0')
+                    val minute = timePickerState.minute.toString().padStart(2, '0')
+                    val time = "$hour:$minute"
+
                     onTimeChange(time)
                     formatTime = time
                     showDialog = false
