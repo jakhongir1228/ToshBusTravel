@@ -1,8 +1,10 @@
 package uz.toshshahartransxizmat.toshbustravel.data.mapper
 
 import uz.toshshahartransxizmat.toshbustravel.data.model.Vehicles
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.CalculatorDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ContentItem
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataAmount
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataClient
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataLogIn
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataOrder
@@ -13,7 +15,9 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDetails
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AmountData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.CalculatorResponse
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientUpdateData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
@@ -124,5 +128,20 @@ fun ContentItem.toOrders():Orders {
         endDate = endDate,
         amount = amount,
         status = status
+    )
+}
+
+fun CalculatorDTO.toCalResponse(): CalculatorResponse{
+    return CalculatorResponse(
+        data = data.toAmountData(),
+        message = message,
+        error = error,
+        success = success
+    )
+}
+
+fun DataAmount.toAmountData(): AmountData{
+    return AmountData(
+        amount = amount
     )
 }

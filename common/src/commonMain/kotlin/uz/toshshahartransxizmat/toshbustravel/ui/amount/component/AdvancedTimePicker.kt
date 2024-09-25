@@ -73,14 +73,19 @@ internal fun AdvancedTimePicker(
         },
     ) {
         if (showDial) {
-            TimePicker(
-                state = timePickerState,
-            )
-        } else {
+//            TimePicker(
+//                state = timePickerState,
+//            )
             TimeInput(
                 state = timePickerState,
             )
         }
+//        else {
+//            TimeInput(
+//                state = timePickerState,
+//            )
+//        }
+
     }
 }
 

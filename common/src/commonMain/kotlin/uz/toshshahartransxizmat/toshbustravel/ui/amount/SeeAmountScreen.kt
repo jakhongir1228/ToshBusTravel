@@ -1,6 +1,7 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.amount
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,10 +26,13 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
+import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.component.OrderTypeSelector
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
@@ -35,6 +40,8 @@ import uz.toshshahartransxizmat.toshbustravel.ui.amount.component.DateInput
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.component.TimeInput
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.component.calculateTotalHours
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.dialog.AmountDialog
+import uz.toshshahartransxizmat.toshbustravel.ui.amount.viewModel.AmountViewModel
+import uz.toshshahartransxizmat.toshbustravel.util.Other
 
 internal class SeeAmountScreen: Screen {
 
@@ -42,8 +49,12 @@ internal class SeeAmountScreen: Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         var isCity by remember { mutableStateOf(false) }
+        var travelTime by remember { mutableStateOf(0) }
         var isDateValidate by remember { mutableStateOf(false) }
         var showAmountDialog by remember { mutableStateOf(false) }
+        var showErrorDialog by remember { mutableStateOf(true) }
+        val viewModel = rememberKoinInject<AmountViewModel>()
+        val state = viewModel.state.collectAsState()
 
         var startDate by remember { mutableStateOf("") }
         var startTime by remember { mutableStateOf("") }
@@ -172,6 +183,7 @@ internal class SeeAmountScreen: Screen {
 
                 if (startDate.isNotEmpty() && startTime.isNotEmpty() && endDate.isNotEmpty() && endTime.isNotEmpty()) {
                     val totalHours = calculateTotalHours(startDate, startTime, endDate, endTime)
+                    travelTime = totalHours.toInt()
                     isDateValidate = true
                     Text(
                         text = getStrings("total_time")+" $totalHours soat",
@@ -184,9 +196,15 @@ internal class SeeAmountScreen: Screen {
 
                 if (showAmountDialog) {
                     AmountDialog(
-                        amount = "200 000",
-                        onConfirm = { /* Tasdiqlash amalini qo'shing */ showAmountDialog = false },
-                        onCancel = { showAmountDialog = false }
+                        amount = state.value.success.amount.toString(),
+                        onConfirm = {
+                            showAmountDialog = false
+                            viewModel.onAmountDialogDismissed()
+                        },
+                        onCancel = {
+                            showAmountDialog = false
+                            viewModel.onAmountDialogDismissed()
+                        }
                     )
                 }
 
@@ -199,12 +217,31 @@ internal class SeeAmountScreen: Screen {
                         .padding(bottom = 56.dp),
                     text = TextValue(getStrings("continue")),
                     size = ButtonSize.Large,
-                    enabled = true,
+                    enabled = isDateValidate,
+                    loading = state.value.isLoading,
                     onClick = {
-                        showAmountDialog = true
+                        val calculatorEntity = CalculatorEntity(
+                            busTypeId = 1,
+                            isCity = isCity,
+                            distance = 15,
+                            travelTime = travelTime
+                        )
+                        println("call->>>>$calculatorEntity")
+                        viewModel.loadCalculator(calculatorEntity)
                     }
                 )
 
+            }
+            if (state.value.error.isNotBlank()) {
+                ErrorDialog(
+                    errorMessage = state.value.error,
+                    showDialog = showErrorDialog,
+                    onDismiss = { showErrorDialog = false }
+                )
+            }
+            if (state.value.isLoaded){
+                 showAmountDialog = true
+                 viewModel.resetLoadedState()
             }
         }
     }

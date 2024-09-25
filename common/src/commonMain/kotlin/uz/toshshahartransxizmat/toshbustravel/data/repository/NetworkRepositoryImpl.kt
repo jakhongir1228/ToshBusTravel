@@ -3,6 +3,7 @@ package uz.toshshahartransxizmat.toshbustravel.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAuthData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toCalResponse
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientUpdateData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toDetailsData
@@ -13,6 +14,7 @@ import uz.toshshahartransxizmat.toshbustravel.data.mapper.toTransports
 import uz.toshshahartransxizmat.toshbustravel.data.network.KtorService
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
@@ -20,6 +22,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.CalculatorResponse
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientUpdateData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
@@ -84,6 +87,11 @@ class NetworkRepositoryImpl(
     override suspend fun postPayOrder(payOrderEntity: PayOrderEntity): Flow<OrderResponseData> = flow {
         val r = ktorService.postPayOrder(payOrderEntity)
         emit(r.toOrderResData())
+    }
+
+    override suspend fun postCalculator(calculatorEntity: CalculatorEntity): Flow<CalculatorResponse> = flow {
+        val r = ktorService.postCalculator(calculatorEntity)
+        emit(r.toCalResponse())
     }
 
     override suspend fun getOrders(): Flow<List<Orders>> = flow {

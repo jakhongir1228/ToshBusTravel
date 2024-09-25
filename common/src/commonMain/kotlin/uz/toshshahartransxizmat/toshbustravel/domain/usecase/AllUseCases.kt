@@ -1,5 +1,6 @@
 package uz.toshshahartransxizmat.toshbustravel.domain.usecase
 
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.amount.CalculatorUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.ActiveOrderUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.CreateOrderUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.GetOrdersUseCase
@@ -19,5 +20,6 @@ data class AllUseCases(
     val createOrderUseCase: CreateOrderUseCase,
     val activeOrderUseCase: ActiveOrderUseCase,
     val payOrderUseCase: PayOrderUseCase,
-    val getOrdersUseCase: GetOrdersUseCase
+    val getOrdersUseCase: GetOrdersUseCase,
+    val calculatorUseCase: CalculatorUseCase
 )
