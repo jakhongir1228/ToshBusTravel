@@ -53,64 +53,6 @@ class OrderViewModel(
         }
     }
 
-    fun loadActiveOrder(){
-        viewModelScope.launch {
-            useCases.activeOrderUseCase()
-                .onStart {
-                    _state.update {
-                        it.copy(isLoading = true, isLoaded = false)
-                    }
-                }
-                .catch {t->
-                    println("activeOrderError-->> $t")
-                    _state.update { res->
-                        res.copy(
-                            isLoading = false,
-                            error = "Serverda xatolik yuz berdi",
-                            isLoaded = false
-                        )
-                    }
-                }.collectLatest { result->
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            orders = emptyList(),
-                            isLoaded = true
-                        )
-                    }
-                }
-        }
-    }
-
-    fun loadPayOrder(payOrderEntity: PayOrderEntity){
-        viewModelScope.launch {
-            useCases.payOrderUseCase(payOrderEntity)
-                .onStart {
-                    _state.update {
-                        it.copy(isLoading = true, isLoaded = false)
-                    }
-                }
-                .catch {t->
-                    println("activeOrderError-->> $t")
-                    _state.update { res->
-                        res.copy(
-                            isLoading = false,
-                            error = "Serverda xatolik yuz berdi",
-                            isLoaded = false
-                        )
-                    }
-                }.collectLatest { result->
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            orders = emptyList(),
-                            isLoaded = true
-                        )
-                    }
-                }
-        }
-    }
-
     fun loadGetOrder(){
         viewModelScope.launch {
             useCases.getOrdersUseCase()

@@ -2,6 +2,7 @@ package uz.toshshahartransxizmat.toshbustravel.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toActiveOrder
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAuthData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toCalResponse
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientData
@@ -9,6 +10,7 @@ import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientUpdateData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toDetailsData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toOrderResData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toOrders
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toPaymentData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toResetData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toTransports
 import uz.toshshahartransxizmat.toshbustravel.data.network.KtorService
@@ -21,6 +23,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ActiveOrderData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.CalculatorResponse
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
@@ -28,6 +31,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientUpdate
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderContentData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.PaymentData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepository
 
@@ -79,14 +83,14 @@ class NetworkRepositoryImpl(
         emit(r.toOrderResData())
     }
 
-    override suspend fun getActiveOrder(): Flow<OrderResponseData> = flow {
+    override suspend fun getActiveOrder(): Flow<ActiveOrderData> = flow {
         val r = ktorService.getActiveOrder()
-        emit(r.toOrderResData())
+        emit(r.data.toActiveOrder())
     }
 
-    override suspend fun postPayOrder(payOrderEntity: PayOrderEntity): Flow<OrderResponseData> = flow {
+    override suspend fun postPayOrder(payOrderEntity: PayOrderEntity): Flow<PaymentData> = flow {
         val r = ktorService.postPayOrder(payOrderEntity)
-        emit(r.toOrderResData())
+        emit(r.data.toPaymentData())
     }
 
     override suspend fun postCalculator(calculatorEntity: CalculatorEntity): Flow<CalculatorResponse> = flow {

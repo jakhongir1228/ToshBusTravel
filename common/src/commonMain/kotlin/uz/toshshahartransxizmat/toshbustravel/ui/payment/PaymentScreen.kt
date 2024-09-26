@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,17 +24,22 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
+import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.ui.payment.component.CardExpiryInput
 import uz.toshshahartransxizmat.toshbustravel.ui.payment.component.CardNumberInput
+import uz.toshshahartransxizmat.toshbustravel.ui.payment.viewModel.PaymentViewModel
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal class PaymentScreen(
+    private val orderId:Int,
     private val amount: Long
 ): Screen {
 
@@ -43,6 +49,10 @@ internal class PaymentScreen(
         var cardNumber by remember { mutableStateOf("") }
         var cardExpiryDate by remember { mutableStateOf("") }
         val isButtonEnabled = cardNumber.length == 16 && cardExpiryDate.length == 4
+        var showErrorDialog by remember { mutableStateOf(true) }
+
+        val viewModel = rememberKoinInject<PaymentViewModel>()
+        val state = viewModel.state.collectAsState()
 
         Scaffold{
             Column(
@@ -113,10 +123,29 @@ internal class PaymentScreen(
                     text = TextValue(getStrings("pay")),
                     size = ButtonSize.Large,
                     enabled = isButtonEnabled,
+                    loading = state.value.isLoading,
                     onClick = {
-
+                        val payOrderEntity = PayOrderEntity(
+                            orderId = orderId,
+                            cardNumber = cardNumber,
+                            cardExpiryDate = cardExpiryDate,
+                            transactionId = amount.toInt()
+                        )
+                        viewModel.loadPayment(payOrderEntity)
                     }
                 )
+            }
+
+            if (state.value.error.isNotBlank()) {
+                ErrorDialog(
+                    errorMessage = state.value.error,
+                    showDialog = showErrorDialog,
+                    onDismiss = { showErrorDialog = false }
+                )
+            }
+
+            if (state.value.isLoaded){
+                println("sentOtp--->${state.value.payment.sentOtp}")
             }
         }
     }

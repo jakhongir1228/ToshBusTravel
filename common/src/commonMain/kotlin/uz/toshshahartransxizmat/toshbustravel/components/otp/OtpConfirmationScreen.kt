@@ -220,7 +220,6 @@ internal class OtpConfirmationScreen(
         }
 
         if (stateAuth.value.isLoaded){
-            println("completed --->"+stateAuth.value.successReset.completed)
             if (stateAuth.value.successReset.completed){
                 navigator.push(NewPasswordScreen(
                     username = userName,

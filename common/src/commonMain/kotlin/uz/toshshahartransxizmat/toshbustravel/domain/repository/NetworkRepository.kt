@@ -10,6 +10,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ActiveOrderData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.CalculatorResponse
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
@@ -17,6 +18,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientUpdate
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderContentData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.PaymentData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 
 interface NetworkRepository {
@@ -38,9 +40,9 @@ interface NetworkRepository {
 
     suspend fun postCreateOrder(createOrderEntity: CreateOrderEntity): Flow<OrderResponseData>
 
-    suspend fun getActiveOrder(): Flow<OrderResponseData>
+    suspend fun getActiveOrder(): Flow<ActiveOrderData>
 
-    suspend fun postPayOrder(payOrderEntity: PayOrderEntity): Flow<OrderResponseData>
+    suspend fun postPayOrder(payOrderEntity: PayOrderEntity): Flow<PaymentData>
 
     suspend fun postCalculator(calculatorEntity: CalculatorEntity): Flow<CalculatorResponse>
 

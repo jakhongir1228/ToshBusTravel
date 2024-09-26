@@ -52,8 +52,12 @@ val ruStrings = mapOf(
     "card_expiry" to "Срок карты",
     "amount_due" to "Сумма к оплате:",
     "sum" to "сум",
-    "your_request_will_be_processed_for_this_amount" to "Ваша заявка будет обработана за эту сумму", // New text
+    "your_request_will_be_processed_for_this_amount" to "Ваша заявка будет обработана за эту сумму",
     "cancel" to "Отменить",
     "confirm" to "Подтвердить",
-    "pay" to "Оплатить"
+    "pay" to "Оплатить",
+    "processing" to "Обрабатывается",
+    "check_status" to "Проверить статус",
+    "the_request_will_be_processed_in_a_few_minutes" to "Для обработки заявки потребуется несколько минут",
+    "technical_error_try_again_later" to "Техническая ошибка, попробуйте позже"
 )

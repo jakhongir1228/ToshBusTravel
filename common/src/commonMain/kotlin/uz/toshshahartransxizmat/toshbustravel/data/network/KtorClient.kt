@@ -20,9 +20,11 @@ import uz.toshshahartransxizmat.toshbustravel.util.BASE_URL
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_IN_ENDPOINT
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_UP_ENDPOINT
 import io.ktor.client.request.headers
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.ActiveOrderDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.CalculatorDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.PaymentDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
@@ -195,7 +197,7 @@ class KtorClient(
         return r.body()
     }
 
-    override suspend fun getActiveOrder(): OrderDTO {
+    override suspend fun getActiveOrder(): ActiveOrderDTO {
         val url = "$BASE_URL$API_ORDER/active"
 
         val token = settings.getValue(ACCESS_TOKEN_KEY)
@@ -213,7 +215,7 @@ class KtorClient(
         return response.body()
     }
 
-    override suspend fun postPayOrder(payOrderEntity: PayOrderEntity): OrderDTO {
+    override suspend fun postPayOrder(payOrderEntity: PayOrderEntity): PaymentDTO {
         val url = "$BASE_URL$API_ORDER/pay"
         val token = settings.getValue(ACCESS_TOKEN_KEY)
 

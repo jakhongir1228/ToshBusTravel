@@ -55,5 +55,9 @@ val uzStrings = mapOf(
     "your_request_will_be_processed_for_this_amount" to "Sizning so'rovingiz ushbu summa uchun qayta ishlanadi",
     "cancel" to "Bekor qilish",
     "confirm" to "Tasdiqlang",
-    "pay" to "To'lash"
+    "pay" to "To'lash",
+    "processing" to "Aniqlanmoqda",
+    "check_status" to "Holatni tekshirish",
+    "the_request_will_be_processed_in_a_few_minutes" to "Arizani ko'rib chiqishga bir necha daqiqa talab etiladi",
+    "technical_error_try_again_later" to "Texnik xato, keyinroq harakat qilib ko'ring"
 )

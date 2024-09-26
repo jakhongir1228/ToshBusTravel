@@ -56,5 +56,9 @@ val enStrings = mapOf(
     "your_request_will_be_processed_for_this_amount" to "Your request will be processed for this amount",
     "cancel" to "Cancel",
     "confirm" to "Confirm",
-    "pay" to "Pay"
+    "pay" to "Pay",
+    "processing" to "Processing",
+    "check_status" to "Check Status",
+    "the_request_will_be_processed_in_a_few_minutes" to "The request will be processed in a few minutes",
+    "technical_error_try_again_later" to "Technical error, try again later"
 )

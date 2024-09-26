@@ -31,7 +31,9 @@ import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.viewModel.AmountViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
+import uz.toshshahartransxizmat.toshbustravel.ui.orders.viewModel.ActiveOrderViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.viewModel.OrderViewModel
+import uz.toshshahartransxizmat.toshbustravel.ui.payment.viewModel.PaymentViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.viewModel.ProfileViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.viewModel.DetailsViewModel
 
@@ -103,5 +105,13 @@ val appModule = module {
 
     factory {
         AmountViewModel(get())
+    }
+
+    factory {
+        ActiveOrderViewModel(get())
+    }
+
+    factory {
+        PaymentViewModel(get())
     }
 }

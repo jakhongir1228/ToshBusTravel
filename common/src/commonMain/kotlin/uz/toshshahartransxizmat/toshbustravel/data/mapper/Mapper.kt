@@ -4,10 +4,12 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.Vehicles
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.CalculatorDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ContentItem
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataActive
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataAmount
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataClient
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataLogIn
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataOrder
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataPayment
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataReset
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.LogInDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
@@ -15,6 +17,7 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDetails
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ActiveOrderData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AmountData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.CalculatorResponse
@@ -23,6 +26,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientUpdate
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.PaymentData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.TransportDetailsData
@@ -131,6 +135,13 @@ fun ContentItem.toOrders():Orders {
     )
 }
 
+fun DataActive.toActiveOrder(): ActiveOrderData{
+    return ActiveOrderData(
+        id = id,
+        price = price
+    )
+}
+
 fun CalculatorDTO.toCalResponse(): CalculatorResponse{
     return CalculatorResponse(
         data = data.toAmountData(),
@@ -143,5 +154,14 @@ fun CalculatorDTO.toCalResponse(): CalculatorResponse{
 fun DataAmount.toAmountData(): AmountData{
     return AmountData(
         amount = amount
+    )
+}
+
+fun DataPayment.toPaymentData(): PaymentData{
+    return PaymentData(
+        hash = hash,
+        sentOtp = sentOtp,
+        paymentId = paymentId,
+        access_token = access_token
     )
 }

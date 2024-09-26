@@ -10,16 +10,8 @@ import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
 import uz.toshshahartransxizmat.toshbustravel.map.LocationProvider
 import uz.toshshahartransxizmat.toshbustravel.theme.ToshBusTravelTheme
-import uz.toshshahartransxizmat.toshbustravel.ui.amount.SeeAmountScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.apply.ApplyForScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.auth.AuthScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.auth.ForgotPasswordScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.auth.language.LanguageScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.logo.LogoScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.payment.PaymentScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.TransportDetailsScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.orders.ActiveOrderScreen
 
 @Composable
 fun Application(
@@ -47,7 +39,8 @@ fun Application(
                    //   HomeScreen()
                    //  TransportDetailsScreen(vehicleId = 1)
                    // ApplyForScreen(locationProvider)
-                    SeeAmountScreen()
+                   // SeeAmountScreen()
+                    ActiveOrderScreen(amount = 200)
                    // PaymentScreen(amount = 200000)
                 )
             }

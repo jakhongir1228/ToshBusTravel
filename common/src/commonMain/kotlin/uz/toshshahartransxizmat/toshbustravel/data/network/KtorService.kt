@@ -1,10 +1,12 @@
 package uz.toshshahartransxizmat.toshbustravel.data.network
 
 import uz.toshshahartransxizmat.toshbustravel.data.model.VehicleDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.ActiveOrderDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.CalculatorDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.LogInDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.PaymentDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
@@ -35,9 +37,9 @@ interface KtorService {
 
     suspend fun postCreateOrder(createOrderEntity: CreateOrderEntity): OrderDTO
 
-    suspend fun getActiveOrder():OrderDTO
+    suspend fun getActiveOrder(): ActiveOrderDTO
 
-    suspend fun postPayOrder(payOrderEntity: PayOrderEntity): OrderDTO
+    suspend fun postPayOrder(payOrderEntity: PayOrderEntity): PaymentDTO
 
     suspend fun getOrders():OrderDTO
 
