@@ -19,10 +19,8 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import uz.toshshahartransxizmat.toshbustravel.ui.orders.component.OrderItem
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.component.OrderList
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.state.OrderState
-import uz.toshshahartransxizmat.toshbustravel.ui.profile.component.showOrderDetailsDialog
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal class OrdersScreen(

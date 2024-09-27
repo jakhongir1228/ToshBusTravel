@@ -12,6 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -20,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.component.ProfileCardItem
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.component.UserProfileCard
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.state.ProfileState
@@ -35,6 +40,7 @@ internal class ProfileScreen(
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
+        var showErrorDialog by remember { mutableStateOf(true) }
 
         LaunchedEffect(Unit) {
             loadGetClient.invoke()
@@ -116,9 +122,11 @@ internal class ProfileScreen(
             }
         }
         if (state.value.error.isNotBlank()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = state.value.error, fontSize = 25.sp)
-            }
+            ErrorDialog(
+                errorMessage = state.value.error,
+                showDialog = showErrorDialog,
+                onDismiss = { showErrorDialog = false }
+            )
         }
     }
 }

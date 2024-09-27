@@ -23,6 +23,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
+import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
@@ -52,6 +53,7 @@ internal class NewPasswordScreen(
         val isPasswordValid = password.length >= 4
         val isPasswordsMatch = password == confirmPassword
         val isFormValid =  isPasswordValid && isPasswordsMatch
+        var showErrorDialog by remember { mutableStateOf(true) }
 
         Scaffold {
             Column(
@@ -114,9 +116,11 @@ internal class NewPasswordScreen(
             }
         }
         if (state.value.error.isNotBlank()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                androidx.compose.material3.Text(text = state.value.error, fontSize = 25.sp)
-            }
+            ErrorDialog(
+                errorMessage = state.value.error,
+                showDialog = showErrorDialog,
+                onDismiss = { showErrorDialog = false }
+            )
         }
 
         if (state.value.isLoaded){

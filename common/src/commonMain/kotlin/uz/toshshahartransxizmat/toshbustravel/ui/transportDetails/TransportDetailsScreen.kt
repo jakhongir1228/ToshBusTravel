@@ -1,6 +1,5 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.transportDetails
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,25 +9,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.koin.compose.rememberKoinInject
+import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
-import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderCharts
-import uz.toshshahartransxizmat.toshbustravel.domain.model.response.TransportDetailsData
-import uz.toshshahartransxizmat.toshbustravel.domain.model.response.VehicleDetails
-import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
 import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.component.SlideTransports
 import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.component.TransportDetailsContent
 import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.viewModel.DetailsViewModel
-import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
 import uz.toshshahartransxizmat.toshbustravel.util.Other
 
 internal class TransportDetailsScreen(
@@ -44,6 +41,7 @@ internal class TransportDetailsScreen(
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = rememberKoinInject<DetailsViewModel>()
         val state = viewModel.state.collectAsState()
+        var showErrorDialog by remember { mutableStateOf(true) }
 
         LaunchedEffect(vehicleId) {
             viewModel.loadDetails(vehicleId)
@@ -86,9 +84,11 @@ internal class TransportDetailsScreen(
             }
         }
         if (state.value.error.isNotBlank()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                androidx.compose.material3.Text(text = state.value.error, fontSize = 25.sp)
-            }
+            ErrorDialog(
+                errorMessage = state.value.error,
+                showDialog = showErrorDialog,
+                onDismiss = { showErrorDialog = false }
+            )
         }
     }
 }

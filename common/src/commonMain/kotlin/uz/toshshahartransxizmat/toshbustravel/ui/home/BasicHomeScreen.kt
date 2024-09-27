@@ -35,6 +35,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.theme.blue650
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.ui.home.component.BannerComponent
@@ -59,6 +60,7 @@ internal class BasicHomeScreen (
         val tabs = listOf(TopBarItem.All, TopBarItem.Bus, TopBarItem.MiniBus)
         val navigator = LocalNavigator.currentOrThrow
         val listState = rememberLazyListState()
+        var showErrorDialog by remember { mutableStateOf(true) }
 
         val shouldLoadMore = remember {
             derivedStateOf {
@@ -144,9 +146,11 @@ internal class BasicHomeScreen (
                 }
 
                 if (state.value.error.isNotBlank()) {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(text = state.value.error, fontSize = 25.sp)
-                    }
+                    ErrorDialog(
+                        errorMessage = state.value.error,
+                        showDialog = showErrorDialog,
+                        onDismiss = { showErrorDialog = false }
+                    )
                 }
 
                 if (state.value.isLoading) {
