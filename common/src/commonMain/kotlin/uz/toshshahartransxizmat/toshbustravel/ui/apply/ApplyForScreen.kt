@@ -18,7 +18,6 @@ import uz.toshshahartransxizmat.toshbustravel.map.ComposeMapView
 import uz.toshshahartransxizmat.toshbustravel.map.Location
 import uz.toshshahartransxizmat.toshbustravel.map.LocationProvider
 
-
 internal class ApplyForScreen(private val locationProvider: LocationProvider) : Screen {
 
     @Composable
@@ -32,7 +31,5 @@ internal class ApplyForScreen(private val locationProvider: LocationProvider) : 
                 modifier = modifier
             )
 
-
     }
-
-    }
+}

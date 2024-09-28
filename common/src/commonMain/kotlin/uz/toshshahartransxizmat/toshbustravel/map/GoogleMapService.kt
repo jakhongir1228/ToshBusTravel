@@ -6,12 +6,9 @@ import androidx.compose.ui.Modifier
 import uz.toshshahartransxizmat.toshbustravel.map.Location
 
 
-expect class LocationProvider {
+expect open class LocationProvider {
     suspend fun getCurrentLocation(): Location?
 }
-
-
-//expect class LocationProviderImpl() : LocationProvider
 
 @Composable
 expect fun ComposeMapView(locationProvider: LocationProvider, modifier: Modifier = Modifier)

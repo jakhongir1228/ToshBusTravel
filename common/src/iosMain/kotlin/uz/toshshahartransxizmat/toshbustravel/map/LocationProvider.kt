@@ -6,7 +6,7 @@ import platform.CoreLocation.CLLocationCoordinate2D
 import platform.CoreLocation.kCLAuthorizationStatusAuthorizedWhenInUse
 import uz.toshshahartransxizmat.toshbustravel.map.Location
 
-actual class LocationProvider {
+actual open class LocationProvider {
     private val locationManager = CLLocationManager()
 
     actual suspend fun getCurrentLocation(): Location? {

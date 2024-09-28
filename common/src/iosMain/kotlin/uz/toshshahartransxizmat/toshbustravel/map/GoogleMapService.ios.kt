@@ -19,9 +19,9 @@ actual fun ComposeMapView(
     // Create a `GMSMapView` instance and configure it
     val googleMapView = remember {
         GMSMapView().apply {
-            setMyLocationEnabled(true)
-//            settings.setMyLocationButton(true)
-            /*settings.setScrollGestures(true)
+//            setMyLocationEnabled(true)
+            /*settings.setMyLocationButton(true)
+            settings.setScrollGestures(true)
             settings.setZoomGestures(true)
             settings.setCompassButton(false)*/
             // Optionally, set map style

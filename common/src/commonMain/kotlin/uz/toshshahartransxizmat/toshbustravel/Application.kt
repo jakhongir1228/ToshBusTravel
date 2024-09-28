@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
+import kotlinx.coroutines.FlowPreview
 import uz.toshshahartransxizmat.toshbustravel.map.LocationProvider
 import uz.toshshahartransxizmat.toshbustravel.theme.ToshBusTravelTheme
 import uz.toshshahartransxizmat.toshbustravel.ui.apply.ApplyForScreen
@@ -22,11 +23,11 @@ import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
 fun Application(
     isDarkTheme:Boolean,
     locationProvider: LocationProvider
-){
+) {
 
     ToshBusTravelTheme(
         isDarkTheme = isDarkTheme
-    ){
+    ) {
         Scaffold {
             var showScreen by remember { mutableStateOf(true) }
 
@@ -36,15 +37,17 @@ fun Application(
                 })
             } else {
                 Navigator(
-                   // LanguageScreen()
-                  //  LogInScreen()
-                  //  AuthScreen()
-                  //  ForgotPasswordScreen()
-                  //  OtpConfirmationScreen()
-                   //   HomeScreen()
+                    // LanguageScreen()
+                    //  LogInScreen()
+                    //  AuthScreen()
+                    //  ForgotPasswordScreen()
+                    //  OtpConfirmationScreen()
+                    //   HomeScreen()
                     ApplyForScreen(locationProvider)
                 )
             }
         }
     }
+
 }
+
