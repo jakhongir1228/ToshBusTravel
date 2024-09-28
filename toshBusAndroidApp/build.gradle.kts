@@ -10,7 +10,7 @@ android {
     compileSdk = 34
     defaultConfig {
         applicationId = "uz.toshshahartransxizmat.toshbustravel.android"
-        minSdk = 22
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -49,4 +49,5 @@ dependencies {
     implementation(libs.koin.compose)
     implementation(libs.koin.android)
     implementation ("androidx.activity:activity-ktx:1.7.2")
+    implementation(libs.places)
 }

@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     kotlin("plugin.serialization") version "1.8.21"
+
 }
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
@@ -103,10 +104,12 @@ kotlin {
                 // Maps SDK for Android
                 implementation(libs.play.services.maps)
                 implementation(libs.android.maps.utils)
+
                 implementation("com.google.android.gms:play-services-location:18.0.0" )
                 implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
                 implementation ("com.google.maps.android:maps-compose:2.4.0") // or the latest version
+                implementation ("androidx.compose.ui:ui:1.4.7")
 
             }
         }
@@ -133,6 +136,13 @@ android {
     defaultConfig {
         minSdk = 22
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.7"
+    }
+    buildFeatures {
+        compose = true
+    }
+
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
@@ -144,7 +154,7 @@ android {
             excludes += "/META-INF/versions/**"
         }
     }
-    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -155,8 +165,13 @@ dependencies {
     implementation(libs.core)
     implementation(libs.activity.ktx)
     implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.places)
     commonMainApi(libs.mvvm.core)
     commonMainApi(libs.mvvm.compose)
     commonMainApi(libs.mvvm.flow)
     commonMainApi(libs.mvvm.flow.compose)
+
+  /* val composeBom = platform("androidx.compose:compose-bom:2023.10.00")
+    implementation(composeBom)*/
 }
