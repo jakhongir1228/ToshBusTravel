@@ -29,6 +29,8 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -44,6 +46,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.compose.GoogleMap
@@ -57,6 +60,12 @@ import com.google.maps.android.compose.rememberMarkerState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.net.URL
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 
 @Composable
@@ -70,6 +79,13 @@ actual fun ComposeMapView(
     val coroutineScope = rememberCoroutineScope()
     var startLatLng by remember { mutableStateOf<LatLng?>(null) }
     var endLatLng by remember { mutableStateOf<LatLng?>(null) }
+    var firstSemgentRoad by remember { mutableStateOf<List<LatLng>>(emptyList()) }
+    var secondSegmentRoad by remember { mutableStateOf<List<LatLng>>(emptyList()) }
+
+    val markersState = remember { mutableStateOf(emptyList<MarkerOptions>()) }
+    val parkingPoint=LatLng(41.3063483,69.350843)
+
+    var distanceOfPoints by remember { mutableStateOf<Double?>(null) }
 
     LaunchedEffect(locationProvider) {
         coroutineScope.launch {
@@ -87,35 +103,86 @@ actual fun ComposeMapView(
         }
     }
 
+    LaunchedEffect(startLatLng, endLatLng) {
+        // Only proceed if both startLatLng and endLatLng are non-null
+        if (startLatLng != null && endLatLng != null) {
+            coroutineScope.launch {
+                distanceOfPoints=calculateTotalDistance(parkingPoint, startLatLng!!, endLatLng!!)
+                markersState.value = listOf(
+                    MarkerOptions()
+                        .position(parkingPoint)
+                        .title("Parking Point")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)),
+                    MarkerOptions()
+                        .position(startLatLng!!)
+                        .title("Start Location")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)),
+                    MarkerOptions()
+                        .position(endLatLng!!)
+                        .title("Destination Location")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
+                )
+
+                // Clear road paths
+                firstSemgentRoad = emptyList()
+                secondSegmentRoad = emptyList()
+
+                // Fetch and set road paths
+                firstSemgentRoad = getRoadPath(parkingPoint, startLatLng!!)
+                secondSegmentRoad = getRoadPath(startLatLng!!, endLatLng!!)
+
+                // Update camera bounds to show both markers
+                val bounds = LatLngBounds.Builder()
+                    .include(startLatLng!!)
+                    .include(endLatLng!!)
+                    .build()
+                cameraPositionState.animate(
+                    CameraUpdateFactory.newLatLngBounds(bounds, 100)
+                )
+            }
+        }
+    }
     Column(modifier = modifier.fillMaxSize()) {
+        if (distanceOfPoints != null)
+        {
+            Text("Distance is $distanceOfPoints")
+        }
         GoogleMap(
             modifier = Modifier.weight(1f).fillMaxWidth(),
             cameraPositionState = cameraPositionState,
             properties = MapProperties(isMyLocationEnabled = true)
         ) {
-            val parkingPoint=LatLng(41.3063483,69.350843)
             location?.let {
-                // Marker for current location
-               /* Marker(
-                    state = rememberMarkerState(position = LatLng(it.latitude, it.longitude)),
-                    title = "Current Location"
-                )*/
 
-                // Draw polyline and markers if start and destination are set
                 if (startLatLng != null && endLatLng != null) {
-                    Polyline(
-                        points = listOf(parkingPoint,startLatLng!!, endLatLng!!),
-                        color = Color.Blue,
-                        width = 5f
-                    )
-                    Marker(
-                        state = rememberMarkerState(position = parkingPoint!!),
-                        title = "Parking Point" ,
-                        icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE) // Set marker color to blue
 
-                    )
-                    // Add markers for start and end locations
-                    Marker(
+
+                    if (firstSemgentRoad.isNotEmpty()) {
+                        Polyline(
+                            points = firstSemgentRoad,
+                            color = Color.Blue,
+                            width = 8f
+                        )
+                    }
+                    if (secondSegmentRoad.isNotEmpty()) {
+                        Polyline(
+                            points = secondSegmentRoad,
+                            color = Color.Green,
+                            width = 8f
+                        )
+                    }
+                    markersState.value.forEach { markerOptions ->
+                        key(markerOptions.position) {
+                            Marker(
+                                state = rememberMarkerState(position = markerOptions.position),
+                                title = markerOptions.title,
+                                icon = markerOptions.icon
+                            )
+                        }
+                    }
+
+
+               /*     Marker(
                         state = rememberMarkerState(position = startLatLng!!),
                         title = "Start Location" ,
                         icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN) // Set marker color to blue
@@ -126,19 +193,8 @@ actual fun ComposeMapView(
                         title = "Destination Location",
                         icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN) // Set marker color to blue
 
-                    )
+                    )*/
 
-                    LaunchedEffect(startLatLng, endLatLng) {
-                        coroutineScope.launch {
-                            val bounds = LatLngBounds.Builder()
-                                .include(startLatLng!!)
-                                .include(endLatLng!!)
-                                .build()
-                            cameraPositionState.move(
-                                CameraUpdateFactory.newLatLngBounds(bounds, 100)
-                            )
-                        }
-                    }
                 }
             }
         }
@@ -160,6 +216,94 @@ actual fun ComposeMapView(
     }
 }
 
+suspend fun getRoadPath(startLatLng: LatLng, endLatLng: LatLng): List<LatLng> {
+    val url = "https://maps.googleapis.com/maps/api/directions/json?" +
+            "origin=${startLatLng.latitude},${startLatLng.longitude}" +
+            "&destination=${endLatLng.latitude},${endLatLng.longitude}" +
+            "&key=${"AIzaSyAg2fOUJo8a-LuMvDYOccUBq9gDxoLZhmE"}"
+
+    return withContext(Dispatchers.IO) {
+        try {
+            val result = URL(url).readText()
+            val jsonObject = JSONObject(result)
+            val routes = jsonObject.getJSONArray("routes")
+            if (routes.length() > 0) {
+                val route = routes.getJSONObject(0)
+                val overviewPolyline = route.getJSONObject("overview_polyline")
+                val encodedPolyline = overviewPolyline.getString("points")
+
+                // Decode the polyline points
+                return@withContext decodePolyline(encodedPolyline)
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
+        }
+    }
+}
+
+// Polyline decoding function
+fun decodePolyline(encoded: String): List<LatLng> {
+    val poly = ArrayList<LatLng>()
+    var index = 0
+    val len = encoded.length
+    var lat = 0
+    var lng = 0
+
+    while (index < len) {
+        var b: Int
+        var shift = 0
+        var result = 0
+        do {
+            b = encoded[index++].code - 63
+            result = result or (b and 0x1f shl shift)
+            shift += 5
+        } while (b >= 0x20)
+        val dlat = if (result and 1 != 0) (result shr 1).inv() else result shr 1
+        lat += dlat
+
+        shift = 0
+        result = 0
+        do {
+            b = encoded[index++].code - 63
+            result = result or (b and 0x1f shl shift)
+            shift += 5
+        } while (b >= 0x20)
+        val dlng = if (result and 1 != 0) (result shr 1).inv() else result shr 1
+        lng += dlng
+
+        val p = LatLng(
+            lat / 1E5,
+            lng / 1E5
+        )
+        poly.add(p)
+    }
+
+    return poly
+}
+fun haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+    val earthRadius = 6371e3 // Radius of the Earth in meters
+
+    val dLat = Math.toRadians(lat2 - lat1)
+    val dLon = Math.toRadians(lon2 - lon1)
+
+    val a = sin(dLat / 2) * sin(dLat / 2) +
+            cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
+            sin(dLon / 2) * sin(dLon / 2)
+
+    val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    return earthRadius * c // Distance in meters
+}
+
+fun calculateTotalDistance(latLng1: LatLng, latLng2: LatLng, latLng3: LatLng): Double {
+    val distance1 = haversineDistance(latLng1.latitude, latLng1.longitude, latLng2.latitude, latLng2.longitude)
+    val distance2 = haversineDistance(latLng2.latitude, latLng2.longitude, latLng3.latitude, latLng3.longitude)
+
+    return distance1 + distance2 // Total distance in meters
+}
 
 @Composable
 fun DirectionSheetDesign(
@@ -181,7 +325,6 @@ fun DirectionSheetDesign(
             onUpdateStartEndPoints(start, destination)
         }
     }
-
     Column {
         Row(
             modifier = Modifier
