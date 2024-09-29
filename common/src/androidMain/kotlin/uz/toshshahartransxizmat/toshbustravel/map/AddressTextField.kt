@@ -4,13 +4,16 @@ import android.app.Activity
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -31,9 +34,10 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import uz.toshshahartransxizmat.toshbustravel.R
+import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType.GhostOutline.borderColor
 
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AddressTextField(
     hint: String,
@@ -82,15 +86,17 @@ fun AddressTextField(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
-                unfocusedContainerColor = Color.White,
+                .border(
+                    border = BorderStroke(1.dp, borderColor),
+                    shape = RoundedCornerShape(16.dp)
+                ),
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                focusedTextColor = Color.Black,
-                unfocusedTextColor = Color.Black
-            ), shape = RoundedCornerShape(20.dp),
+                errorIndicatorColor = Color.Transparent
+            ),
+            shape = RoundedCornerShape(16.dp),
             textStyle = MaterialTheme.typography.bodySmall,
             enabled = false
            /* trailingIcon = {

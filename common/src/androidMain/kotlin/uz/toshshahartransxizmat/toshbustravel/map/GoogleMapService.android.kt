@@ -61,6 +61,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
+import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
+import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import java.net.URL
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -364,14 +369,17 @@ fun DirectionSheetDesign(
         }
 
         Button(
-            onClick = { onValidateAndDrawPath() },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 20.dp)
-                .height(50.dp)
-        ) {
-            Text(text = "Продолжить")
-        }
+                .padding(horizontal = 8.dp)
+                .padding(bottom = 42.dp),
+            text = TextValue(getStrings("continue")),
+            size = ButtonSize.Large,
+            enabled = false,
+            onClick = {
+                onValidateAndDrawPath()
+            }
+        )
     }
 }
 @Composable
