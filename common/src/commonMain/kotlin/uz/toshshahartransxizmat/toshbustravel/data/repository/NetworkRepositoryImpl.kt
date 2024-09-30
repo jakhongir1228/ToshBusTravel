@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toActiveOrder
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAuthData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAuthDataTwo
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toCalResponse
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientUpdateData
@@ -45,7 +46,7 @@ class NetworkRepositoryImpl(
 
     override suspend fun postSignUp(signUp: SignUpEntity): Flow<AuthResponseData> = flow {
         val r = ktorService.postSignUp(signUp)
-        emit(r.toAuthData())
+        emit(r.toAuthDataTwo())
     }
 
     override suspend fun postSignIn(signInEntity: SignInEntity): Flow<AuthResponseData> = flow {

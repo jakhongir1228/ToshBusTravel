@@ -11,8 +11,10 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataLogIn
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataOrder
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataPayment
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataReset
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataSignUp
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.LogInDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.SignUpDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDetails
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
@@ -56,6 +58,25 @@ fun DataLogIn.toSignData():SignData{
     return SignData(
         hash = hash,
         sentOtp = sentOtp,
+        userRole = userRole,
+        accessToken = access_token
+    )
+}
+
+fun SignUpDTO.toAuthDataTwo(): AuthResponseData {
+    return AuthResponseData(
+        data = data.toSignDataTwo(),
+        message = message,
+        error = error.toString(),
+        success = success
+    )
+}
+
+fun DataSignUp.toSignDataTwo(): SignData{
+    return SignData(
+        hash = hash,
+        sentOtp = sentOtp,
+        userRole = "",
         accessToken = access_token
     )
 }
