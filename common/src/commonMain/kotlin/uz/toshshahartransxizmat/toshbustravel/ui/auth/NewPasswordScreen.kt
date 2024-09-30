@@ -109,6 +109,7 @@ internal class NewPasswordScreen(
                                 deviceId = provideDeviceId()
                             )
                             viewModel.loadPasswordVerify(resetEntity)
+                            showErrorDialog = true
                         }
 
                     }

@@ -228,6 +228,7 @@ internal class SeeAmountScreen: Screen {
                         )
                         println("call->>>>$calculatorEntity")
                         viewModel.loadCalculator(calculatorEntity)
+                        showErrorDialog = true
                     }
                 )
 

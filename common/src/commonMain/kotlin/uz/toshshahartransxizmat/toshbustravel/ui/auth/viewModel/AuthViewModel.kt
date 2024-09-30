@@ -67,7 +67,7 @@ class AuthViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = tt.message.toString(),
+                            error = "Неправильный логин или пароль",
                             isLoaded = false
                         )
                     }

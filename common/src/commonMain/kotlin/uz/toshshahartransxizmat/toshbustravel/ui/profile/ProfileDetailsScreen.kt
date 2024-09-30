@@ -131,6 +131,7 @@ internal class ProfileDetailsScreen: Screen {
                             imgBase64 = "base64"
                         )
                         viewModel.loadUpdateClient(r)
+                        showErrorDialog = true
                     }
                 )
 

@@ -132,6 +132,7 @@ internal class PaymentScreen(
                             transactionId = amount.toInt()
                         )
                         viewModel.loadPayment(payOrderEntity)
+                        showErrorDialog = true
                     }
                 )
             }

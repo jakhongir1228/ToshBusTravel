@@ -132,6 +132,7 @@ internal class LogInScreen(
                         ipAddress = "string"
                     )
                     viewModel.loadLoginIn(signInEntity)
+                    showErrorDialog = true
                 }
             )
         }
