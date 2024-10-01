@@ -3,6 +3,7 @@ package uz.toshshahartransxizmat.toshbustravel.map
 import android.content.Context
 import android.location.Geocoder
 import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -80,10 +81,10 @@ actual fun ComposeMapView(
     val markersState = remember { mutableStateOf(emptyList<MarkerOptions>()) }
     val parkingPoint=LatLng(41.3063483,69.350843)
 
-    var distanceOfPoints by remember { mutableStateOf<Double?>(null) }
+    var distanceOfPoints by remember { mutableStateOf<Double?>(0.0) }
 
 
-    var blueDotLocation by remember { mutableStateOf<LatLng?>(null) }
+//    var blueDotLocation by remember { mutableStateOf<LatLng?>(null) }
 
     // Set up a callback to listen for changes in the My Location layer
     val mapProperties = remember {
@@ -112,7 +113,7 @@ actual fun ComposeMapView(
 
 
     LaunchedEffect(startLatLng, endLatLng) {
-        // Only proceed if both startLatLng and endLatLng are non-null
+
         if (startLatLng != null && endLatLng != null) {
             coroutineScope.launch {
                 distanceOfPoints=calculateTotalDistance(parkingPoint, startLatLng!!, endLatLng!!)
@@ -139,12 +140,11 @@ actual fun ComposeMapView(
                 firstSemgentRoad = getRoadPath(parkingPoint, startLatLng!!)
                 secondSegmentRoad = getRoadPath(startLatLng!!, endLatLng!!)
 
-                // Update camera bounds to show both markers
                 val bounds = LatLngBounds.Builder()
                     .include(startLatLng!!)
                     .include(endLatLng!!)
                     .build()
-                cameraPositionState.animate(
+                cameraPositionState.move(
                     CameraUpdateFactory.newLatLngBounds(bounds, 100)
                 )
             }
@@ -160,15 +160,16 @@ actual fun ComposeMapView(
             modifier = Modifier.weight(1f).fillMaxWidth(),
             cameraPositionState = cameraPositionState,
             properties = mapProperties,
-            onMyLocationClick = { location ->
-                blueDotLocation = LatLng(location.latitude, location.longitude)}
+           /* onMyLocationClick = { location ->
+                blueDotLocation = LatLng(location.latitude, location.longitude)
+            }*/
         ) {
-            blueDotLocation?.let {
+            /*location?.let {
                 cameraPositionState.position = CameraPosition(
                     LatLng(it.latitude, it.longitude), 15f, 0f, 0f
                 )
-            }
-            blueDotLocation?.let {
+            }*/
+            location?.let {
 
                 if (startLatLng != null && endLatLng != null) {
 
@@ -197,20 +198,6 @@ actual fun ComposeMapView(
                         }
                     }
 
-
-               /*     Marker(
-                        state = rememberMarkerState(position = startLatLng!!),
-                        title = "Start Location" ,
-                        icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN) // Set marker color to blue
-
-                    )
-                    Marker(
-                        state = rememberMarkerState(position = endLatLng!!),
-                        title = "Destination Location",
-                        icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN) // Set marker color to blue
-
-                    )*/
-
                 }
             }
         }
@@ -229,16 +216,49 @@ actual fun ComposeMapView(
             },
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             vehicleId=vehicleId,
-            parkingPoint=parkingPoint
+            parkingPoint=parkingPoint,
+            distanceOfPoints=distanceOfPoints!!
         )
     }
 }
-
 suspend fun getRoadPath(startLatLng: LatLng, endLatLng: LatLng): List<LatLng> {
     val url = "https://maps.googleapis.com/maps/api/directions/json?" +
             "origin=${startLatLng.latitude},${startLatLng.longitude}" +
             "&destination=${endLatLng.latitude},${endLatLng.longitude}" +
-            "&key=${"AIzaSyAg2fOUJo8a-LuMvDYOccUBq9gDxoLZhmE"}"
+            "&key=${"AIzaSyD7i6d8teRDVvWJ3SdeATBrG74liSChL5I"}"
+
+    return withContext(Dispatchers.IO) {
+        try {
+            val result = URL(url).readText()
+            val jsonObject = JSONObject(result)
+            val routes = jsonObject.getJSONArray("routes")
+
+            if (routes.length() > 0) {
+                val route = routes.getJSONObject(0)
+                val overviewPolyline = route.getJSONObject("overview_polyline")
+                val encodedPolyline = overviewPolyline.getString("points")
+
+                Log.d("getRoadPath", "Encoded polyline: $encodedPolyline")
+
+                // Decode the polyline points
+                return@withContext decodePolyline(encodedPolyline)
+            } else {
+                Log.e("getRoadPath", "No routes found")
+                emptyList()
+            }
+        } catch (e: Exception) {
+            Log.e("getRoadPath", "Error fetching road path", e)
+            emptyList()
+        }
+    }
+}
+
+/*
+suspend fun getRoadPath(startLatLng: LatLng, endLatLng: LatLng): List<LatLng> {
+    val url = "https://maps.googleapis.com/maps/api/directions/json?" +
+            "origin=${startLatLng.latitude},${startLatLng.longitude}" +
+            "&destination=${endLatLng.latitude},${endLatLng.longitude}" +
+            "&key=${"AIzaSyD7i6d8teRDVvWJ3SdeATBrG74liSChL5I"}"
 
     return withContext(Dispatchers.IO) {
         try {
@@ -261,6 +281,7 @@ suspend fun getRoadPath(startLatLng: LatLng, endLatLng: LatLng): List<LatLng> {
         }
     }
 }
+*/
 
 // Polyline decoding function
 fun decodePolyline(encoded: String): List<LatLng> {
@@ -331,6 +352,7 @@ fun DirectionSheetDesign(
     modifier: Modifier,
     vehicleId: Int,
     parkingPoint:LatLng,
+    distanceOfPoints:Double
 
 ) {
     val navigator = LocalNavigator.currentOrThrow
@@ -358,7 +380,7 @@ fun DirectionSheetDesign(
             onValidateAndDrawPath()
             println("test----->")
         }
-        onDispose { /* No-op */ }
+        onDispose { }
     }
 
     Column {
@@ -383,7 +405,7 @@ fun DirectionSheetDesign(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     errorText = startError,
-                    hint = "Current Location"
+                    hint = getStrings("Current Location")
                 )
 
                 Text(text = "куда")
@@ -391,7 +413,7 @@ fun DirectionSheetDesign(
                     addressText = destination,
                     onTextChange = { newAddress ->
                         destination = newAddress
-                        onValidateAndDrawPath()
+
                     },
                     modifier = Modifier.fillMaxWidth(),
                     errorText = destinationError,
@@ -399,6 +421,47 @@ fun DirectionSheetDesign(
                 )
             }
         }
+     /*   Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween, // Ensures the buttons are spaced evenly
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Button(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp), // Add padding between buttons
+                text = TextValue(getStrings("Draw Route")),
+                size = ButtonSize.Large,
+                enabled = areBothFieldsFilled,
+                onClick = {
+                    onValidateAndDrawPath()
+                }
+            )
+
+            Button(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp), // Add padding between buttons
+                text = TextValue(getStrings("Continue")),
+                size = ButtonSize.Large,
+                enabled = areBothFieldsFilled,
+                onClick = {
+                    navigator.push(SeeAmountScreen(vehicleId= vehicleId,
+                        from= start,
+                        to= destination,
+                        aLatitude=parkingPoint.latitude,
+                        aLongitude= parkingPoint.longitude,
+                        bLatitude=startLatLng!!.latitude,
+                        bLongitude=startLatLng.longitude,
+                        cLatitude=endLatLng!!.latitude,
+                        cLongitude=endLatLng.longitude,
+                        distance=distance
+                    ))
+                }
+            )
+        }*/
 
         Button(
             modifier = Modifier
@@ -418,6 +481,7 @@ fun DirectionSheetDesign(
                     bLongitude=startLatLng.longitude,
                     cLatitude=endLatLng!!.latitude,
                     cLongitude=endLatLng.longitude,
+                    distanceofPoints=distanceOfPoints
                     ))
 
             }

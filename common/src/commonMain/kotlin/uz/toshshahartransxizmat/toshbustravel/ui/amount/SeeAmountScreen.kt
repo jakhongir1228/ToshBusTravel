@@ -44,7 +44,7 @@ import uz.toshshahartransxizmat.toshbustravel.ui.amount.viewModel.AmountViewMode
 import uz.toshshahartransxizmat.toshbustravel.util.Other
 
 internal class SeeAmountScreen(vehicleId:Int,from:String,to:String,aLatitude:Double,aLongitude:Double,
-                               bLatitude:Double,bLongitude:Double,cLatitude:Double,cLongitude:Double,): Screen {
+                               bLatitude:Double,bLongitude:Double,cLatitude:Double,cLongitude:Double,distanceofPoints:Double?): Screen {
 
     @Composable
     override fun Content() {
