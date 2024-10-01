@@ -41,7 +41,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType.Ghost
 @Composable
 fun AddressTextField(
     hint: String,
-    AddressText: String,
+    addressText: String,
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     errorText: String?
@@ -74,7 +74,7 @@ fun AddressTextField(
     ) {
         // Embedded TextField from original code with modifications
         OutlinedTextField(
-            value = AddressText,
+            value = addressText,
             onValueChange = onTextChange,
             placeholder = {
                 Text(

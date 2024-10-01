@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.padding
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -338,6 +340,10 @@ fun DirectionSheetDesign(
     var startError by remember { mutableStateOf<String?>(null) }
     var destinationError by remember { mutableStateOf<String?>(null) }
 
+    val areBothFieldsFilled by remember {
+        derivedStateOf { start.isNotEmpty() && destination.isNotEmpty() }
+    }
+
     val onValidateAndDrawPath: () -> Unit = {
         startError = if (start.isEmpty()) "Start location is empty" else null
         destinationError = if (destination.isEmpty()) "Destination is empty" else null
@@ -345,6 +351,14 @@ fun DirectionSheetDesign(
         if (startError == null && destinationError == null) {
             onUpdateStartEndPoints(start, destination)
         }
+    }
+
+    DisposableEffect(areBothFieldsFilled) {
+        if (areBothFieldsFilled) {
+            onValidateAndDrawPath()
+            println("test----->")
+        }
+        onDispose { /* No-op */ }
     }
 
     Column {
@@ -363,7 +377,7 @@ fun DirectionSheetDesign(
             ) {
                 Text(text = "От куда")
                 AddressTextField(
-                    AddressText = start,
+                    addressText = start,
                     onTextChange = { newAddress ->
                         start = newAddress
                     },
@@ -374,7 +388,7 @@ fun DirectionSheetDesign(
 
                 Text(text = "куда")
                 AddressTextField(
-                    AddressText = destination,
+                    addressText = destination,
                     onTextChange = { newAddress ->
                         destination = newAddress
                         onValidateAndDrawPath()
@@ -393,7 +407,7 @@ fun DirectionSheetDesign(
                 .padding(bottom = 42.dp),
             text = TextValue(getStrings("continue")),
             size = ButtonSize.Large,
-            enabled = false,
+            enabled = areBothFieldsFilled,
             onClick = {
                 navigator.push(SeeAmountScreen(vehicleId= vehicleId,
                     from= start,
@@ -410,6 +424,7 @@ fun DirectionSheetDesign(
         )
     }
 }
+
 @Composable
 fun DrawMapWithPath(googleMap: GoogleMap, start: String, destination: String) {
     val context = LocalContext.current
