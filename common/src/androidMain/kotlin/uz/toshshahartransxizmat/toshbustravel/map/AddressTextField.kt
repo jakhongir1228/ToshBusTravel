@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -35,6 +36,9 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import uz.toshshahartransxizmat.toshbustravel.R
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType.GhostOutline.borderColor
+import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
+import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
+import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 
 
 @OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3Api::class)
@@ -78,10 +82,9 @@ fun AddressTextField(
             onValueChange = onTextChange,
             placeholder = {
                 Text(
-                    text = hint,
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                    color = Color.Gray,
-                    fontSize = 10.sp
+                    modifier = Modifier.align(Alignment.CenterStart),
+                    text = TextValue(hint),
+                    color = grayA220
                 )
             },
             modifier = Modifier

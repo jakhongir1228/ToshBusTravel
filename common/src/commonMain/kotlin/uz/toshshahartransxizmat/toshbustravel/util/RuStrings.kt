@@ -59,5 +59,8 @@ val ruStrings = mapOf(
     "processing" to "Обрабатывается",
     "check_status" to "Проверить статус",
     "the_request_will_be_processed_in_a_few_minutes" to "Для обработки заявки потребуется несколько минут",
-    "technical_error_try_again_later" to "Техническая ошибка, попробуйте позже"
+    "technical_error_try_again_later" to "Техническая ошибка, попробуйте позже",
+    "my_location" to "Моё местоположение",
+    "from" to "От куда",
+    "to" to "Куда"
 )

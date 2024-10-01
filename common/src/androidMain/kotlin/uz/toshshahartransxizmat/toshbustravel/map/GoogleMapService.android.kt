@@ -53,7 +53,9 @@ import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
+import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.SeeAmountScreen
+import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import java.net.URL
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -157,7 +159,9 @@ actual fun ComposeMapView(
         }
 
         GoogleMap(
-            modifier = Modifier.weight(1f).fillMaxWidth(),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
             cameraPositionState = cameraPositionState,
             properties = mapProperties,
             onMyLocationClick = { location ->
@@ -227,7 +231,9 @@ actual fun ComposeMapView(
                     endLatLng = getLatLngFromAddress(context, end)
                 }
             },
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             vehicleId=vehicleId,
             parkingPoint=parkingPoint
         )
@@ -365,7 +371,7 @@ fun DirectionSheetDesign(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(220.dp)
                 .padding(5.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -375,27 +381,39 @@ fun DirectionSheetDesign(
                     .weight(1f)
                     .fillMaxHeight()
             ) {
-                Text(text = "От куда")
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, bottom = 8.dp),
+                    text = TextValue(text = getStrings(resourceKey = "from")),
+                    color = gray650
+                )
                 AddressTextField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     addressText = start,
                     onTextChange = { newAddress ->
                         start = newAddress
                     },
-                    modifier = Modifier.fillMaxWidth(),
                     errorText = startError,
-                    hint = "Current Location"
+                    hint = getStrings(resourceKey = "my_location")
                 )
 
-                Text(text = "куда")
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp, bottom = 8.dp),
+                    text = TextValue(text = getStrings(resourceKey = "to")),
+                    color = gray650
+                )
                 AddressTextField(
                     addressText = destination,
                     onTextChange = { newAddress ->
                         destination = newAddress
-                        onValidateAndDrawPath()
                     },
                     modifier = Modifier.fillMaxWidth(),
                     errorText = destinationError,
-                    hint = "Продолжить"
+                    hint = getStrings(resourceKey = "to")
                 )
             }
         }
