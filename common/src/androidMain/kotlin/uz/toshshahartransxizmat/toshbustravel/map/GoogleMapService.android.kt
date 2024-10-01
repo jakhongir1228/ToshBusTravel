@@ -152,7 +152,7 @@ actual fun ComposeMapView(
     Column(modifier = modifier.fillMaxSize()) {
         if (distanceOfPoints != null)
         {
-            Text("Distance is $distanceOfPoints")
+            Text("Distance is $distanceOfPoints KM")
         }
 
         GoogleMap(
@@ -340,8 +340,13 @@ fun calculateTotalDistance(latLng1: LatLng, latLng2: LatLng, latLng3: LatLng): D
     val distance1 = haversineDistance(latLng1.latitude, latLng1.longitude, latLng2.latitude, latLng2.longitude)
     val distance2 = haversineDistance(latLng2.latitude, latLng2.longitude, latLng3.latitude, latLng3.longitude)
 
-    return distance1 + distance2 // Total distance in meters
+    // Total distance in kilometers
+    val totalDistanceInKm = (distance1 + distance2) / 1000
+
+    // Round to 2 decimal places
+    return String.format("%.2f", totalDistanceInKm).toDouble()
 }
+
 
 @Composable
 fun DirectionSheetDesign(
