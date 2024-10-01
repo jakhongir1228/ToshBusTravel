@@ -59,5 +59,8 @@ val uzStrings = mapOf(
     "processing" to "Aniqlanmoqda",
     "check_status" to "Holatni tekshirish",
     "the_request_will_be_processed_in_a_few_minutes" to "Arizani ko'rib chiqishga bir necha daqiqa talab etiladi",
-    "technical_error_try_again_later" to "Texnik xato, keyinroq harakat qilib ko'ring"
+    "technical_error_try_again_later" to "Texnik xato, keyinroq harakat qilib ko'ring",
+    "my_location" to "Mening joylashuvim",
+    "from" to "Qayerdan",
+    "to" to "Qayerga"
 )

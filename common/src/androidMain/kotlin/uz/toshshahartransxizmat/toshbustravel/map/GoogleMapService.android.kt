@@ -3,7 +3,6 @@ package uz.toshshahartransxizmat.toshbustravel.map
 import android.content.Context
 import android.location.Geocoder
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -144,7 +143,7 @@ actual fun ComposeMapView(
                     .include(startLatLng!!)
                     .include(endLatLng!!)
                     .build()
-                cameraPositionState.move(
+                cameraPositionState.animate(
                     CameraUpdateFactory.newLatLngBounds(bounds, 100)
                 )
             }

@@ -60,5 +60,8 @@ val enStrings = mapOf(
     "processing" to "Processing",
     "check_status" to "Check Status",
     "the_request_will_be_processed_in_a_few_minutes" to "The request will be processed in a few minutes",
-    "technical_error_try_again_later" to "Technical error, try again later"
+    "technical_error_try_again_later" to "Technical error, try again later",
+    "my_location" to "My Location",
+    "from" to "From",
+    "to" to "To"
 )
