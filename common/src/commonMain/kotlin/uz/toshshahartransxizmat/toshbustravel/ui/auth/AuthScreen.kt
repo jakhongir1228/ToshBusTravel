@@ -149,6 +149,7 @@ internal class AuthScreen(
                                 deviceId = provideDeviceId()
                             )
                             viewModel.loadAuth(signUpEntity)
+                            showErrorDialog = true
                         }
 
                     }

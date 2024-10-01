@@ -131,6 +131,9 @@ fun TransportDetailsContent(
                     Column {
                         transportDetailsData.orderCharts.forEach { order ->
                             Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 12.dp),
                                 text = "${order.orderStart}  до  ${order.orderEnd}",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = errorLight

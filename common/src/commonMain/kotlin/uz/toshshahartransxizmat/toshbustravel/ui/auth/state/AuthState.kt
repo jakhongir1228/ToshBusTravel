@@ -9,6 +9,7 @@ data class AuthState(
         data = SignData(
             hash = null,
             sentOtp = false,
+            userRole = "",
             accessToken = null
         ),
         message =  null,

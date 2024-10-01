@@ -26,6 +26,7 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.PaymentDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.SignUpDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
@@ -68,7 +69,7 @@ class KtorClient(
         return response.body()
     }
 
-    override suspend fun postSignUp(signUpEntity: SignUpEntity): LogInDTO {
+    override suspend fun postSignUp(signUpEntity: SignUpEntity): SignUpDTO {
         val url = BASE_URL + SIGN_UP_ENDPOINT
         val r = client.post(url) {
             contentType(ContentType.Application.Json)

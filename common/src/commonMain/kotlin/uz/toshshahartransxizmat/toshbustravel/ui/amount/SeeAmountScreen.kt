@@ -229,6 +229,7 @@ internal class SeeAmountScreen(vehicleId:Int,from:String,to:String,aLatitude:Dou
                         )
                         println("call->>>>$calculatorEntity")
                         viewModel.loadCalculator(calculatorEntity)
+                        showErrorDialog = true
                     }
                 )
 

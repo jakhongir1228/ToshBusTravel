@@ -38,7 +38,7 @@ class AuthViewModel(
                     _state.update { res->
                         res.copy(
                             isLoading = false,
-                            error = res.success.message.toString(),
+                            error = "Техническая ошибка, попробуйте позже",
                             isLoaded = false
                         )
                     }
@@ -67,7 +67,7 @@ class AuthViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = tt.message.toString(),
+                            error = "Неправильный логин или пароль",
                             isLoaded = false
                         )
                     }
@@ -97,7 +97,7 @@ class AuthViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = "User not found",
+                            error = "Техническая ошибка, попробуйте позже",
                             isLoaded = false
                         )
                     }
@@ -127,7 +127,7 @@ class AuthViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = it.success.message.toString(),
+                            error = "Техническая ошибка, попробуйте позже",
                             isLoaded = false
                         )
                     }

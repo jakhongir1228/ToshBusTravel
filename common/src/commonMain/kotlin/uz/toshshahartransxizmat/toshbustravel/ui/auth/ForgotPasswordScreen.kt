@@ -101,6 +101,7 @@ internal class ForgotPasswordScreen(
                         deviceId = provideDeviceId()
                     )
                     viewModel.loadResetPassword(resetEntity)
+                    showErrorDialog = true
                 }
             )
         }

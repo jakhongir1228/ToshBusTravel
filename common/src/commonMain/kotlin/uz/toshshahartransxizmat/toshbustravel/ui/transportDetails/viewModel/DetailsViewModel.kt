@@ -34,7 +34,7 @@ class DetailsViewModel(
                     _state.update { res->
                         res.copy(
                             isLoading = false,
-                            error = res.success.message.toString(),
+                            error = "Техническая ошибка, попробуйте позже",
                             isLoaded = false
                         )
                     }

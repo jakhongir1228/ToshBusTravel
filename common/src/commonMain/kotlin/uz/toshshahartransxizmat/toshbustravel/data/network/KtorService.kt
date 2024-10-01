@@ -8,6 +8,7 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.LogInDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.PaymentDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.SignUpDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
@@ -21,7 +22,7 @@ interface KtorService {
 
     suspend fun getVehicles(query: String, page: Int, size: Int): VehicleDTO
 
-    suspend fun postSignUp(signUpEntity: SignUpEntity):LogInDTO
+    suspend fun postSignUp(signUpEntity: SignUpEntity): SignUpDTO
 
     suspend fun postSignIn(signInEntity: SignInEntity):LogInDTO
 

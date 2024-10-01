@@ -45,6 +45,7 @@ internal class TransportDetailsScreen(
 
         LaunchedEffect(vehicleId) {
             viewModel.loadDetails(vehicleId)
+            showErrorDialog = true
         }
         Scaffold {
             Column(
