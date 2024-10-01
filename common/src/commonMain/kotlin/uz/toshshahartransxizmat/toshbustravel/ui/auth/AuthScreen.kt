@@ -25,27 +25,31 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
-import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
+import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.components.input.text.TextInput
 import uz.toshshahartransxizmat.toshbustravel.components.otp.OtpConfirmationScreen
+import uz.toshshahartransxizmat.toshbustravel.components.otp.OtpType
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.share.provideDeviceId
-import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputConfirmPassword
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.InputPhone
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
-internal class AuthScreen: Screen {
+internal class AuthScreen(
+    private val languageCode:String
+): Screen {
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = rememberKoinInject<AuthViewModel>()
         val state = viewModel.state.collectAsState()
+        var showErrorDialog by remember { mutableStateOf(true) }
 
         var firstName by remember { mutableStateOf("") }
         var showError by remember { mutableStateOf(false) }
@@ -54,6 +58,11 @@ internal class AuthScreen: Screen {
         var confirmPassword by remember { mutableStateOf("") }
         var passwordError by remember { mutableStateOf(false) }
         val isPhoneNumberValid = phoneNumber.length == 9
+        val isPasswordValid = password.length >= 4
+        val isPasswordsMatch = password == confirmPassword
+        val isFirstNameValid = firstName.isNotEmpty()
+
+        val isFormValid = isFirstNameValid && isPhoneNumberValid && isPasswordValid && isPasswordsMatch
 
         Scaffold {
             Column(
@@ -62,7 +71,7 @@ internal class AuthScreen: Screen {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PageHeader(
-                    type = PageHeaderType.Heading(text = "Регистрация"),
+                    type = PageHeaderType.Heading(text = getStrings("register")),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 16.dp),
@@ -75,22 +84,22 @@ internal class AuthScreen: Screen {
                         .padding(start = 16.dp, end = 16.dp),
                     value = firstName,
                     onValueChange = { firstName = it },
-                    label = TextValue("ФИО"),
+                    label = TextValue(getStrings("full_name")),
                     isError = showError && firstName.isEmpty(),
                     keyboardOptions = KeyboardOptions.Default,
                     keyboardActions = KeyboardActions(),
-                    placeholder = TextValue("Введите ФИО")
+                    placeholder = TextValue(getStrings("enter_full_name"))
                 )
 
                 InputPhone(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    title = "Номер телефона",
+                    title = getStrings("phone_number"),
                     onPhoneNumberChange = { phoneNumber = it }
                 )
 
                 InputConfirmPassword(
-                    title = "Пароль",
+                    title = getStrings("password"),
                     modifier = Modifier
                         .fillMaxWidth(),
                     value = password,
@@ -99,7 +108,7 @@ internal class AuthScreen: Screen {
                 )
 
                 InputConfirmPassword(
-                    title = "Подтвердите пароль",
+                    title = getStrings("confirm_password"),
                     modifier = Modifier
                         .fillMaxWidth(),
                     value = confirmPassword,
@@ -110,9 +119,11 @@ internal class AuthScreen: Screen {
                 TextAuth(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = "У вас есть аккаунт?",
-                    textClick = "Войти",
-                    navigator = navigator
+                    text = getStrings("have_account"),
+                    textClick = getStrings("sign_in"),
+                    navigator = {
+                        navigator.pop()
+                    }
                 )
 
                 Spacer(modifier = Modifier.weight(weight = 1f))
@@ -122,44 +133,55 @@ internal class AuthScreen: Screen {
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                         .padding(bottom = 56.dp),
-                    text = TextValue("Продолжить"),
+                    text = TextValue(getStrings("continue")),
                     size = ButtonSize.Large,
-                    enabled = true,
+                    enabled = isFormValid,
                     loading = state.value.isLoading,
                     onClick = {
-//                        showError = firstName.isEmpty()
-//                        passwordError = password != confirmPassword
-//                        if (!showError && !passwordError && password.length >= 8) {
-//                           // navigator.push(ForgotPasswordScreen())
-//
-//                        }
-                        val signUpEntity = SignUpEntity(
-                            username = "string1fg234",
-                            password = "string22",
-                            code = "",
-                            hash = "",
-                            deviceId = provideDeviceId()
-                        )
-                        viewModel.loadAuth(signUpEntity)
+                        showError = firstName.isEmpty()
+                        passwordError = password != confirmPassword
+                        if (!showError && !passwordError && password.length >= 4) {
+                            val signUpEntity = SignUpEntity(
+                                username = "998$phoneNumber",
+                                password = password,
+                                code = "",
+                                hash = "",
+                                deviceId = provideDeviceId()
+                            )
+                            viewModel.loadAuth(signUpEntity)
+                            showErrorDialog = true
+                        }
+
                     }
                 )
             }
         }
 
         if (state.value.error.isNotBlank()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                androidx.compose.material3.Text(text = state.value.error, fontSize = 25.sp)
-            }
+            ErrorDialog(
+                errorMessage = state.value.error,
+                showDialog = showErrorDialog,
+                onDismiss = { showErrorDialog = false }
+            )
         }
 
         if (state.value.isLoaded){
-            navigator.push(OtpConfirmationScreen(
-                userName = "string1fg234",
-                password = "string22",
-                code = state.value.success.code,
-                hash = state.value.success.hash,
-                deviceId = provideDeviceId()
-            ))
+            val hashSignUp = state.value.success.data.hash
+            if (hashSignUp!=null){
+                navigator.push(
+                    OtpConfirmationScreen(
+                        userName = "998$phoneNumber",
+                        password = password,
+                        hash = hashSignUp,
+                        deviceId = provideDeviceId(),
+                        languageCode = languageCode,
+                        otpType = OtpType.SIGN_UP
+                    )
+                )
+            }
+            else{
+                println("hash is null")
+            }
         }
 
     }

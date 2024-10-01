@@ -4,11 +4,13 @@ import GoogleMaps
 
 @main
 struct iOSApp: App {
-    
+
     init() {
         InitKoinKt.doInitKoin(appDeclaration: {_ in })
+        GMSServices.provideAPIKey("AIzaSyCKZtX5J6h3LWwl3e86P77ce0vuHaiZOv0")
+
     }
-    
+
     var body: some Scene {
             WindowGroup {
                 ZStack {
@@ -17,7 +19,6 @@ struct iOSApp: App {
             }
         }
 }
-
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> some UIViewController {
         return MainKt.MainViewController()
@@ -27,3 +28,7 @@ struct ComposeView: UIViewControllerRepresentable {
         print("update")
     }
 }
+
+
+
+

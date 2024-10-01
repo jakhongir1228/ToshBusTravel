@@ -16,8 +16,8 @@ internal class LanguageScreen: Screen {
 
         BasicLanguageScreen(
             modifier = Modifier,
-            navigateToAuthScreen = {
-                //navigator.push(LogInScreen())
+            navigateToAuthScreen = { lang->
+                navigator.push(LogInScreen(lang))
             }
         )
     }

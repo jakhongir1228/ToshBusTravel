@@ -3,4 +3,6 @@ target 'toshBusIosApp' do
   platform :ios, '16.0'
   pod 'common', :path => '../common'
   pod 'GoogleMaps'
+  pod 'GooglePlaces'
 end
+

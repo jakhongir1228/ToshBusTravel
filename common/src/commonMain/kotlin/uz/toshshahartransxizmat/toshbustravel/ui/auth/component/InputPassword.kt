@@ -30,15 +30,17 @@ import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
 import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 @Composable
 internal fun InputPasswordComponent(
     title:String,
     modifier: Modifier = Modifier,
+    password: TextFieldValue,
+    onPasswordChange: (TextFieldValue) -> Unit
 ) {
-    var password by remember { mutableStateOf(TextFieldValue("")) }
     var passwordVisible by remember { mutableStateOf(false) }
-    val borderColor = if (password.text.length < 8 && password.text.isNotEmpty()) errorLight else Color(0xFFD0D5DD)
+    val borderColor = if (password.text.length < 4 && password.text.isNotEmpty()) errorLight else Color(0xFFD0D5DD)
 
     Column(
         modifier = modifier
@@ -53,7 +55,7 @@ internal fun InputPasswordComponent(
         Box {
             BasicTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = onPasswordChange,
                 singleLine = true,
                 textStyle = MaterialTheme.typography.bodyLarge,
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -72,7 +74,7 @@ internal fun InputPasswordComponent(
                         if (password.text.isEmpty()) {
                             Text(
                                 modifier = Modifier.align(Alignment.CenterStart),
-                                text = TextValue("Введите пароль"),
+                                text = TextValue(getStrings("enter_password")),
                                 color = grayA220
                             )
                         }
@@ -93,10 +95,10 @@ internal fun InputPasswordComponent(
                 }
             )
         }
-        if (password.text.length < 8 && password.text.isNotEmpty()) {
+        if (password.text.length < 4 && password.text.isNotEmpty()) {
             Text(
                 modifier = modifier.padding(start = 16.dp, end = 16.dp),
-                text = TextValue("Введите не менее 8 символов"),
+                text = TextValue(getStrings("enter_at_least_4_characters")),
                 color = errorLight,
                 fontSize = 12.sp
             )

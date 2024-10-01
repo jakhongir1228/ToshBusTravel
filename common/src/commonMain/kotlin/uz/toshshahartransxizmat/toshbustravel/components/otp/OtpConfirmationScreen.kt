@@ -1,23 +1,19 @@
 package uz.toshshahartransxizmat.toshbustravel.components.otp
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,57 +21,56 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import cafe.adriel.voyager.navigator.tab.CurrentTab
-import cafe.adriel.voyager.navigator.tab.TabNavigator
 import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
-import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
-import uz.toshshahartransxizmat.toshbustravel.components.navigator.BottomItem
-import uz.toshshahartransxizmat.toshbustravel.components.otp.state.OtpConfirmationState
+import uz.toshshahartransxizmat.toshbustravel.components.otp.viewModel.OtpViewModel
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
+import uz.toshshahartransxizmat.toshbustravel.share.Platform
+import uz.toshshahartransxizmat.toshbustravel.share.provideDeviceId
 import uz.toshshahartransxizmat.toshbustravel.theme.black100
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
-import uz.toshshahartransxizmat.toshbustravel.theme.gray150
 import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.red500
-import uz.toshshahartransxizmat.toshbustravel.theme.white100
-import uz.toshshahartransxizmat.toshbustravel.ui.auth.ForgotPasswordScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.NewPasswordScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.auth.component.TextAuth
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
-import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeTab
-import uz.toshshahartransxizmat.toshbustravel.ui.orders.OrdersTab
-import uz.toshshahartransxizmat.toshbustravel.ui.profile.ProfileTab
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal class OtpConfirmationScreen(
     private val userName:String,
     private val password:String,
-    private val code:String,
     private val hash:String,
-    private val deviceId:String
+    private val deviceId:String,
+    private val languageCode:String,
+    private val otpType: OtpType
 ): Screen {
 
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        val viewModel = rememberKoinInject<AuthViewModel>()
-        val stateAuth = viewModel.state.collectAsState()
+        val vmAuth = rememberKoinInject<AuthViewModel>()
+        val stateAuth = vmAuth.state.collectAsState()
+        val viewModel = rememberKoinInject<OtpViewModel>()
+        val state = viewModel.state.collectAsState()
+        val platformName = remember { Platform() }
 
-        val state = OtpConfirmationState(
-            phoneNumber = userName,
-            requiredTimeout = 2,
-            requiredValueLength = code.length
-        )
         val keyboardController = LocalSoftwareKeyboardController.current
 
         keyboardController?.apply {
-           // if (state.isTimerCompleted) hide() else show()
+            if (state.value.isTimerCompleted) hide() else show()
+        }
+
+        LaunchedEffect(Unit) {
+            viewModel.startTimer()
         }
 
         Column(
@@ -85,7 +80,7 @@ internal class OtpConfirmationScreen(
         ) {
 
             PageHeader(
-                type = PageHeaderType.Heading(text = "СМС-подтверждение"),
+                type = PageHeaderType.Heading(text = getStrings("sms_verification")),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 16.dp),
@@ -96,14 +91,14 @@ internal class OtpConfirmationScreen(
 
             Text(
                 modifier = Modifier.padding(top = 32.dp),
-                text = TextValue("Отправили на номер"),
+                text = TextValue(getStrings("sent_to_number")),
                 color = gray650,
                 fontSize = 16.sp
             )
 
             Text(
                 modifier = Modifier.padding(top = 2.dp),
-                text = TextValue(state.phoneNumber), //state.phoneNumber
+                text = TextValue("+$userName"),
                 color = black100,
                 fontSize = 16.sp
             )
@@ -112,16 +107,16 @@ internal class OtpConfirmationScreen(
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)
                     .padding(top = 55.dp),
-                text = code,
-                length = state.requiredValueLength,
+                text = viewModel.state.value.value,
+                length = state.value.requiredValueLength,
                 onTextChanged = { value, _ ->
-                    //accept(Intent.OtpValueChanged(value))
-                                },
-                enabled = state.isInputEnabled,
-                isError = state.errorText != null
+                    viewModel.onOtpValueChanged(value)
+                },
+                enabled = true,
+                isError = state.value.errorText != null
             )
 
-            state.errorText?.let { text ->
+            state.value.errorText?.let { text ->
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -139,30 +134,31 @@ internal class OtpConfirmationScreen(
                     .padding(start = 52.dp, top = 24.dp, end = 52.dp)
                     .align(alignment = Alignment.CenterHorizontally)
             ) {
-                state.timerText?.let { value ->
-                    Text(
+                if (state.value.isTimerCompleted) {
+                    TextAuth(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .alpha(1f),
-                        textAlign = TextAlign.Center,
-                        text = value,
-                        color = blueA220,
-                        fontSize = 12.sp
-                    )
-                }
-
-                if (state.isResendAvailable) {
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = TextValue("Отправить еще раз"),
-                        size = ButtonSize.Medium,
-                        type = ButtonType.Primary,
-                        onClick = {
-                           // accept(Intent.ResendOtpValue(Commands.RequestOtp))
+                            .fillMaxWidth(),
+                        text = "",
+                        textClick = getStrings("resend"),
+                        navigator = {
+                            viewModel.resendOtp()
                         }
                     )
+                } else {
+                    state.value.timerText?.let { value ->
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .alpha(1f),
+                            textAlign = TextAlign.Center,
+                            text = value,
+                            color = blueA220,
+                            fontSize = 12.sp
+                        )
+                    }
                 }
             }
+
             Spacer(modifier = Modifier.weight(weight = 1f))
 
             Button(
@@ -172,10 +168,47 @@ internal class OtpConfirmationScreen(
                     .padding(bottom = 56.dp),
                 text = TextValue("Продолжить"),
                 size = ButtonSize.Large,
-                enabled = true,
+                enabled = state.value.isInputCompleted,
                 loading = stateAuth.value.isLoading,
                 onClick = {
-                   // viewModel.loadAuth(signUpEntity)
+                    when(otpType){
+                        OtpType.SIGN_UP-> {
+                            val signUpEntity = SignUpEntity(
+                                username = userName,
+                                password = password,
+                                code = state.value.value,
+                                hash = hash,
+                                deviceId = deviceId
+                            )
+                            vmAuth.loadAuth(signUpEntity)
+                        }
+                        OtpType.SIGN_IN-> {
+                            val signInEntity = SignInEntity(
+                                username = userName,
+                                password = password,
+                                platform = platformName.name,
+                                code = state.value.value,
+                                hash = hash,
+                                deviceId = deviceId,
+                                version = "string",
+                                lang = languageCode,
+                                deviceName = platformName.name,
+                                ipAddress = "string"
+                            )
+                            vmAuth.loadLoginIn(signInEntity)
+                        }
+                        OtpType.RESET_PASSWORD-> {
+                            val resetEntity = ResetEntity(
+                                username = userName,
+                                newPassword = "",
+                                code = state.value.value,
+                                hash = hash,
+                                deviceId = provideDeviceId()
+                            )
+                            vmAuth.loadResetPassword(resetEntity)
+                        }
+                    }
+
                 }
             )
         }
@@ -187,8 +220,15 @@ internal class OtpConfirmationScreen(
         }
 
         if (stateAuth.value.isLoaded){
-            navigator.push(LogInScreen())
+            if (stateAuth.value.successReset.completed){
+                navigator.push(NewPasswordScreen(
+                    username = userName,
+                    hash = hash,
+                    languageCode = languageCode
+                ))
+            }else{
+                navigator.push(LogInScreen(languageCode = languageCode))
+            }
         }
     }
-
 }

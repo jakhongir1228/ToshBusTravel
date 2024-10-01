@@ -19,8 +19,8 @@ import uz.toshshahartransxizmat.toshbustravel.ui.auth.AuthScreen
 fun TextAuth(
     text:String,
     textClick:String,
-    navigator: Navigator,
     modifier: Modifier = Modifier,
+    navigator:() -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -38,7 +38,7 @@ fun TextAuth(
             )
             Text(
                 modifier = Modifier.clickable {
-                    navigator.push(AuthScreen())
+                    navigator.invoke()
                 },
                 text = TextValue(textClick),
                 color = Color(0xFF007AFF),

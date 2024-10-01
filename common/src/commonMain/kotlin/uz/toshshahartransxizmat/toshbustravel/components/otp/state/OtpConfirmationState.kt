@@ -5,7 +5,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextVa
 import uz.toshshahartransxizmat.toshbustravel.components.otp.button.OtpButtonModel
 
 @Immutable
-internal data class OtpConfirmationState (
+data class OtpConfirmationState (
     val buttonModel: OtpButtonModel?,
     val errorText: TextValue?,
     val isInputCompleted: Boolean,

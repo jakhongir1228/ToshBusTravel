@@ -8,7 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.navigator.Navigator
-import uz.toshshahartransxizmat.toshbustravel.components.otp.OtpConfirmationScreen
+import kotlinx.coroutines.FlowPreview
+import uz.toshshahartransxizmat.toshbustravel.map.LocationProvider
 import uz.toshshahartransxizmat.toshbustravel.theme.ToshBusTravelTheme
 import uz.toshshahartransxizmat.toshbustravel.ui.apply.ApplyForScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.AuthScreen
@@ -17,16 +18,17 @@ import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.language.LanguageScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.logo.LogoScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
-import uz.toshshahartransxizmat.toshbustravel.ui.transportDetails.TransportDetailsScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.orders.ActiveOrderScreen
 
 @Composable
 fun Application(
-    isDarkTheme:Boolean
-){
+    isDarkTheme:Boolean,
+    locationProvider: LocationProvider
+) {
 
     ToshBusTravelTheme(
         isDarkTheme = isDarkTheme
-    ){
+    ) {
         Scaffold {
             var showScreen by remember { mutableStateOf(true) }
 
@@ -35,17 +37,19 @@ fun Application(
                     showScreen = false
                 })
             } else {
+
                 Navigator(
-                  //  LanguageScreen()
-                    LogInScreen()
-                  //  AuthScreen()
-                  //  ForgotPasswordScreen()
-                  //  OtpConfirmationScreen()
-                   //   HomeScreen()
-                   // ApplyForScreen()
-                  //  TransportDetailsScreen()
+                    // LanguageScreen()
+                    //  LogInScreen()
+                    //  AuthScreen()
+                    //  ForgotPasswordScreen()
+                    //  OtpConfirmationScreen()
+                       HomeScreen()
+//                    ApplyForScreen()
                 )
             }
         }
     }
+
 }
+

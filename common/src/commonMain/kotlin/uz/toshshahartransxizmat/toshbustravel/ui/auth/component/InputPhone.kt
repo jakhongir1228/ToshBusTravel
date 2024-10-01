@@ -22,6 +22,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.theme.borderColor200
 import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -92,7 +93,7 @@ internal fun InputPhone(
                     if (phoneNumber.isEmpty()) {
                         Text(
                             modifier = Modifier.align(Alignment.CenterVertically),
-                            text = "Введите номер телефона",
+                            text = getStrings("enter_phone_number"),
                             color = grayA220
                         )
                     }
