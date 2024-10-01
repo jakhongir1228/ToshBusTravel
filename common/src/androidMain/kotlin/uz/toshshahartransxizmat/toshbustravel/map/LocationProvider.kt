@@ -21,4 +21,26 @@ actual open class LocationProvider(private val context: Context) {
     }
 }
 
+/*private val fusedLocationClient: FusedLocationProviderClient =
+    LocationServices.getFusedLocationProviderClient(context)
+
+    @SuppressLint("MissingPermission")
+    actual suspend fun getCurrentLocation(): Location? {
+        return suspendCancellableCoroutine { continuation ->
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        continuation.resume(
+                            Location(location.latitude, location.longitude)
+                        )
+                    } else {
+                        continuation.resume(null)
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    continuation.resumeWithException(exception)
+                }
+        }
+    }*/
+
 

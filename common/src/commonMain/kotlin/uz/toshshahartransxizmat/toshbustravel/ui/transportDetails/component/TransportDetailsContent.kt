@@ -29,9 +29,11 @@ import org.jetbrains.compose.resources.painterResource
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.TransportDetailsData
+import uz.toshshahartransxizmat.toshbustravel.map.LocationProvider
 import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
 import uz.toshshahartransxizmat.toshbustravel.theme.grayA250
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
+import uz.toshshahartransxizmat.toshbustravel.ui.apply.ApplyForScreen
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 @OptIn(ExperimentalResourceApi::class)
@@ -41,6 +43,7 @@ fun TransportDetailsContent(
     navigator: Navigator,
     modifier: Modifier = Modifier
 ) {
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -143,7 +146,7 @@ fun TransportDetailsContent(
                 modifier = Modifier.fillMaxWidth(),
                 text = TextValue("Продолжить"),
                 onClick = {
-                    //  navigator.push(ApplyForScreen())
+                      navigator.push(ApplyForScreen(transportDetailsData.vehicleId))
                 },
             )
         }

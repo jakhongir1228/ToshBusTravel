@@ -46,7 +46,6 @@ internal class TransportDetailsScreen(
         LaunchedEffect(vehicleId) {
             viewModel.loadDetails(vehicleId)
         }
-
         Scaffold {
             Column(
                 modifier = Modifier

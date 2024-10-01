@@ -17,6 +17,7 @@ import cafe.adriel.voyager.navigator.tab.CurrentTab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import uz.toshshahartransxizmat.toshbustravel.components.navigator.AnimVisible
 import uz.toshshahartransxizmat.toshbustravel.components.navigator.BottomItem
+import uz.toshshahartransxizmat.toshbustravel.map.LocationProvider
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.OrdersTab
 import uz.toshshahartransxizmat.toshbustravel.ui.profile.ProfileTab
 import uz.toshshahartransxizmat.toshbustravel.util.Other
