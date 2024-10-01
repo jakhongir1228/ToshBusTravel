@@ -32,6 +32,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
+import uz.toshshahartransxizmat.toshbustravel.data.args.AmountArgs
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.component.OrderTypeSelector
@@ -43,8 +44,9 @@ import uz.toshshahartransxizmat.toshbustravel.ui.amount.dialog.AmountDialog
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.viewModel.AmountViewModel
 import uz.toshshahartransxizmat.toshbustravel.util.Other
 
-internal class SeeAmountScreen(vehicleId:Int,from:String,to:String,aLatitude:Double,aLongitude:Double,
-                               bLatitude:Double,bLongitude:Double,cLatitude:Double,cLongitude:Double,distanceofPoints:Double?): Screen {
+internal class SeeAmountScreen(
+    private val args: AmountArgs
+): Screen {
 
     @Composable
     override fun Content() {
@@ -90,7 +92,7 @@ internal class SeeAmountScreen(vehicleId:Int,from:String,to:String,aLatitude:Dou
                     )
 
                     Text(
-                        text = "20 km",
+                        text = args.distanceOfPoints.toString(),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = blueA220,
