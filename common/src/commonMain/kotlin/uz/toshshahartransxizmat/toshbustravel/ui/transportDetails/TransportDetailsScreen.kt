@@ -47,7 +47,6 @@ internal class TransportDetailsScreen(
             viewModel.loadDetails(vehicleId)
             showErrorDialog = true
         }
-
         Scaffold {
             Column(
                 modifier = Modifier

@@ -13,7 +13,7 @@ import cocoapods.GoogleMaps.animateWithCameraUpdate
 
 @Composable
 actual fun ComposeMapView(
-    locationProvider: LocationProvider,
+    vehicleId:Int,
     modifier: Modifier
 ) {
     // Create a `GMSMapView` instance and configure it
@@ -32,7 +32,7 @@ actual fun ComposeMapView(
     }
 
     // Launch effect to update the map based on location
-    LaunchedEffect(locationProvider) {
+/*    LaunchedEffect(locationProvider) {
         val location = locationProvider.getCurrentLocation()
         location?.let {
             googleMapView.animateWithCameraUpdate(
@@ -41,7 +41,7 @@ actual fun ComposeMapView(
                 )
             )
         }
-    }
+    }*/
 
     // Use UIKitView to integrate GMSMapView into Compose
     UIKitView(

@@ -11,6 +11,6 @@ expect open class LocationProvider {
 }
 
 @Composable
-expect fun ComposeMapView(locationProvider: LocationProvider, modifier: Modifier = Modifier)
+expect fun ComposeMapView(vehicleId:Int,modifier: Modifier = Modifier)
 
 data class Location(var latitude: Double, var longitude: Double)

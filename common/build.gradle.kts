@@ -84,6 +84,7 @@ kotlin {
                 implementation(libs.kotlinx.datetime)
 
                 implementation(libs.kamel.image)
+
             }
         }
 
@@ -167,11 +168,11 @@ dependencies {
     implementation(libs.androidx.ui.android)
     implementation(libs.androidx.ui.tooling.preview.android)
     implementation(libs.places)
+    implementation(libs.gms.play.services.location)
     commonMainApi(libs.mvvm.core)
     commonMainApi(libs.mvvm.compose)
     commonMainApi(libs.mvvm.flow)
     commonMainApi(libs.mvvm.flow.compose)
-
   /* val composeBom = platform("androidx.compose:compose-bom:2023.10.00")
     implementation(composeBom)*/
 }

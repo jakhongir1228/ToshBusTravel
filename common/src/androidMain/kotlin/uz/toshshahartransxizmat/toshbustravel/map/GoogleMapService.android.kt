@@ -3,8 +3,7 @@ package uz.toshshahartransxizmat.toshbustravel.map
 import android.content.Context
 import android.location.Geocoder
 import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,24 +12,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomSheetDefaults
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetValue
+
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,20 +27,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
@@ -63,9 +49,9 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
-import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
+import uz.toshshahartransxizmat.toshbustravel.ui.amount.SeeAmountScreen
 import java.net.URL
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -75,10 +61,12 @@ import kotlin.math.sqrt
 
 @Composable
 actual fun ComposeMapView(
-    locationProvider: LocationProvider,
+    vehicleId:Int,
     modifier: Modifier
 ) {
+
     val context = LocalContext.current
+    val locationProvider=LocationProvider(context)
     var location by remember { mutableStateOf<Location?>(null) }
     val cameraPositionState = rememberCameraPositionState()
     val coroutineScope = rememberCoroutineScope()
@@ -92,21 +80,34 @@ actual fun ComposeMapView(
 
     var distanceOfPoints by remember { mutableStateOf<Double?>(null) }
 
-    LaunchedEffect(locationProvider) {
-        coroutineScope.launch {
-            try {
-                location = locationProvider.getCurrentLocation()
-                Log.i("mapLocation", "Latitude: ${location?.latitude}, Longitude: ${location?.longitude}")
-                location?.let {
-                    cameraPositionState.position = CameraPosition(
-                        LatLng(it.latitude, it.longitude), 15f, 0f, 0f
-                    )
-                }
-            } catch (e: Exception) {
-                Log.e("mapLocation", "Error fetching location", e)
-            }
-        }
+
+    var blueDotLocation by remember { mutableStateOf<LatLng?>(null) }
+
+    // Set up a callback to listen for changes in the My Location layer
+    val mapProperties = remember {
+        MapProperties(isMyLocationEnabled = true)
     }
+   LaunchedEffect(Unit) {
+       coroutineScope.launch {
+           try {
+               location = locationProvider.getCurrentLocation()
+               Log.i(
+                   "mapLocation",
+                   "Latitude: ${location?.latitude}, Longitude: ${location?.longitude}"
+               )
+               location?.let {
+                   cameraPositionState.position = CameraPosition(
+                       LatLng(it.latitude, it.longitude), 15f, 0f, 0f
+                   )
+               }
+           } catch (e: Exception) {
+               Log.e("mapLocation", "Error fetching location", e)
+           }
+       }
+   }
+
+
+
 
     LaunchedEffect(startLatLng, endLatLng) {
         // Only proceed if both startLatLng and endLatLng are non-null
@@ -152,12 +153,20 @@ actual fun ComposeMapView(
         {
             Text("Distance is $distanceOfPoints")
         }
+
         GoogleMap(
             modifier = Modifier.weight(1f).fillMaxWidth(),
             cameraPositionState = cameraPositionState,
-            properties = MapProperties(isMyLocationEnabled = true)
+            properties = mapProperties,
+            onMyLocationClick = { location ->
+                blueDotLocation = LatLng(location.latitude, location.longitude)}
         ) {
-            location?.let {
+            blueDotLocation?.let {
+                cameraPositionState.position = CameraPosition(
+                    LatLng(it.latitude, it.longitude), 15f, 0f, 0f
+                )
+            }
+            blueDotLocation?.let {
 
                 if (startLatLng != null && endLatLng != null) {
 
@@ -208,15 +217,17 @@ actual fun ComposeMapView(
 
         // Design at the bottom
         DirectionSheetDesign(
-            startLatLng = { startLatLng },
-            endLatLng = { endLatLng },
+            startLatLng = startLatLng ,
+            endLatLng =  endLatLng ,
             onUpdateStartEndPoints = { start, end ->
                 coroutineScope.launch {
                     startLatLng = getLatLngFromAddress(context, start)
                     endLatLng = getLatLngFromAddress(context, end)
                 }
             },
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            vehicleId=vehicleId,
+            parkingPoint=parkingPoint
         )
     }
 }
@@ -312,11 +323,16 @@ fun calculateTotalDistance(latLng1: LatLng, latLng2: LatLng, latLng3: LatLng): D
 
 @Composable
 fun DirectionSheetDesign(
-    startLatLng: () -> LatLng?,
-    endLatLng: () -> LatLng?,
+    startLatLng:  LatLng?,
+    endLatLng:LatLng?,
     onUpdateStartEndPoints: (String, String) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
+    vehicleId: Int,
+    parkingPoint:LatLng,
+
 ) {
+    val navigator = LocalNavigator.currentOrThrow
+
     var start by remember { mutableStateOf("") }
     var destination by remember { mutableStateOf("") }
     var startError by remember { mutableStateOf<String?>(null) }
@@ -330,6 +346,7 @@ fun DirectionSheetDesign(
             onUpdateStartEndPoints(start, destination)
         }
     }
+
     Column {
         Row(
             modifier = Modifier
@@ -360,6 +377,7 @@ fun DirectionSheetDesign(
                     AddressText = destination,
                     onTextChange = { newAddress ->
                         destination = newAddress
+                        onValidateAndDrawPath()
                     },
                     modifier = Modifier.fillMaxWidth(),
                     errorText = destinationError,
@@ -377,7 +395,17 @@ fun DirectionSheetDesign(
             size = ButtonSize.Large,
             enabled = false,
             onClick = {
-                onValidateAndDrawPath()
+                navigator.push(SeeAmountScreen(vehicleId= vehicleId,
+                    from= start,
+                    to= destination,
+                    aLatitude=parkingPoint.latitude,
+                    aLongitude= parkingPoint.longitude,
+                    bLatitude=startLatLng!!.latitude,
+                    bLongitude=startLatLng.longitude,
+                    cLatitude=endLatLng!!.latitude,
+                    cLongitude=endLatLng.longitude,
+                    ))
+
             }
         )
     }

@@ -2,9 +2,7 @@ package uz.toshshahartransxizmat.toshbustravel.map
 
 import kotlinx.cinterop.useContents
 import platform.CoreLocation.CLLocationManager
-import platform.CoreLocation.CLLocationCoordinate2D
 import platform.CoreLocation.kCLAuthorizationStatusAuthorizedWhenInUse
-import uz.toshshahartransxizmat.toshbustravel.map.Location
 
 actual open class LocationProvider {
     private val locationManager = CLLocationManager()
@@ -21,4 +19,25 @@ actual open class LocationProvider {
         }
         return null
     }
+/*private val fusedLocationClient: FusedLocationProviderClient =
+    LocationServices.getFusedLocationProviderClient(context)
+
+    @SuppressLint("MissingPermission")
+    actual suspend fun getCurrentLocation(): Location? {
+        return suspendCancellableCoroutine { continuation ->
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        continuation.resume(
+                            Location(location.latitude, location.longitude)
+                        )
+                    } else {
+                        continuation.resume(null)
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    continuation.resumeWithException(exception)
+                }
+        }
+    }*/
 }
