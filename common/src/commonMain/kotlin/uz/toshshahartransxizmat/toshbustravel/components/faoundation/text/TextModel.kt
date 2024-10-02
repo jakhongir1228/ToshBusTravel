@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import uz.toshshahartransxizmat.toshbustravel.components.model.Model
 import uz.toshshahartransxizmat.toshbustravel.components.model.UnspecifiedId
+import uz.toshshahartransxizmat.toshbustravel.theme.onPrimaryLight
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
 
 abstract class TextModel : Model {
@@ -27,7 +28,7 @@ abstract class TextModel : Model {
     open val minLines: Int = 1
 
     companion object {
-        val defaultTextColor: Color = white100
+        val defaultTextColor: Color = onPrimaryLight
         val defaultTypography: @Composable () -> TextStyle = { MaterialTheme.typography.bodyMedium }
 
         operator fun invoke(

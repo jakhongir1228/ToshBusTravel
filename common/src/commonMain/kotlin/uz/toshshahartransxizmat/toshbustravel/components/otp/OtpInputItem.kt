@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,7 +34,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction.Companion.Done
 import androidx.compose.ui.text.input.KeyboardType.Companion.Number
 import androidx.compose.ui.text.input.TextFieldValue
@@ -45,10 +45,8 @@ import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
-import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.gray900
 import uz.toshshahartransxizmat.toshbustravel.theme.red500
-import uz.toshshahartransxizmat.toshbustravel.theme.silver500
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
 
 private const val DEFAULT_LENGTH = 6
@@ -171,7 +169,7 @@ private fun CharContainer(
     val textColor = when {
         index < text.length && !otpError -> gray900
         otpError -> red500
-        else -> gray650
+        else -> MaterialTheme.colorScheme.tertiary
     }
 
     Box(

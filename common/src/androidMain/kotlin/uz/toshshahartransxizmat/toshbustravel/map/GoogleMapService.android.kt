@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,10 +55,8 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextVa
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.data.args.AmountArgs
-import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.SeeAmountScreen
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
-import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import java.net.URL
 import java.util.Locale
 import kotlin.math.atan2
@@ -183,15 +182,15 @@ actual fun ComposeMapView(
                     if (firstSemgentRoad.isNotEmpty()) {
                         Polyline(
                             points = firstSemgentRoad,
-                            color = Color.Blue,
-                            width = 8f
+                            color = Color.Green,
+                            width = 10f
                         )
                     }
                     if (secondSegmentRoad.isNotEmpty()) {
                         Polyline(
                             points = secondSegmentRoad,
-                            color = Color.Green,
-                            width = 8f
+                            color = Color.Blue,
+                            width = 10f
                         )
                     }
                     markersState.value.forEach { markerOptions ->
@@ -415,7 +414,7 @@ fun DirectionSheetDesign(
                         .fillMaxWidth()
                         .padding(top = 8.dp, bottom = 6.dp),
                     text = TextValue(text = getStrings(resourceKey = "from")),
-                    color = gray650
+                    color = MaterialTheme.colorScheme.tertiary
                 )
                 AddressTextField(
                     addressText = start,
@@ -432,7 +431,7 @@ fun DirectionSheetDesign(
                         .fillMaxWidth()
                         .padding(top = 12.dp, bottom = 6.dp),
                     text = TextValue(text = getStrings(resourceKey = "to")),
-                    color = gray650
+                    color = MaterialTheme.colorScheme.tertiary
                 )
                 AddressTextField(
                     addressText = destination,

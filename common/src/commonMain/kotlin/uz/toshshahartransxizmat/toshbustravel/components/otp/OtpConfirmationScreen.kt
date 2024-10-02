@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -36,7 +37,6 @@ import uz.toshshahartransxizmat.toshbustravel.share.Platform
 import uz.toshshahartransxizmat.toshbustravel.share.provideDeviceId
 import uz.toshshahartransxizmat.toshbustravel.theme.black100
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
-import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.red500
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.NewPasswordScreen
@@ -92,7 +92,7 @@ internal class OtpConfirmationScreen(
             Text(
                 modifier = Modifier.padding(top = 32.dp),
                 text = TextValue(getStrings("sent_to_number")),
-                color = gray650,
+                color = MaterialTheme.colorScheme.tertiary,
                 fontSize = 16.sp
             )
 

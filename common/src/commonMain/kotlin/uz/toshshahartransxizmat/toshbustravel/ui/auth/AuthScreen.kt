@@ -51,8 +51,6 @@ internal class AuthScreen(
         val state = viewModel.state.collectAsState()
         var showErrorDialog by remember { mutableStateOf(true) }
 
-        var firstName by remember { mutableStateOf("") }
-        var showError by remember { mutableStateOf(false) }
         var phoneNumber by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
@@ -60,9 +58,8 @@ internal class AuthScreen(
         val isPhoneNumberValid = phoneNumber.length == 9
         val isPasswordValid = password.length >= 4
         val isPasswordsMatch = password == confirmPassword
-        val isFirstNameValid = firstName.isNotEmpty()
 
-        val isFormValid = isFirstNameValid && isPhoneNumberValid && isPasswordValid && isPasswordsMatch
+        val isFormValid = isPhoneNumberValid && isPasswordValid && isPasswordsMatch
 
         Scaffold {
             Column(
@@ -76,19 +73,6 @@ internal class AuthScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 16.dp),
                     onNavigationClick = { navigator.pop() }
-                )
-
-                TextInput(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp),
-                    value = firstName,
-                    onValueChange = { firstName = it },
-                    label = TextValue(getStrings("full_name")),
-                    isError = showError && firstName.isEmpty(),
-                    keyboardOptions = KeyboardOptions.Default,
-                    keyboardActions = KeyboardActions(),
-                    placeholder = TextValue(getStrings("enter_full_name"))
                 )
 
                 InputPhone(
@@ -138,9 +122,8 @@ internal class AuthScreen(
                     enabled = isFormValid,
                     loading = state.value.isLoading,
                     onClick = {
-                        showError = firstName.isEmpty()
                         passwordError = password != confirmPassword
-                        if (!showError && !passwordError && password.length >= 4) {
+                        if (!passwordError && password.length >= 4) {
                             val signUpEntity = SignUpEntity(
                                 username = "998$phoneNumber",
                                 password = password,

@@ -11,7 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.ImeAction
@@ -20,7 +20,6 @@ import org.jetbrains.compose.resources.painterResource
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.theme.borderColor200
-import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
@@ -42,7 +41,7 @@ internal fun InputPhone(
                 .fillMaxWidth()
                 .padding(start = 16.dp, top = 16.dp, end = 16.dp),
             text = TextValue(text = title),
-            color = gray650
+            color = MaterialTheme.colorScheme.tertiary
         )
         Row(
             modifier = Modifier
@@ -77,7 +76,7 @@ internal fun InputPhone(
                     .fillMaxWidth()
                     .align(Alignment.CenterVertically),
                 value = phoneNumber,
-                textStyle = MaterialTheme.typography.bodyLarge,
+                textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.scrim),
                 onValueChange = { newText ->
                     if (newText.replace(" ", "").length <= 9) {
                         phoneNumber = newText.filter { it.isDigit() }
@@ -98,7 +97,8 @@ internal fun InputPhone(
                         )
                     }
                     innerTextField()
-                }
+                },
+                cursorBrush = SolidColor(value = MaterialTheme.colorScheme.scrim)
             )
         }
 

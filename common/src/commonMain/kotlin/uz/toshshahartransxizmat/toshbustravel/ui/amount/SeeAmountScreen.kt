@@ -92,7 +92,7 @@ internal class SeeAmountScreen(
                     )
 
                     Text(
-                        text = args.distanceOfPoints.toString(),
+                        text = "${args.distanceOfPoints.toString()} km",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = blueA220,
@@ -138,7 +138,6 @@ internal class SeeAmountScreen(
                         title = getStrings("start_date")
                     ){ date->
                         startDate = date
-                        println("startDate-->$startDate")
                     }
 
                     TimeInput(
@@ -148,7 +147,6 @@ internal class SeeAmountScreen(
                         title = getStrings("start_time")
                     ){ time->
                         startTime = time
-                        println("startTime----->$startTime")
                     }
                 }
 
@@ -178,7 +176,6 @@ internal class SeeAmountScreen(
                         title = getStrings("end_time")
                     ){ time->
                         endTime = time
-                        println("endTime----->$endTime")
                     }
                 }
 
@@ -224,9 +221,9 @@ internal class SeeAmountScreen(
                     loading = state.value.isLoading,
                     onClick = {
                         val calculatorEntity = CalculatorEntity(
-                            busTypeId = 1,
+                            busTypeId = args.vehicleId,
                             isCity = isCity,
-                            distance = 15,
+                            distance = args.distanceOfPoints!!.toInt(),
                             travelTime = travelTime
                         )
                         println("call->>>>$calculatorEntity")

@@ -1,7 +1,6 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.auth.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -27,9 +27,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.IconVa
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
-import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
-import uz.toshshahartransxizmat.toshbustravel.theme.white100
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 @Composable
@@ -50,14 +48,15 @@ internal fun InputPasswordComponent(
                 .fillMaxWidth()
                 .padding(start = 16.dp, top = 16.dp, end = 16.dp),
             text = TextValue(text = title),
-            color = gray650
+            color = MaterialTheme.colorScheme.tertiary
         )
         Box {
             BasicTextField(
                 value = password,
                 onValueChange = onPasswordChange,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.bodyLarge,
+                cursorBrush = SolidColor(value = MaterialTheme.colorScheme.scrim),
+                textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.scrim),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 decorationBox = { innerTextField ->

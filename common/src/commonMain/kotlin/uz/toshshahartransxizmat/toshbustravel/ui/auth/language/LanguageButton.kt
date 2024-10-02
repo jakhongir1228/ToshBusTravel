@@ -29,13 +29,6 @@ import androidx.compose.ui.unit.dp
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
 import uz.toshshahartransxizmat.toshbustravel.components.button.theme.ButtonRippleTheme
-import uz.toshshahartransxizmat.toshbustravel.theme.blue725
-import uz.toshshahartransxizmat.toshbustravel.theme.gray300
-import uz.toshshahartransxizmat.toshbustravel.theme.gray500
-import uz.toshshahartransxizmat.toshbustravel.theme.gray700
-import uz.toshshahartransxizmat.toshbustravel.theme.silver100
-import uz.toshshahartransxizmat.toshbustravel.theme.silver400
-import uz.toshshahartransxizmat.toshbustravel.theme.silver950
 
 @Composable
 fun LanguageButton(

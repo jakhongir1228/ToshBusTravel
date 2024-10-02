@@ -18,16 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.Icon
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.IconValue
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
-import uz.toshshahartransxizmat.toshbustravel.theme.black100
-import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
-import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
 import uz.toshshahartransxizmat.toshbustravel.theme.yellowLight
 
@@ -79,7 +75,7 @@ internal fun TransportItem(
         ) {
             Text(
                 text = "${transport.passengerCapacity} мест",
-                color = gray650
+                color = MaterialTheme.colorScheme.tertiary
             )
 
             Spacer(modifier = Modifier.width(8.dp))

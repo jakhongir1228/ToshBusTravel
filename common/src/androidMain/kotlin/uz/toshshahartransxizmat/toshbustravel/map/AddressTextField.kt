@@ -100,7 +100,7 @@ fun AddressTextField(
                 errorIndicatorColor = Color.Transparent
             ),
             shape = RoundedCornerShape(16.dp),
-            textStyle = MaterialTheme.typography.bodySmall,
+            textStyle = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.scrim),
             enabled = false
            /* trailingIcon = {
                 Icon(
