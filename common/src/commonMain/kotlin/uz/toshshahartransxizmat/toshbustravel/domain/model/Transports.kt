@@ -1,10 +1,11 @@
 package uz.toshshahartransxizmat.toshbustravel.domain.model
 
 data class Transports(
-    val nameTransport:String?,
-    val typeTransport:String?,
-    val passengerCapacity: Int?,
-    val transmission:String?,
-    val colorTransport:String?,
-    val rateTransport:String?
+    val id: Int,
+    val modelName: String,
+    val number: String,
+    val type: String,
+    val passengerCapacity: Int,
+    val url: String?,
+    val urlToImage: String?
 )

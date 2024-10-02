@@ -1,7 +1,6 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.auth.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -27,18 +27,18 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.IconVa
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.theme.errorLight
-import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
-import uz.toshshahartransxizmat.toshbustravel.theme.white100
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 @Composable
 internal fun InputPasswordComponent(
     title:String,
     modifier: Modifier = Modifier,
+    password: TextFieldValue,
+    onPasswordChange: (TextFieldValue) -> Unit
 ) {
-    var password by remember { mutableStateOf(TextFieldValue("")) }
     var passwordVisible by remember { mutableStateOf(false) }
-    val borderColor = if (password.text.length < 8 && password.text.isNotEmpty()) errorLight else Color(0xFFD0D5DD)
+    val borderColor = if (password.text.length < 4 && password.text.isNotEmpty()) errorLight else Color(0xFFD0D5DD)
 
     Column(
         modifier = modifier
@@ -48,14 +48,15 @@ internal fun InputPasswordComponent(
                 .fillMaxWidth()
                 .padding(start = 16.dp, top = 16.dp, end = 16.dp),
             text = TextValue(text = title),
-            color = gray650
+            color = MaterialTheme.colorScheme.tertiary
         )
         Box {
             BasicTextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = onPasswordChange,
                 singleLine = true,
-                textStyle = MaterialTheme.typography.bodyLarge,
+                cursorBrush = SolidColor(value = MaterialTheme.colorScheme.scrim),
+                textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.scrim),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 decorationBox = { innerTextField ->
@@ -72,7 +73,7 @@ internal fun InputPasswordComponent(
                         if (password.text.isEmpty()) {
                             Text(
                                 modifier = Modifier.align(Alignment.CenterStart),
-                                text = TextValue("Введите пароль"),
+                                text = TextValue(getStrings("enter_password")),
                                 color = grayA220
                             )
                         }
@@ -93,10 +94,10 @@ internal fun InputPasswordComponent(
                 }
             )
         }
-        if (password.text.length < 8 && password.text.isNotEmpty()) {
+        if (password.text.length < 4 && password.text.isNotEmpty()) {
             Text(
                 modifier = modifier.padding(start = 16.dp, end = 16.dp),
-                text = TextValue("Введите не менее 8 символов"),
+                text = TextValue(getStrings("enter_at_least_4_characters")),
                 color = errorLight,
                 fontSize = 12.sp
             )

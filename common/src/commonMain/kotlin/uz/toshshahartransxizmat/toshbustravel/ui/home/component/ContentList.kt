@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,22 +18,24 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
 internal fun ContentList(
     modifier: Modifier = Modifier,
     list: List<Transports>,
-    onClick: (Transports) -> Unit
+    onClick: (Transports) -> Unit,
+    listState: LazyListState
 ) {
     LazyColumn(
-        modifier = modifier
+        modifier = modifier,
+        state = listState
     ) {
         items(
             items = list
         ) { transport ->
-            val iconTransport = when (transport.typeTransport) {
-                "MINI" -> painterResource("drawable/iconMini.png")
-                "BIG" -> painterResource("drawable/iconBig.png")
+            val iconTransport = when (transport.type) {
+                "MINI_BUS" -> painterResource("drawable/iconMini.png")
+                "BUS" -> painterResource("drawable/iconBig.png")
                 else -> painterResource("drawable/iconMini.png")
             }
-            val transportImage = when (transport.typeTransport) {
-                "MINI" -> painterResource("drawable/mini.png")
-                "BIG" -> painterResource("drawable/big.png")
+            val transportImage = when (transport.type) {
+                "MINI_BUS" -> painterResource("drawable/mini.png")
+                "BUS" -> painterResource("drawable/big.png")
                 else -> painterResource("drawable/mini.png")
             }
             TransportItem(

@@ -1,10 +1,11 @@
 package uz.toshshahartransxizmat.toshbustravel.data.model.response
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class DataLogIn(
-    @SerialName("access_token")
-    val access_token: String
+    val hash: String?,
+    val sentOtp: Boolean,
+    val userRole: String,
+    val access_token: String?
 )

@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
@@ -32,11 +33,12 @@ class AuthViewModel(
                         it.copy(isLoading = true, isLoaded = false)
                     }
                 }
-                .catch {
-                    _state.update {
-                        it.copy(
+                .catch {t->
+                    println("signError-->> "+t.message)
+                    _state.update { res->
+                        res.copy(
                             isLoading = false,
-                            error = "Error has occurred",
+                            error = "Техническая ошибка, попробуйте позже",
                             isLoaded = false
                         )
                     }
@@ -61,11 +63,11 @@ class AuthViewModel(
                     }
                 }
                 .catch {tt->
-                    println("kkk-->"+tt)
+                    println("loginError-->"+tt.message)
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = "Error has occurred",
+                            error = "Неправильный логин или пароль",
                             isLoaded = false
                         )
                     }
@@ -73,7 +75,7 @@ class AuthViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            successLogIn = result,
+                            success = result,
                             isLoaded = true
                         )
                     }
@@ -81,4 +83,63 @@ class AuthViewModel(
         }
     }
 
+    fun loadResetPassword(resetEntity: ResetEntity){
+        println("reqq---> "+resetEntity)
+        viewModelScope.launch {
+            useCases.resetPasswordUseCase(resetEntity)
+                .onStart {
+                    _state.update {
+                        it.copy(isLoading = true, isLoaded = false)
+                    }
+                }
+                .catch {tt->
+                    println("resetError-->"+tt)
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            error = "Техническая ошибка, попробуйте позже",
+                            isLoaded = false
+                        )
+                    }
+                }.collectLatest { result->
+                    println("ress---> "+result)
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            successReset = result,
+                            isLoaded = true
+                        )
+                    }
+                }
+        }
+    }
+
+    fun loadPasswordVerify(resetEntity: ResetEntity){
+        viewModelScope.launch {
+            useCases.passwordVerifyUseCase(resetEntity)
+                .onStart {
+                    _state.update {
+                        it.copy(isLoading = true, isLoaded = false)
+                    }
+                }
+                .catch {tt->
+                    println("verifyError-->"+tt)
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            error = "Техническая ошибка, попробуйте позже",
+                            isLoaded = false
+                        )
+                    }
+                }.collectLatest { result->
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            successReset = result,
+                            isLoaded = true
+                        )
+                    }
+                }
+        }
+    }
 }

@@ -33,11 +33,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.input.text.TextInputDefaultSize.MinHeight
 import uz.toshshahartransxizmat.toshbustravel.components.input.text.TextInputDefaultSize.MinWidth
-import uz.toshshahartransxizmat.toshbustravel.theme.black50
-import uz.toshshahartransxizmat.toshbustravel.theme.silver200
-import uz.toshshahartransxizmat.toshbustravel.theme.silver950
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
-import uz.toshshahartransxizmat.toshbustravel.theme.white70
 
 @Composable
 fun TextInput(

@@ -2,37 +2,106 @@ package uz.toshshahartransxizmat.toshbustravel.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import uz.toshshahartransxizmat.toshbustravel.data.mapper.toNews
-import uz.toshshahartransxizmat.toshbustravel.data.mapper.toSignInData
-import uz.toshshahartransxizmat.toshbustravel.data.mapper.toSignUpData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toActiveOrder
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAuthData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAuthDataTwo
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toCalResponse
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientUpdateData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toDetailsData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toOrderResData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toOrders
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toPaymentData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toResetData
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toTransports
 import uz.toshshahartransxizmat.toshbustravel.data.network.KtorService
-import uz.toshshahartransxizmat.toshbustravel.domain.model.News
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
-import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignInData
-import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignUpData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ActiveOrderData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.CalculatorResponse
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientUpdateData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.DetailsResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderContentData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderResponseData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.PaymentData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepository
 
 class NetworkRepositoryImpl(
     private val ktorService: KtorService
 ): NetworkRepository {
-    override suspend fun getNews(query: String): Flow<List<News>> = flow {
-        val r = ktorService.getNews(query)
-        emit(r.articles.map { it.toNews() })
+    override suspend fun getVehicles(query: String, page: Int, size: Int): Flow<List<Transports>> = flow {
+        val r = ktorService.getVehicles(query,page,size)
+        emit(r.content.map { it.toTransports() })
     }
 
-    override suspend fun getTransports(query: String): Flow<List<Transports>> = flow {
-
-    }
-
-    override suspend fun postSignUp(signUp: SignUpEntity): Flow<SignUpData> = flow {
+    override suspend fun postSignUp(signUp: SignUpEntity): Flow<AuthResponseData> = flow {
         val r = ktorService.postSignUp(signUp)
-        emit(r.data.toSignUpData())
+        emit(r.toAuthDataTwo())
     }
 
-    override suspend fun postSignIn(signInEntity: SignInEntity): Flow<SignInData> = flow {
+    override suspend fun postSignIn(signInEntity: SignInEntity): Flow<AuthResponseData> = flow {
         val r = ktorService.postSignIn(signInEntity)
-        emit(r.data.toSignInData())
+        emit(r.toAuthData())
     }
+
+    override suspend fun postResetPassword(resetEntity: ResetEntity): Flow<ResetData> = flow {
+        val r = ktorService.postResetPassword(resetEntity)
+        emit(r.data.toResetData())
+    }
+
+    override suspend fun postPasswordVerify(resetEntity: ResetEntity): Flow<ResetData> = flow {
+        val r = ktorService.postPasswordVerify(resetEntity)
+        emit(r.data.toResetData())
+    }
+
+    override suspend fun getDetails(id: Int): Flow<DetailsResponseData> = flow {
+        val r = ktorService.getDetails(id)
+        emit(r.toDetailsData())
+    }
+
+    override suspend fun getClientInfo(): Flow<ClientData> = flow {
+        val r = ktorService.getClientInfo()
+        r.data?.toClientData()?.let { emit(it) }
+    }
+
+    override suspend fun postUpdateClient(userProfileEntity: UserProfileEntity): Flow<ClientUpdateData> = flow {
+        val r = ktorService.postUpdateClient(userProfileEntity)
+        emit(r.toClientUpdateData())
+    }
+
+    override suspend fun postCreateOrder(createOrderEntity: CreateOrderEntity): Flow<OrderResponseData> = flow {
+        val r = ktorService.postCreateOrder(createOrderEntity)
+        emit(r.toOrderResData())
+    }
+
+    override suspend fun getActiveOrder(): Flow<ActiveOrderData> = flow {
+        val r = ktorService.getActiveOrder()
+        emit(r.data.toActiveOrder())
+    }
+
+    override suspend fun postPayOrder(payOrderEntity: PayOrderEntity): Flow<PaymentData> = flow {
+        val r = ktorService.postPayOrder(payOrderEntity)
+        emit(r.data.toPaymentData())
+    }
+
+    override suspend fun postCalculator(calculatorEntity: CalculatorEntity): Flow<CalculatorResponse> = flow {
+        val r = ktorService.postCalculator(calculatorEntity)
+        emit(r.toCalResponse())
+    }
+
+    override suspend fun getOrders(): Flow<List<Orders>> = flow {
+        val r = ktorService.getOrders()
+        r.data?.content?.map { it.toOrders() }?.let { emit(it) }
+    }
+
 }

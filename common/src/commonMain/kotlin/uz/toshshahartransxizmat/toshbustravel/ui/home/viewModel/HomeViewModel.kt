@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import uz.toshshahartransxizmat.toshbustravel.domain.model.News
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.VehicleQueryParams
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
 import uz.toshshahartransxizmat.toshbustravel.ui.home.state.HomeState
 
@@ -18,62 +19,84 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
     val state get() = _state.asStateFlow()
 
-    private val generalList = mutableListOf<News>()
-    private val businessList = mutableListOf<News>()
-    private val techList = mutableListOf<News>()
+    private val allList = mutableListOf<Transports>()
+    private val busList = mutableListOf<Transports>()
+    private val miniBusList = mutableListOf<Transports>()
+
+    private var allPage = 0
+    private var busPage = 0
+    private var miniBusPage = 0
+
+    private var oldItemCount = 0
 
     init {
         println("@@@init")
-        loadNews(0)
+        loadTransports(0)
     }
 
-    fun loadNews(index: Int) {
+    fun loadTransports(index: Int, nextPage: Boolean = false) {
         when (index) {
             0 -> {
-                if (generalList.isEmpty()) {
-                    fetchNews(generalList, "general")
+                if (allList.isEmpty() || (nextPage && allList.size > oldItemCount + 9)) {
+                    val params = VehicleQueryParams(
+                        query = "ALL",
+                        page = if (nextPage) ++allPage else allPage,
+                        size = 10
+                    )
+                    fetchTransports(allList, params)
                 }
             }
-
             1 -> {
-                if (businessList.isEmpty()) {
-                    fetchNews(businessList, "business")
+                if (busList.isEmpty() || (nextPage && busList.size > oldItemCount + 9)) {
+                    val params = VehicleQueryParams(
+                        query = "BUS",
+                        page = if (nextPage) ++busPage else busPage,
+                        size = 10
+                    )
+                    fetchTransports(busList, params)
                 }
             }
-
             else -> {
-                if (techList.isEmpty()) {
-                    fetchNews(techList, "technology")
+                if (miniBusList.isEmpty() || (nextPage && miniBusList.size > oldItemCount + 9)) {
+                    val params = VehicleQueryParams(
+                        query = "MINI_BUS",
+                        page = if (nextPage) ++miniBusPage else miniBusPage,
+                        size = 10
+                    )
+                    fetchTransports(miniBusList, params)
                 }
             }
         }
+        oldItemCount = when (index) {
+            0 -> allList.size
+            1 -> busList.size
+            else -> miniBusList.size
+        }
     }
 
-    private fun fetchNews(newsList: MutableList<News>, query: String) {
+    private fun fetchTransports(vehicleList: MutableList<Transports>, query: VehicleQueryParams) {
         viewModelScope.launch {
-            allUseCases.getNewsUseCase(query)
+            allUseCases.getTransportsUseCase(query)
                 .onStart {
                     _state.update {
                         it.copy(isLoading = true, isLoaded = false)
                     }
                 }
                 .catch { t ->
-                    println("@@@${t.message}")
+                    println("@@@--->${t.message}")
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = "Error has occurred",
+                            error = "Xatolik yuz berdi",
                             isLoaded = false
                         )
                     }
                 }.collectLatest { list ->
-
-                    newsList.addAll(list)
-
+                    vehicleList.addAll(list)
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            success = listOf(generalList, businessList, techList),
+                            success = listOf(allList, busList, miniBusList),
                             isLoaded = true
                         )
                     }

@@ -1,6 +1,7 @@
 package uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon
 
 import androidx.compose.foundation.Image
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -8,7 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import uz.toshshahartransxizmat.toshbustravel.theme.gray700
-import uz.toshshahartransxizmat.toshbustravel.theme.silver200
 
 @Composable
 fun Icon(
@@ -17,7 +17,7 @@ fun Icon(
     contentDescription: String? = null,
     alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit,
-    tint: Color? = gray700
+    tint: Color? = MaterialTheme.colorScheme.surface
 ) {
     val painter = icon.painter
 

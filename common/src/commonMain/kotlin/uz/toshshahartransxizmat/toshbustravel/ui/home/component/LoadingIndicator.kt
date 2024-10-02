@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
-import uz.toshshahartransxizmat.toshbustravel.theme.blue650
 
 @Composable
 internal fun LoadingIndicator(modifier: Modifier = Modifier) {
@@ -34,7 +34,7 @@ internal fun LoadingIndicator(modifier: Modifier = Modifier) {
         val lineLength = size.minDimension / 6
         val lineWidth = size.minDimension / 20
         val colors = (0 until lineCount).map {
-            blue650.copy(alpha = it / lineCount.toFloat())
+            Color(color = 0xFF6C6C70).copy(alpha = it / lineCount.toFloat())
         }
 
         (0 until lineCount).forEach { i ->
