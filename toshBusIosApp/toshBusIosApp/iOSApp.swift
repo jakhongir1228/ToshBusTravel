@@ -8,7 +8,8 @@ struct iOSApp: App {
     init() {
         InitKoinKt.doInitKoin(appDeclaration: {_ in })
         GMSServices.provideAPIKey("AIzaSyCKZtX5J6h3LWwl3e86P77ce0vuHaiZOv0")
-
+        // Klaviatura kuzatuvchilarini o'rnatish
+        PlatformModuleKt.setupKeyboardObservers()
     }
 
     var body: some Scene {

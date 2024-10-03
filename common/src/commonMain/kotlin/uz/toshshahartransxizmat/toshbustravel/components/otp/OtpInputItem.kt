@@ -160,7 +160,7 @@ private fun CharContainer(
     modifier: Modifier = Modifier
 ) {
     val isFocused = text.length == index
-    val char = if (index < text.length) text[index] else '•'
+    val char = if (index < text.length) text[index] else ' '
     val backgroundColor = when {
         isFocused && !otpError -> blueA220
         otpError -> red500

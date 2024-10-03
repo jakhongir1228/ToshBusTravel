@@ -1,8 +1,11 @@
 package uz.toshshahartransxizmat.toshbustravel.components.otp
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,7 +13,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -25,6 +31,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
+import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
@@ -34,6 +41,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.share.Platform
+import uz.toshshahartransxizmat.toshbustravel.share.isImeVisible
 import uz.toshshahartransxizmat.toshbustravel.share.provideDeviceId
 import uz.toshshahartransxizmat.toshbustravel.theme.black100
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
@@ -62,11 +70,18 @@ internal class OtpConfirmationScreen(
         val viewModel = rememberKoinInject<OtpViewModel>()
         val state = viewModel.state.collectAsState()
         val platformName = remember { Platform() }
+        var showErrorDialog by remember { mutableStateOf(true) }
 
         val keyboardController = LocalSoftwareKeyboardController.current
 
+        val keyboardVisible = isImeVisible()
+        val buttonBottomPadding by animateDpAsState(
+            targetValue = if (keyboardVisible) 252.dp else 56.dp,
+            animationSpec = tween(durationMillis = 100)
+        )
+
         keyboardController?.apply {
-            if (state.value.isTimerCompleted) hide() else show()
+          //  if (state.value.isTimerCompleted) hide() else show()
         }
 
         LaunchedEffect(Unit) {
@@ -113,7 +128,7 @@ internal class OtpConfirmationScreen(
                     viewModel.onOtpValueChanged(value)
                 },
                 enabled = true,
-                isError = state.value.errorText != null
+                isError = stateAuth.value.error != ""
             )
 
             state.value.errorText?.let { text ->
@@ -165,7 +180,7 @@ internal class OtpConfirmationScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
-                    .padding(bottom = 56.dp),
+                    .padding(bottom = buttonBottomPadding),
                 text = TextValue("Продолжить"),
                 size = ButtonSize.Large,
                 enabled = state.value.isInputCompleted,
@@ -181,6 +196,7 @@ internal class OtpConfirmationScreen(
                                 deviceId = deviceId
                             )
                             vmAuth.loadAuth(signUpEntity)
+                            showErrorDialog = true
                         }
                         OtpType.SIGN_IN-> {
                             val signInEntity = SignInEntity(
@@ -196,6 +212,7 @@ internal class OtpConfirmationScreen(
                                 ipAddress = "string"
                             )
                             vmAuth.loadLoginIn(signInEntity)
+                            showErrorDialog = true
                         }
                         OtpType.RESET_PASSWORD-> {
                             val resetEntity = ResetEntity(
@@ -206,6 +223,7 @@ internal class OtpConfirmationScreen(
                                 deviceId = provideDeviceId()
                             )
                             vmAuth.loadResetPassword(resetEntity)
+                            showErrorDialog = true
                         }
                     }
 
@@ -214,9 +232,11 @@ internal class OtpConfirmationScreen(
         }
 
         if (stateAuth.value.error.isNotBlank()){
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                androidx.compose.material3.Text(text = stateAuth.value.error, fontSize = 25.sp)
-            }
+            ErrorDialog(
+                errorMessage = stateAuth.value.error,
+                showDialog = showErrorDialog,
+                onDismiss = { showErrorDialog = false }
+            )
         }
 
         if (stateAuth.value.isLoaded){
