@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.Icon
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.IconValue
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.theme.black100
 import uz.toshshahartransxizmat.toshbustravel.theme.white100
 import uz.toshshahartransxizmat.toshbustravel.theme.yellowLight
 
@@ -56,6 +57,7 @@ internal fun TransportItem(
 
                 Text(
                     text = transport.modelName,
+                    color = black100,
                     style = MaterialTheme.typography.bodyLarge.copy( fontWeight = FontWeight.SemiBold)
                 )
             }
@@ -87,7 +89,7 @@ internal fun TransportItem(
             )
 
             Text(
-                text = "4.9" ?: "N/A"
+                text = "4.9"
             )
         }
     }

@@ -36,8 +36,8 @@ internal class HomeScreen: Screen {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(82.dp)
-                                .background(Color.White, shape = RoundedCornerShape(32.dp))
+                                .height(78.dp)
+                                .background(Color.White, shape = RoundedCornerShape(24.dp))
                                 .padding(8.dp)
                         ) {
                             NavigationBar(
