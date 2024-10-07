@@ -1,0 +1,94 @@
+package uz.toshshahartransxizmat.toshbustravel.ui.card
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import uz.toshshahartransxizmat.toshbustravel.components.button.Button
+import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
+import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
+import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
+import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
+import uz.toshshahartransxizmat.toshbustravel.ui.card.component.CardBottomSheet
+import uz.toshshahartransxizmat.toshbustravel.ui.card.component.CardMessageComponent
+import uz.toshshahartransxizmat.toshbustravel.ui.card.component.ChooseCardComponent
+import uz.toshshahartransxizmat.toshbustravel.util.getStrings
+
+internal class ChooseCardScreen: Screen {
+
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        var showDialog by remember { mutableStateOf(false) }
+
+        Scaffold {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                PageHeader(
+                    type = PageHeaderType.Heading(text = getStrings("choose_card")),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                    onNavigationClick = { navigator.pop() }
+                )
+                CardMessageComponent(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp),
+                    text = getStrings("active_card_tip")
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                ChooseCardComponent(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp),
+                    text = getStrings("choose_card")
+                ){
+                    showDialog = true
+                }
+
+                Spacer(modifier = Modifier.weight(weight = 1f))
+
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 56.dp),
+                    text = TextValue(getStrings("continue")),
+                    size = ButtonSize.Large,
+                    enabled = false,
+                    onClick = {
+
+                    }
+                )
+            }
+            if (showDialog) {
+                CardBottomSheet(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    title = getStrings("choose_card"),
+                    onDismissRequest = { showDialog = false }
+                )
+            }
+        }
+    }
+}

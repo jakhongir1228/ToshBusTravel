@@ -62,5 +62,13 @@ val uzStrings = mapOf(
     "technical_error_try_again_later" to "Texnik xato, keyinroq harakat qilib ko'ring",
     "my_location" to "Mening joylashuvim",
     "from" to "Qayerdan",
-    "to" to "Qayerga"
+    "to" to "Qayerga",
+    "payment_successful" to "To'lov muvaffaqiyatli amalga oshirildi",
+    "track_order_status" to "Siz buyurtmangizning holatini ilovaning buyurtmalar bo'limida kuzatishingiz mumkin.",
+    "track_order_status_two" to "Agar buyurtmangizda kechikish kuzatilsa, xizmat ko‘rsatuvchining qo‘llab-quvvatlash xizmatiga murojaat qiling!",
+    "view_order" to "Buyurtmani ko'rish",
+    "receipt" to "Chek",
+    "add_cards" to "Kartalarni qo'shish",
+    "active_card_tip" to "Faol pul tushumiga ega karta ma'qullanish imkoniyatini oshiradi",
+    "choose_card" to "Kartani tanlang"
 )

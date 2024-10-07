@@ -93,6 +93,4 @@ internal fun TransportItem(
             )
         }
     }
-
-
 }

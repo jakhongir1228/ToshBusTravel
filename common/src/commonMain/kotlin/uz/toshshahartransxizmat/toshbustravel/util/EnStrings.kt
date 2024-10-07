@@ -63,5 +63,13 @@ val enStrings = mapOf(
     "technical_error_try_again_later" to "Technical error, try again later",
     "my_location" to "My Location",
     "from" to "From",
-    "to" to "To"
+    "to" to "To",
+    "payment_successful" to "Payment was successfully completed",
+    "track_order_status" to "You can track your order status in the app's orders section.",
+    "track_order_status_two" to "If there is a delay in your order, contact the service provider's support!",
+    "view_order" to "View Order",
+    "receipt" to "Receipt",
+    "add_cards" to "Add Cards",
+    "active_card_tip" to "A card with active money inflows will increase the chance of approval",
+    "choose_card" to "Choose Card"
 )

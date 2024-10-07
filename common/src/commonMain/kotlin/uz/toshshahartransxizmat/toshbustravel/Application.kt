@@ -17,8 +17,10 @@ import uz.toshshahartransxizmat.toshbustravel.ui.auth.ForgotPasswordScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.language.LanguageScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.logo.LogoScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.card.ChooseCardScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.ActiveOrderScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.payment.SuccessPayScreen
 
 @Composable
 fun Application(
@@ -39,13 +41,14 @@ fun Application(
             } else {
 
                 Navigator(
-                     LanguageScreen()
+                   //  LanguageScreen()
                     //  LogInScreen()
                     //  AuthScreen()
                     //  ForgotPasswordScreen()
                     //  OtpConfirmationScreen()
                     //   HomeScreen()
 //                    ApplyForScreen()
+                    ChooseCardScreen()
                 )
             }
         }

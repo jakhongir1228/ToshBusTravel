@@ -62,5 +62,13 @@ val ruStrings = mapOf(
     "technical_error_try_again_later" to "Техническая ошибка, попробуйте позже",
     "my_location" to "Моё местоположение",
     "from" to "От куда",
-    "to" to "Куда"
+    "to" to "Куда",
+    "payment_successful" to "Платеж был успешно завершен",
+    "track_order_status" to "Вы можете отслеживать статус вашего заказа в разделе заказов приложения.",
+    "track_order_status_two" to "Если ваш заказ задерживается, свяжитесь со службой поддержки поставщика услуг!",
+    "view_order" to "Посмотреть заказ",
+    "receipt" to "Квитанция",
+    "add_cards" to "Добавление карт",
+    "active_card_tip" to "Карта с активными поступлениями денег увеличит шанс одобрения",
+    "choose_card" to "Выберите карту"
 )
