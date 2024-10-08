@@ -1,5 +1,6 @@
-package uz.toshshahartransxizmat.toshbustravel.ui.payment.component
+package uz.toshshahartransxizmat.toshbustravel.ui.card.component.addCard
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,23 +10,28 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
-internal fun CardExpiryInput(
+internal fun CardNumberInput(
     title: String,
     modifier: Modifier = Modifier,
-    onCardExpiryChange: (String) -> Unit
+    onCardNumberChange: (String) -> Unit
 ) {
-    var expiryDate by remember { mutableStateOf("") }
+    var cardNumber by remember { mutableStateOf("") }
+    val clipboardManager = LocalClipboardManager.current
 
     Column(
         modifier = modifier
     ){
+
         Text(
             modifier = Modifier
                 .padding(bottom = 8.dp),
@@ -41,24 +47,24 @@ internal fun CardExpiryInput(
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextField(
-                value = expiryDate,
+                value = cardNumber,
                 onValueChange = { newValue ->
-                    if (newValue.length <= 4 && newValue.all { it.isDigit() }) {
-                        expiryDate = newValue
-                        onCardExpiryChange(expiryDate)
+                    if (newValue.length <= 16 && newValue.all { it.isDigit() }) {
+                        cardNumber = newValue
+                        onCardNumberChange(cardNumber)
                     }
                 },
                 placeholder = {
                     Text(
-                        text = "MM/YY",
+                        text = "---- ---- ---- ----",
                         color = Color.Gray,
-                        fontSize = 16.sp
+                        fontSize = 18.sp
                     )
                 },
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = 16.dp),
-                visualTransformation = ExpiryDateVisualTransformation(),
+                    .padding(horizontal = 8.dp),
+                visualTransformation = CardNumberVisualTransformation(),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 textStyle = TextStyle(fontSize = 18.sp),
                 singleLine = true,
@@ -67,9 +73,18 @@ internal fun CardExpiryInput(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     errorIndicatorColor = Color.Transparent
-                ),
-                maxLines = 1
+                )
             )
+
+            IconButton(onClick = {
+              //  clipboardManager.setText(cardNumber)
+            }) {
+                Image(
+                    painter = painterResource("drawable/iconScan.xml"),
+                    contentDescription = "Copy card number"
+                )
+            }
         }
+
     }
 }

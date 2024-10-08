@@ -70,5 +70,6 @@ val uzStrings = mapOf(
     "receipt" to "Chek",
     "add_cards" to "Kartalarni qo'shish",
     "active_card_tip" to "Faol pul tushumiga ega karta ma'qullanish imkoniyatini oshiradi",
-    "choose_card" to "Kartani tanlang"
+    "choose_card" to "Kartani tanlang",
+    "add_new" to "Yangi qo'shish"
 )

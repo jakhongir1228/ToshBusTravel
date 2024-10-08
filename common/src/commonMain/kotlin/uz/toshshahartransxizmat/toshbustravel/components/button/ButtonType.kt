@@ -6,10 +6,12 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
+import uz.toshshahartransxizmat.toshbustravel.theme.black100
 import uz.toshshahartransxizmat.toshbustravel.theme.black5
 import uz.toshshahartransxizmat.toshbustravel.theme.blue500
 import uz.toshshahartransxizmat.toshbustravel.theme.blue650
 import uz.toshshahartransxizmat.toshbustravel.theme.blue750
+import uz.toshshahartransxizmat.toshbustravel.theme.gray200
 import uz.toshshahartransxizmat.toshbustravel.theme.gray500
 import uz.toshshahartransxizmat.toshbustravel.theme.gray700
 import uz.toshshahartransxizmat.toshbustravel.theme.plumA700
@@ -153,17 +155,17 @@ sealed class ButtonType {
         override val backgroundColor: Color
             @Composable
             @ReadOnlyComposable
-            get() = silver950
+            get() = gray200
 
         override val rippleBackgroundColor: Color
             @Composable
             @ReadOnlyComposable
-            get() = silver950
+            get() = gray700
 
         override val textColor: Color
             @Composable
             @ReadOnlyComposable
-            get() = silver100
+            get() = black100
     }
 
      object GhostOutline : ButtonType() {

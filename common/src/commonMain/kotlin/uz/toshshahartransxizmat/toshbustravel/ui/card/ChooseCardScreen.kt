@@ -1,5 +1,9 @@
 package uz.toshshahartransxizmat.toshbustravel.ui.card
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -26,6 +31,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.CardBottomSheet
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.CardMessageComponent
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.ChooseCardComponent
+import uz.toshshahartransxizmat.toshbustravel.ui.card.component.MyCardComponent
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal class ChooseCardScreen: Screen {
@@ -55,7 +61,15 @@ internal class ChooseCardScreen: Screen {
                     text = getStrings("active_card_tip")
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+
+                MyCardComponent(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
 
                 ChooseCardComponent(
                     modifier = Modifier
@@ -81,6 +95,21 @@ internal class ChooseCardScreen: Screen {
                     }
                 )
             }
+
+            if (showDialog) {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.32f))
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null
+                        ) {
+                            showDialog = false
+                        }
+                )
+            }
+
             if (showDialog) {
                 CardBottomSheet(
                     modifier = Modifier

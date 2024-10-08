@@ -17,6 +17,7 @@ import uz.toshshahartransxizmat.toshbustravel.ui.auth.ForgotPasswordScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.LogInScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.language.LanguageScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.logo.LogoScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.card.AddCardScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.card.ChooseCardScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.home.HomeScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.ActiveOrderScreen
@@ -48,7 +49,7 @@ fun Application(
                     //  OtpConfirmationScreen()
                     //   HomeScreen()
 //                    ApplyForScreen()
-                    ChooseCardScreen()
+                    AddCardScreen()
                 )
             }
         }

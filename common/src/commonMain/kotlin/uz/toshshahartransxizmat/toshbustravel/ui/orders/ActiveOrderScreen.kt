@@ -36,7 +36,6 @@ import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.theme.gray700
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.viewModel.ActiveOrderViewModel
-import uz.toshshahartransxizmat.toshbustravel.ui.payment.PaymentScreen
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 
@@ -180,12 +179,7 @@ internal class ActiveOrderScreen(
                 )
             }
             if (state.value.isLoaded){
-                navigator.push(
-                    PaymentScreen(
-                        orderId = state.value.activeOrder.id,
-                        amount = amount
-                    )
-                )
+               // navigator.push()
             }
         }
     }

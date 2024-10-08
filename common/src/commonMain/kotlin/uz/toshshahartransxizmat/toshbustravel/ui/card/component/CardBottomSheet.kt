@@ -12,6 +12,7 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -19,6 +20,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import uz.toshshahartransxizmat.toshbustravel.components.button.Button
+import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
+import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
+import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.IconValue
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
@@ -39,6 +44,7 @@ internal fun CardBottomSheet(
                 onDismissRequest()
             },
         scaffoldState = bottomSheetState,
+        sheetContainerColor = Color.White,
         sheetContent = {
             Column(
                 modifier = modifier,
@@ -59,12 +65,30 @@ internal fun CardBottomSheet(
                         .padding(start = 16.dp, end = 16.dp),
                     text = getStrings("active_card_tip")
                 )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 56.dp),
+                    text = TextValue(getStrings("add_new")),
+                    type = ButtonType.Ghost,
+                    leftIcon = IconValue("drawable/plusIcon.png"),
+                    size = ButtonSize.Large,
+                    enabled = true,
+                    onClick = {
+                        onDismissRequest()
+                    }
+                )
             }
-        },
-        sheetContainerColor = Color.White
+        }
     ) {
-        scope.launch {
-            bottomSheetState.bottomSheetState.expand()
+        LaunchedEffect(Unit) {
+            scope.launch {
+                bottomSheetState.bottomSheetState.expand()
+            }
         }
     }
 }

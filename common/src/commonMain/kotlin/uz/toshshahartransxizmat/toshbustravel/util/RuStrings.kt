@@ -70,5 +70,6 @@ val ruStrings = mapOf(
     "receipt" to "Квитанция",
     "add_cards" to "Добавление карт",
     "active_card_tip" to "Карта с активными поступлениями денег увеличит шанс одобрения",
-    "choose_card" to "Выберите карту"
+    "choose_card" to "Выберите карту",
+    "add_new" to "Добавить новую"
 )
