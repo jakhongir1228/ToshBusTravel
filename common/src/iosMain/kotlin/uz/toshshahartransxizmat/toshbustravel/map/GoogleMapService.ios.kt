@@ -67,6 +67,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.cinterop.ObjCAction
+import uz.toshshahartransxizmat.toshbustravel.data.args.AmountArgs
 import kotlin.math.PI
 
 @Composable
@@ -420,20 +421,19 @@ fun DirectionSheetDesign(
             size = ButtonSize.Large,
             enabled = areBothFieldsFilled,
             onClick = {
-                navigator.push(
-                    SeeAmountScreen(vehicleId= vehicleId,
-                        from= startAddress,
-                        to= endAddress,
-                        aLatitude=parkingPoint.latitude,
-                        aLongitude= parkingPoint.longitude,
-                        bLatitude=startLatLng!!.latitude,
-                        bLongitude=startLatLng.longitude,
-                        cLatitude=endLatLng!!.latitude,
-                        cLongitude=endLatLng.longitude,
-                        distanceofPoints=distanceOfPoints
-                    )
+                val args = AmountArgs(
+                    vehicleId= vehicleId,
+                    from= startAddress,
+                    to= endAddress,
+                    aLatitude= parkingPoint.latitude,
+                    aLongitude= parkingPoint.longitude,
+                    bLatitude= startLatLng!!.latitude,
+                    bLongitude= startLatLng.longitude,
+                    cLatitude= endLatLng!!.latitude,
+                    cLongitude= endLatLng.longitude,
+                    distanceOfPoints= distanceOfPoints
                 )
-
+                navigator.push(SeeAmountScreen(args = args))
             }
         )
 
