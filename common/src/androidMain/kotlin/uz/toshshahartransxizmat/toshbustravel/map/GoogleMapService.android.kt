@@ -53,8 +53,13 @@ import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
+import uz.toshshahartransxizmat.toshbustravel.data.args.AmountArgs
+import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.SeeAmountScreen
+import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
+import uz.toshshahartransxizmat.toshbustravel.theme.gray650
 import java.net.URL
+import java.util.Locale
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -156,7 +161,9 @@ actual fun ComposeMapView(
         }
 
         GoogleMap(
-            modifier = Modifier.weight(1f).fillMaxWidth(),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
             cameraPositionState = cameraPositionState,
             properties = mapProperties,
            /* onMyLocationClick = { location ->
@@ -213,7 +220,9 @@ actual fun ComposeMapView(
                     endLatLng = getLatLngFromAddress(context, end)
                 }
             },
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             vehicleId=vehicleId,
             parkingPoint=parkingPoint,
             distanceOfPoints=distanceOfPoints!!
@@ -343,8 +352,8 @@ fun calculateTotalDistance(latLng1: LatLng, latLng2: LatLng, latLng3: LatLng): D
     // Total distance in kilometers
     val totalDistanceInKm = (distance1 + distance2) / 1000
 
-    // Round to 2 decimal places
-    return String.format("%.2f", totalDistanceInKm).toDouble()
+    // Round to 2 decimal places using Locale
+    return String.format(Locale.US, "%.2f", totalDistanceInKm).toDouble()
 }
 
 
@@ -391,7 +400,7 @@ fun DirectionSheetDesign(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(220.dp)
                 .padding(5.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -401,7 +410,13 @@ fun DirectionSheetDesign(
                     .weight(1f)
                     .fillMaxHeight()
             ) {
-                Text(text = "От куда")
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, bottom = 6.dp),
+                    text = TextValue(text = getStrings(resourceKey = "from")),
+                    color = gray650
+                )
                 AddressTextField(
                     addressText = start,
                     onTextChange = { newAddress ->
@@ -409,10 +424,16 @@ fun DirectionSheetDesign(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     errorText = startError,
-                    hint = getStrings("Current Location")
+                    hint = getStrings(resourceKey = "my_location")
                 )
 
-                Text(text = "куда")
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp, bottom = 6.dp),
+                    text = TextValue(text = getStrings(resourceKey = "to")),
+                    color = gray650
+                )
                 AddressTextField(
                     addressText = destination,
                     onTextChange = { newAddress ->
@@ -421,51 +442,10 @@ fun DirectionSheetDesign(
                     },
                     modifier = Modifier.fillMaxWidth(),
                     errorText = destinationError,
-                    hint = "Продолжить"
+                    hint = getStrings(resourceKey = "to")
                 )
             }
         }
-     /*   Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween, // Ensures the buttons are spaced evenly
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 8.dp), // Add padding between buttons
-                text = TextValue(getStrings("Draw Route")),
-                size = ButtonSize.Large,
-                enabled = areBothFieldsFilled,
-                onClick = {
-                    onValidateAndDrawPath()
-                }
-            )
-
-            Button(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp), // Add padding between buttons
-                text = TextValue(getStrings("Continue")),
-                size = ButtonSize.Large,
-                enabled = areBothFieldsFilled,
-                onClick = {
-                    navigator.push(SeeAmountScreen(vehicleId= vehicleId,
-                        from= start,
-                        to= destination,
-                        aLatitude=parkingPoint.latitude,
-                        aLongitude= parkingPoint.longitude,
-                        bLatitude=startLatLng!!.latitude,
-                        bLongitude=startLatLng.longitude,
-                        cLatitude=endLatLng!!.latitude,
-                        cLongitude=endLatLng.longitude,
-                        distance=distance
-                    ))
-                }
-            )
-        }*/
 
         Button(
             modifier = Modifier
@@ -476,18 +456,19 @@ fun DirectionSheetDesign(
             size = ButtonSize.Large,
             enabled = areBothFieldsFilled,
             onClick = {
-                navigator.push(SeeAmountScreen(vehicleId= vehicleId,
+                val args = AmountArgs(
+                    vehicleId= vehicleId,
                     from= start,
                     to= destination,
-                    aLatitude=parkingPoint.latitude,
+                    aLatitude= parkingPoint.latitude,
                     aLongitude= parkingPoint.longitude,
-                    bLatitude=startLatLng!!.latitude,
-                    bLongitude=startLatLng.longitude,
-                    cLatitude=endLatLng!!.latitude,
-                    cLongitude=endLatLng.longitude,
-                    distanceofPoints=distanceOfPoints
-                    ))
-
+                    bLatitude= startLatLng!!.latitude,
+                    bLongitude= startLatLng.longitude,
+                    cLatitude= endLatLng!!.latitude,
+                    cLongitude= endLatLng.longitude,
+                    distanceOfPoints= distanceOfPoints
+                )
+                navigator.push(SeeAmountScreen(args = args))
             }
         )
     }
