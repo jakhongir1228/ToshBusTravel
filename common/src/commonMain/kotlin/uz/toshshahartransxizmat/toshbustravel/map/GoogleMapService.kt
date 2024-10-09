@@ -12,3 +12,4 @@ expect open class LocationProvider {
 expect fun ComposeMapView(vehicleId:Int,modifier: Modifier = Modifier)
 
 data class Location(var latitude: Double, var longitude: Double)
+

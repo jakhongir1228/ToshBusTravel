@@ -33,15 +33,13 @@ import androidx.compose.ui.unit.sp
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import uz.toshshahartransxizmat.toshbustravel.R
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType.GhostOutline.borderColor
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.theme.grayA220
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
 
 
-@OptIn(ExperimentalResourceApi::class, ExperimentalMaterial3Api::class)
+@OptIn( ExperimentalMaterial3Api::class)
 @Composable
 fun AddressTextField(
     hint: String,
@@ -102,13 +100,13 @@ fun AddressTextField(
             shape = RoundedCornerShape(16.dp),
             textStyle = MaterialTheme.typography.bodySmall,
             enabled = false
-           /* trailingIcon = {
-                Icon(
-                    painter = org.jetbrains.compose.resources.painterResource(res = "drawable/cancel.png"),
-                    contentDescription = "Clear Text",
-                    modifier = Modifier.size(20.dp)
-                )
-            },*/
+            /* trailingIcon = {
+                 Icon(
+                     painter = org.jetbrains.compose.resources.painterResource(res = "drawable/cancel.png"),
+                     contentDescription = "Clear Text",
+                     modifier = Modifier.size(20.dp)
+                 )
+             },*/
 
         )
     }

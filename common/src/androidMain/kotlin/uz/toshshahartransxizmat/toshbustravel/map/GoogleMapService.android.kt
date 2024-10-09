@@ -152,7 +152,7 @@ actual fun ComposeMapView(
     Column(modifier = modifier.fillMaxSize()) {
         if (distanceOfPoints != null)
         {
-            Text("Distance is $distanceOfPoints KM")
+            Text(text="Distance is $distanceOfPoints KM")
         }
 
         GoogleMap(

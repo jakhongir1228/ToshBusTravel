@@ -4,7 +4,6 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     kotlin("plugin.serialization") version "1.8.21"
-
 }
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
@@ -104,9 +103,10 @@ kotlin {
 
                 // Maps SDK for Android
                 implementation(libs.play.services.maps)
+                implementation(libs.play.services.location)
                 implementation(libs.android.maps.utils)
 
-                implementation("com.google.android.gms:play-services-location:18.0.0" )
+//                implementation("com.google.android.gms:play-services-location:18.0.0" )
                 implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
                 implementation ("com.google.maps.android:maps-compose:2.4.0") // or the latest version
@@ -125,7 +125,13 @@ kotlin {
             dependencies {
                 implementation(libs.native.driver)
                 implementation(libs.ktor.client.darwin)
-               // implementation("platform.google.maps:GMSMapView:3.10.0")
+            /*    implementation("io.ktor:ktor-client-core:2.3.4") // Use the latest version
+                implementation("io.ktor:ktor-client-json:2.3.4")
+                implementation("io.ktor:ktor-client-serialization:2.3.4")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.0")*/
+
+
+                // implementation("platform.google.maps:GMSMapView:3.10.0")
             }
         }
     }
