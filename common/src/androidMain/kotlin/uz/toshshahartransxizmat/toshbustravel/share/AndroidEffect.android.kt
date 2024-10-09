@@ -19,7 +19,6 @@ actual fun AndroidEffect(onSmsReceived: (String) -> Unit) {
     val context = LocalContext.current
     val receiver = rememberUpdatedState(smsCodeBroadcastReceiver(onSmsReceived))
 
-    // Receiverning ro'yxatdan o'tganligini ko'rsatish flagi
     var isReceiverRegistered by remember { mutableStateOf(false) }
 
     DisposableEffect(key1 = context) {
@@ -28,7 +27,6 @@ actual fun AndroidEffect(onSmsReceived: (String) -> Unit) {
         isReceiverRegistered = true
 
         onDispose {
-            // Receiver ro'yxatdan o'tganligini tekshirish
             if (isReceiverRegistered) {
                 context.unregisterReceiver(receiver.value)
                 isReceiverRegistered = false
@@ -37,7 +35,6 @@ actual fun AndroidEffect(onSmsReceived: (String) -> Unit) {
     }
 }
 
-// SMS kod receiver funksiyasini yaratish
 private fun smsCodeBroadcastReceiver(onSmsReceived: (String) -> Unit): BroadcastReceiver {
     return object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -52,7 +49,6 @@ private fun smsCodeBroadcastReceiver(onSmsReceived: (String) -> Unit): Broadcast
     }
 }
 
-// SMS kodni matndan ajratib olish
 private fun extractSmsCode(message: String?): String? {
     val regex = "(\\d{4})".toRegex()
     return regex.find(message ?: "")?.value

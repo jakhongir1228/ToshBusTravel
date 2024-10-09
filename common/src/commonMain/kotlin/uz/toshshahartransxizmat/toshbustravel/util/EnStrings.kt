@@ -72,5 +72,6 @@ val enStrings = mapOf(
     "add_cards" to "Add Cards",
     "active_card_tip" to "A card with active money inflows will increase the chance of approval",
     "choose_card" to "Choose Card",
-    "add_new" to "Add new"
+    "add_new" to "Add new",
+    "note" to "Note! If you want to add a VISA or MasterCard, you must enter the full card details!"
 )

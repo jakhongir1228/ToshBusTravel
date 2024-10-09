@@ -46,7 +46,7 @@ internal class TextInputColors {
     fun labelColor(isError: Boolean): State<Color> {
         val targetValue = when {
             isError -> red500
-            else -> MaterialTheme.colorScheme.tertiary
+            else -> MaterialTheme.colorScheme.scrim
         }
         return rememberUpdatedState(targetValue)
     }

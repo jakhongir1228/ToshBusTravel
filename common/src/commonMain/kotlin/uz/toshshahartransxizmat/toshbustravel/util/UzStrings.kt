@@ -71,5 +71,6 @@ val uzStrings = mapOf(
     "add_cards" to "Kartalarni qo'shish",
     "active_card_tip" to "Faol pul tushumiga ega karta ma'qullanish imkoniyatini oshiradi",
     "choose_card" to "Kartani tanlang",
-    "add_new" to "Yangi qo'shish"
+    "add_new" to "Yangi qo'shish",
+    "note" to "Eslatma! Agar siz VISA yoki MasterCard qo'shmoqchi bo'lsangiz, Karta ma'lumotlarini to'liq kiritishingiz shart!"
 )

@@ -20,20 +20,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonType
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.icon.IconValue
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.Text
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Cards
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 internal fun CardBottomSheet(
     title: String,
+    cardList: List<Cards>,
     modifier: Modifier = Modifier,
-    onDismissRequest: () -> Unit
+    onDismissRequest: () -> Unit,
+    onAddCardClick: () -> Unit,
+    onSelectCard: (Cards) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberBottomSheetScaffoldState()
@@ -63,8 +69,19 @@ internal fun CardBottomSheet(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp),
-                    text = getStrings("active_card_tip")
+                    text = getStrings("active_card_tip"),
+                    iconMessage = painterResource(res = "drawable/giveMoneyIcon.png")
                 )
+
+                if (cardList.isNotEmpty()){
+                    Spacer(modifier = Modifier.height(16.dp))
+                    CardList(
+                        list = cardList,
+                        onClick = { card->
+                            onSelectCard(card)
+                        }
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -79,7 +96,7 @@ internal fun CardBottomSheet(
                     size = ButtonSize.Large,
                     enabled = true,
                     onClick = {
-                        onDismissRequest()
+                        onAddCardClick()
                     }
                 )
             }

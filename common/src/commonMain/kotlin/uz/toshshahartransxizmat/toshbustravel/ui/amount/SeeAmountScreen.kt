@@ -34,6 +34,7 @@ import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.data.args.AmountArgs
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.theme.blueA220
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.component.OrderTypeSelector
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
@@ -42,6 +43,8 @@ import uz.toshshahartransxizmat.toshbustravel.ui.amount.component.TimeInput
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.component.calculateTotalHours
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.dialog.AmountDialog
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.viewModel.AmountViewModel
+import uz.toshshahartransxizmat.toshbustravel.ui.orders.ActiveOrderScreen
+import uz.toshshahartransxizmat.toshbustravel.ui.orders.viewModel.OrderViewModel
 import uz.toshshahartransxizmat.toshbustravel.util.Other
 
 internal class SeeAmountScreen(
@@ -56,8 +59,12 @@ internal class SeeAmountScreen(
         var isDateValidate by remember { mutableStateOf(false) }
         var showAmountDialog by remember { mutableStateOf(false) }
         var showErrorDialog by remember { mutableStateOf(true) }
+
         val viewModel = rememberKoinInject<AmountViewModel>()
         val state = viewModel.state.collectAsState()
+
+        val orderVm = rememberKoinInject<OrderViewModel>()
+        val orderState = orderVm.state.collectAsState()
 
         var startDate by remember { mutableStateOf("") }
         var startTime by remember { mutableStateOf("") }
@@ -166,7 +173,6 @@ internal class SeeAmountScreen(
                         title = getStrings("end_date")
                     ){ date->
                         endDate = date
-                        println("endDate-->$endDate")
                     }
 
                     TimeInput(
@@ -200,6 +206,26 @@ internal class SeeAmountScreen(
                         onConfirm = {
                             showAmountDialog = false
                             viewModel.onAmountDialogDismissed()
+                            val createOrderEntity = CreateOrderEntity(
+                                vehicleId = args.vehicleId,
+                                directionsFrom = args.from,
+                                directionsTo = args.to,
+                                price = state.value.success.amount.toInt(),
+                                orderStatus = "NEW",
+                                aLongitude = args.aLongitude.toString(),
+                                aLatitude = args.aLatitude.toString(),
+                                bLongitude = args.bLongitude.toString(),
+                                bLatitude = args.bLatitude.toString(),
+                                orderDate = startDate,
+                                orderStarts = "${startDate}Y${startTime}",
+                                orderEnds = "${endDate}Y${endTime}",
+                                from = args.from,
+                                to = args.to,
+                                distance = args.distanceOfPoints!!.toInt(),
+                                travelTime = travelTime
+                            )
+                            orderVm.loadCreateOrder(createOrderEntity)
+                            showErrorDialog = true
                         },
                         onCancel = {
                             showAmountDialog = false
@@ -226,7 +252,6 @@ internal class SeeAmountScreen(
                             distance = args.distanceOfPoints!!.toInt(),
                             travelTime = travelTime
                         )
-                        println("call->>>>$calculatorEntity")
                         viewModel.loadCalculator(calculatorEntity)
                         showErrorDialog = true
                     }
@@ -243,6 +268,21 @@ internal class SeeAmountScreen(
             if (state.value.isLoaded){
                  showAmountDialog = true
                  viewModel.resetLoadedState()
+            }
+
+            if (orderState.value.error.isNotBlank()){
+                ErrorDialog(
+                    errorMessage = orderState.value.error,
+                    showDialog = showErrorDialog,
+                    onDismiss = { showErrorDialog = false }
+                )
+            }
+            if (orderState.value.isLoaded){
+                navigator.push(
+                    ActiveOrderScreen(
+                        amount = state.value.success.amount.toLong()
+                    )
+                )
             }
         }
     }

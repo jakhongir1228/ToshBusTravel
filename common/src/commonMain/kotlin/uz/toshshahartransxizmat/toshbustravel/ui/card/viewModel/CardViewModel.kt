@@ -1,4 +1,4 @@
-package uz.toshshahartransxizmat.toshbustravel.ui.orders.viewModel
+package uz.toshshahartransxizmat.toshbustravel.ui.card.viewModel
 
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -8,61 +8,31 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
-import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.AddCardEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
-import uz.toshshahartransxizmat.toshbustravel.ui.orders.state.OrderState
+import uz.toshshahartransxizmat.toshbustravel.ui.card.state.CardState
 
-class OrderViewModel(
+class CardViewModel(
     private val useCases: AllUseCases
-):ViewModel() {
+): ViewModel() {
 
-    private val _state = MutableStateFlow(OrderState())
+    private val _state = MutableStateFlow(CardState())
     val state get() = _state.asStateFlow()
 
     init {
         println("@@@init")
     }
 
-    fun loadCreateOrder(createOrderEntity: CreateOrderEntity){
+    fun loadGetCards(){
         viewModelScope.launch {
-            useCases.createOrderUseCase(createOrderEntity)
+            useCases.getCardsUseCase()
                 .onStart {
                     _state.update {
                         it.copy(isLoading = true, isLoaded = false)
                     }
                 }
                 .catch {t->
-                    println("createOrderError-->> $t")
-                    _state.update { res->
-                        res.copy(
-                            isLoading = false,
-                            error = "Serverda xatolik yuz berdi",
-                            isLoaded = false
-                        )
-                    }
-                }.collectLatest { result->
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            orders = emptyList(),
-                            isLoaded = true
-                        )
-                    }
-                }
-        }
-    }
-
-    fun loadGetOrder(){
-        viewModelScope.launch {
-            useCases.getOrdersUseCase()
-                .onStart {
-                    _state.update {
-                        it.copy(isLoading = true, isLoaded = false)
-                    }
-                }
-                .catch {t->
-                    println("getOrderError-->> $t")
+                    println("getCardError-->> $t")
                     _state.update { res->
                         res.copy(
                             isLoading = false,
@@ -74,7 +44,36 @@ class OrderViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            orders = result,
+                            cards = result,
+                            isLoaded = true
+                        )
+                    }
+                }
+        }
+    }
+
+    fun loadAddCard(addCardEntity: AddCardEntity){
+        viewModelScope.launch {
+            useCases.addCardUseCase(addCardEntity)
+                .onStart {
+                    _state.update {
+                        it.copy(isLoading = true, isLoaded = false)
+                    }
+                }
+                .catch {t->
+                    println("addCardError-->> $t")
+                    _state.update { res->
+                        res.copy(
+                            isLoading = false,
+                            error = "Нет доступа",
+                            isLoaded = false
+                        )
+                    }
+                }.collectLatest { result->
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            addCardData = result,
                             isLoaded = true
                         )
                     }

@@ -2,7 +2,6 @@ package uz.toshshahartransxizmat.toshbustravel.ui.card.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -12,13 +11,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.painter.Painter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Cards
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
-internal fun MyCardComponent(
+internal fun CardItem(
+    card: Cards,
     modifier: Modifier = Modifier,
+    cardImage: Painter,
+    cardIcon: Painter
 ) {
     Card(
         modifier = modifier,
@@ -35,28 +38,28 @@ internal fun MyCardComponent(
         ) {
             Image(
                 modifier = Modifier.size(40.dp),
-                painter = painterResource("drawable/humoCard.xml"),
+                painter = cardImage,
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(
-                    text = "Моя карта",
-                    fontSize = 18.sp,
+                    text = card.holderFullName,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "•• 1234",
+                        text = card.cardNumber,
                         fontSize = 14.sp,
                         color = Color.Gray
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Image(
                         modifier = Modifier.size(16.dp),
-                        painter = painterResource("drawable/iconHumo.xml"),
+                        painter = cardIcon,
                         contentDescription = null
                     )
                 }

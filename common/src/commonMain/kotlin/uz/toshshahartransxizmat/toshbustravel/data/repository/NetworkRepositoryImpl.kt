@@ -3,9 +3,11 @@ package uz.toshshahartransxizmat.toshbustravel.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toActiveOrder
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAddCardData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAuthData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toAuthDataTwo
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toCalResponse
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toCards
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toClientUpdateData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toDetailsData
@@ -15,8 +17,10 @@ import uz.toshshahartransxizmat.toshbustravel.data.mapper.toPaymentData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toResetData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toTransports
 import uz.toshshahartransxizmat.toshbustravel.data.network.KtorService
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Cards
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.AddCardEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
@@ -25,6 +29,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ActiveOrderData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AddCardData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.CalculatorResponse
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
@@ -102,6 +107,16 @@ class NetworkRepositoryImpl(
     override suspend fun getOrders(): Flow<List<Orders>> = flow {
         val r = ktorService.getOrders()
         r.data?.content?.map { it.toOrders() }?.let { emit(it) }
+    }
+
+    override suspend fun getCards(): Flow<List<Cards>> = flow {
+        val r = ktorService.getCards()
+        r.data.map { it.toCards() }
+    }
+
+    override suspend fun postAddCard(addCardEntity: AddCardEntity): Flow<AddCardData> = flow {
+        val r = ktorService.postAddCard(addCardEntity)
+        emit(r.data.toAddCardData())
     }
 
 }

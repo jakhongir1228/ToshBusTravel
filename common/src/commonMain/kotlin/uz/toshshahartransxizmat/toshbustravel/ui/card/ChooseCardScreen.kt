@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,23 +24,31 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.rememberKoinInject
 import uz.toshshahartransxizmat.toshbustravel.components.button.Button
 import uz.toshshahartransxizmat.toshbustravel.components.button.ButtonSize
+import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.CardBottomSheet
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.CardMessageComponent
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.ChooseCardComponent
-import uz.toshshahartransxizmat.toshbustravel.ui.card.component.MyCardComponent
+import uz.toshshahartransxizmat.toshbustravel.ui.card.viewModel.CardViewModel
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
 internal class ChooseCardScreen: Screen {
 
+    @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         var showDialog by remember { mutableStateOf(false) }
+        val viewModel = rememberKoinInject<CardViewModel>()
+        val state = viewModel.state.collectAsState()
+        var showErrorDialog by remember { mutableStateOf(true) }
 
         Scaffold {
             Column(
@@ -58,16 +67,17 @@ internal class ChooseCardScreen: Screen {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp),
-                    text = getStrings("active_card_tip")
+                    text = getStrings("active_card_tip"),
+                    iconMessage = painterResource(res = "drawable/giveMoneyIcon.png")
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                MyCardComponent(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp)
-                )
+//                Spacer(modifier = Modifier.height(16.dp))
+//
+//                MyCardComponent(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(start = 16.dp, end = 16.dp)
+//                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -78,6 +88,8 @@ internal class ChooseCardScreen: Screen {
                     text = getStrings("choose_card")
                 ){
                     showDialog = true
+                    viewModel.loadGetCards()
+                    showErrorDialog = true
                 }
 
                 Spacer(modifier = Modifier.weight(weight = 1f))
@@ -111,13 +123,38 @@ internal class ChooseCardScreen: Screen {
             }
 
             if (showDialog) {
+                val cardList = state.value.cards
+
                 CardBottomSheet(
                     modifier = Modifier
                         .fillMaxWidth(),
                     title = getStrings("choose_card"),
-                    onDismissRequest = { showDialog = false }
+                    cardList = cardList,
+                    onDismissRequest = {
+                        showDialog = false
+                    },
+                    onAddCardClick = {
+                        showDialog = false
+                        navigator.push(
+                            AddCardScreen()
+                        )
+                    }
+                ){ card->
+                    println("card---> ${card}")
+                }
+            }
+            if (state.value.error.isNotBlank()) {
+                ErrorDialog(
+                    errorMessage = state.value.error,
+                    showDialog = showErrorDialog,
+                    onDismiss = { showErrorDialog = false }
                 )
             }
+//            if (state.value.isLoaded){
+//                navigator.push(
+//                    ChooseCardScreen()
+//                )
+//            }
         }
     }
 }

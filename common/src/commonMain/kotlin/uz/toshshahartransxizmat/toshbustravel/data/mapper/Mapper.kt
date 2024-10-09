@@ -5,7 +5,9 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.CalculatorDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ContentItem
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataActive
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataAddCard
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataAmount
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataCard
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataClient
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataLogIn
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataOrder
@@ -17,9 +19,11 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.SignUpDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDetails
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Cards
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ActiveOrderData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AddCardData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AmountData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.CalculatorResponse
@@ -156,6 +160,19 @@ fun ContentItem.toOrders():Orders {
     )
 }
 
+fun DataCard.toCards(): Cards{
+    return Cards(
+        id = id,
+        token = token,
+        cardNumber = cardNumber,
+        expiryDate = expiryDate,
+        holderFullName = holderFullName,
+        bankName = bankName,
+        type = type,
+        smsNotificationNumber = smsNotificationNumber
+    )
+}
+
 fun DataActive.toActiveOrder(): ActiveOrderData{
     return ActiveOrderData(
         id = id,
@@ -184,5 +201,12 @@ fun DataPayment.toPaymentData(): PaymentData{
         sentOtp = sentOtp,
         paymentId = paymentId,
         access_token = access_token
+    )
+}
+
+fun DataAddCard.toAddCardData(): AddCardData{
+    return AddCardData(
+        cardToken = cardToken,
+        smsNotificationNumber = smsNotificationNumber
     )
 }

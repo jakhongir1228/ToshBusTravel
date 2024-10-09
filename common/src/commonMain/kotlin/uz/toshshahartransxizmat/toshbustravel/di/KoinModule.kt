@@ -20,6 +20,8 @@ import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignInUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.PostSignUpUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.ResetPasswordUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.amount.CalculatorUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.card.AddCardUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.card.GetCardsUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.ActiveOrderUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.CreateOrderUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.GetOrdersUseCase
@@ -30,6 +32,7 @@ import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.share.getSettingsSource
 import uz.toshshahartransxizmat.toshbustravel.ui.amount.viewModel.AmountViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.auth.viewModel.AuthViewModel
+import uz.toshshahartransxizmat.toshbustravel.ui.card.viewModel.CardViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.home.viewModel.HomeViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.viewModel.ActiveOrderViewModel
 import uz.toshshahartransxizmat.toshbustravel.ui.orders.viewModel.OrderViewModel
@@ -75,7 +78,9 @@ val appModule = module {
             activeOrderUseCase = ActiveOrderUseCase(),
             payOrderUseCase = PayOrderUseCase(),
             getOrdersUseCase = GetOrdersUseCase(),
-            calculatorUseCase = CalculatorUseCase()
+            calculatorUseCase = CalculatorUseCase(),
+            getCardsUseCase = GetCardsUseCase(),
+            addCardUseCase = AddCardUseCase()
         )
     }
 
@@ -113,5 +118,9 @@ val appModule = module {
 
     factory {
         PaymentViewModel(get())
+    }
+
+    factory {
+        CardViewModel(get())
     }
 }

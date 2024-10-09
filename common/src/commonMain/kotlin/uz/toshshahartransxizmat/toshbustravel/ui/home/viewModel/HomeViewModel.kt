@@ -87,7 +87,7 @@ class HomeViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            error = "Xatolik yuz berdi",
+                            error = "Техническая ошибка, попробуйте позже",
                             isLoaded = false
                         )
                     }

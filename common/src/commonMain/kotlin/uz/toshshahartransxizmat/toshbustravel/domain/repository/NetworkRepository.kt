@@ -1,8 +1,10 @@
 package uz.toshshahartransxizmat.toshbustravel.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Cards
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Transports
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.AddCardEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
@@ -11,6 +13,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ActiveOrderData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AddCardData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.CalculatorResponse
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ClientData
@@ -47,4 +50,8 @@ interface NetworkRepository {
     suspend fun postCalculator(calculatorEntity: CalculatorEntity): Flow<CalculatorResponse>
 
     suspend fun getOrders(): Flow<List<Orders>>
+
+    suspend fun getCards():Flow<List<Cards>>
+
+    suspend fun postAddCard(addCardEntity: AddCardEntity): Flow<AddCardData>
 }

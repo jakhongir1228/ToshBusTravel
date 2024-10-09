@@ -20,21 +20,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class)
+
 @Composable
 internal fun CardMessageComponent(
     text: String,
+    iconMessage: Painter,
     modifier: Modifier = Modifier
 ){
     Row(
         modifier = modifier
             .background(Color(0xFFD6EAF8), shape = RoundedCornerShape(12.dp))
             .border(1.dp, Color(0xFFB3CDE0), shape = RoundedCornerShape(12.dp))
-            .padding(8.dp),
+            .padding(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
@@ -49,7 +51,7 @@ internal fun CardMessageComponent(
         ) {
             Image(
                 modifier = Modifier.size(24.dp),
-                painter = painterResource(res = "drawable/giveMoneyIcon.png"),
+                painter = iconMessage,
                 contentDescription = null,
             )
         }

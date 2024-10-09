@@ -21,13 +21,16 @@ import uz.toshshahartransxizmat.toshbustravel.util.SIGN_IN_ENDPOINT
 import uz.toshshahartransxizmat.toshbustravel.util.SIGN_UP_ENDPOINT
 import io.ktor.client.request.headers
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ActiveOrderDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.AddCardDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.CalculatorDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.CardsDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ClientDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.PaymentDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.SignUpDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.AddCardEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
@@ -36,6 +39,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEn
 import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
 import uz.toshshahartransxizmat.toshbustravel.util.API_CALCULATOR
+import uz.toshshahartransxizmat.toshbustravel.util.API_CARD
 import uz.toshshahartransxizmat.toshbustravel.util.API_CLIENT
 import uz.toshshahartransxizmat.toshbustravel.util.API_ORDER
 import uz.toshshahartransxizmat.toshbustravel.util.API_RESET_PASSWORD
@@ -263,6 +267,43 @@ class KtorClient(
             }
             contentType(ContentType.Application.Json)
             setBody(calculatorEntity)
+        }
+
+        if (r.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${r.contentType()}")
+        }
+
+        return r.body()
+    }
+
+    override suspend fun getCards(): CardsDTO {
+        val url = "$BASE_URL$API_CARD"
+
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
+
+        val response: HttpResponse = client.get(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }
+
+        if (response.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${response.contentType()}")
+        }
+
+        return response.body()
+    }
+
+    override suspend fun postAddCard(addCardEntity: AddCardEntity): AddCardDTO {
+        val url = "$BASE_URL$API_CARD/add"
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
+
+        val r = client.post(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+            contentType(ContentType.Application.Json)
+            setBody(addCardEntity)
         }
 
         if (r.contentType() != ContentType.Application.Json) {
