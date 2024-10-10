@@ -44,6 +44,7 @@ kotlin {
 //        }
 
         pod("GoogleMaps")
+        pod("GooglePlaces")
 
     }
 

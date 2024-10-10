@@ -1,6 +1,7 @@
 PODS:
   - common (1.0):
     - GoogleMaps
+    - GooglePlaces
   - GoogleMaps (9.1.0):
     - GoogleMaps/Maps (= 9.1.0)
   - GoogleMaps/Base (9.1.0)
@@ -23,7 +24,7 @@ EXTERNAL SOURCES:
     :path: "../common"
 
 SPEC CHECKSUMS:
-  common: 10eaa5f63b7ed84d66b4933c3d4a93dd3690d235
+  common: 9ee618989352759e57c93db103e3858432265ca6
   GoogleMaps: c74e02e00db0be27b165516bde753826e2652b9c
   GooglePlaces: 00c43ad62c888354fe0bc5ce09181b2f6ce8b6d1
 
