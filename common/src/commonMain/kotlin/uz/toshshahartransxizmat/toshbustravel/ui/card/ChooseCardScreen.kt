@@ -34,7 +34,9 @@ import uz.toshshahartransxizmat.toshbustravel.components.dialog.ErrorDialog
 import uz.toshshahartransxizmat.toshbustravel.components.faoundation.text.TextValue
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeader
 import uz.toshshahartransxizmat.toshbustravel.components.header.PageHeaderType
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Cards
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.CardBottomSheet
+import uz.toshshahartransxizmat.toshbustravel.ui.card.component.CardItem
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.CardMessageComponent
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.ChooseCardComponent
 import uz.toshshahartransxizmat.toshbustravel.ui.card.viewModel.CardViewModel
@@ -50,6 +52,8 @@ internal class ChooseCardScreen: Screen {
         val viewModel = rememberKoinInject<CardViewModel>()
         val state = viewModel.state.collectAsState()
         var showErrorDialog by remember { mutableStateOf(true) }
+        var isItemCard by remember { mutableStateOf(false) }
+        var selectedCard by remember { mutableStateOf<Cards?>(null) }
 
         LaunchedEffect(Unit){
             viewModel.loadGetCards()
@@ -76,13 +80,35 @@ internal class ChooseCardScreen: Screen {
                     iconMessage = painterResource(res = "drawable/giveMoneyIcon.png")
                 )
 
-//                Spacer(modifier = Modifier.height(16.dp))
-//
-//                MyCardComponent(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(start = 16.dp, end = 16.dp)
-//                )
+                if (selectedCard != null){
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    val cardImg = when (selectedCard?.type) {
+                        "UZCARD" -> painterResource("drawable/uzCard.xml")
+                        "HUMO" -> painterResource("drawable/humoCard.xml")
+                        "VISA_CARD" -> painterResource("drawable/visaCard.xml")
+                        "MASTER_CARD" -> painterResource("drawable/masterCard.xml")
+                        else -> painterResource("drawable/uzCard.xml")
+                    }
+
+                    val cardIcon = when (selectedCard?.type) {
+                        "UZCARD" -> painterResource("drawable/iconUzCard.xml")
+                        "HUMO" -> painterResource("drawable/iconHumo.xml")
+                        "VISA_CARD" -> painterResource("drawable/iconVisa.xml")
+                        "MASTER_CARD" -> painterResource("drawable/iconMasterCard.xml")
+                        else -> painterResource("drawable/iconUzCard.xml")
+                    }
+
+                    CardItem(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp)
+                            .padding(4.dp),
+                        card = selectedCard!!,
+                        cardImage = cardImg,
+                        cardIcon = cardIcon
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -93,7 +119,6 @@ internal class ChooseCardScreen: Screen {
                     text = getStrings("choose_card")
                 ){
                     showDialog = true
-                    println("onclikkkkk---> ")
                 }
 
                 Spacer(modifier = Modifier.weight(weight = 1f))
@@ -105,9 +130,14 @@ internal class ChooseCardScreen: Screen {
                         .padding(bottom = 56.dp),
                     text = TextValue(getStrings("continue")),
                     size = ButtonSize.Large,
-                    enabled = false,
+                    enabled = isItemCard,
                     onClick = {
-
+                        when (selectedCard?.type) {
+                            "UZCARD", "HUMO" -> {  }
+                            else -> {
+                                navigator.push(CheckoutScreen())
+                            }
+                        }
                     }
                 )
             }
@@ -142,7 +172,9 @@ internal class ChooseCardScreen: Screen {
                         )
                     }
                 ){ card->
-                    println("cardss---> ${card}")
+                    showDialog = false
+                    isItemCard = true
+                    selectedCard = card
                 }
             }
             if (state.value.error.isNotBlank()) {
@@ -151,9 +183,6 @@ internal class ChooseCardScreen: Screen {
                     showDialog = showErrorDialog,
                     onDismiss = { showErrorDialog = false }
                 )
-            }
-            if (state.value.isLoaded){
-                println("card---> ${state.value.cards}")
             }
         }
     }
