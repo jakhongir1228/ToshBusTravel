@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,6 +50,10 @@ internal class ChooseCardScreen: Screen {
         val viewModel = rememberKoinInject<CardViewModel>()
         val state = viewModel.state.collectAsState()
         var showErrorDialog by remember { mutableStateOf(true) }
+
+        LaunchedEffect(Unit){
+            viewModel.loadGetCards()
+        }
 
         Scaffold {
             Column(
@@ -88,8 +93,7 @@ internal class ChooseCardScreen: Screen {
                     text = getStrings("choose_card")
                 ){
                     showDialog = true
-                    viewModel.loadGetCards()
-                    showErrorDialog = true
+                    println("onclikkkkk---> ")
                 }
 
                 Spacer(modifier = Modifier.weight(weight = 1f))
@@ -123,13 +127,11 @@ internal class ChooseCardScreen: Screen {
             }
 
             if (showDialog) {
-                val cardList = state.value.cards
-
                 CardBottomSheet(
                     modifier = Modifier
                         .fillMaxWidth(),
                     title = getStrings("choose_card"),
-                    cardList = cardList,
+                    cardList = state.value.cards,
                     onDismissRequest = {
                         showDialog = false
                     },
@@ -140,7 +142,7 @@ internal class ChooseCardScreen: Screen {
                         )
                     }
                 ){ card->
-                    println("card---> ${card}")
+                    println("cardss---> ${card}")
                 }
             }
             if (state.value.error.isNotBlank()) {
@@ -150,11 +152,9 @@ internal class ChooseCardScreen: Screen {
                     onDismiss = { showErrorDialog = false }
                 )
             }
-//            if (state.value.isLoaded){
-//                navigator.push(
-//                    ChooseCardScreen()
-//                )
-//            }
+            if (state.value.isLoaded){
+                println("card---> ${state.value.cards}")
+            }
         }
     }
 }

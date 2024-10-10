@@ -12,6 +12,7 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.PaymentDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.SignUpDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.VerifyCardDTO
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.AddCardEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
@@ -20,6 +21,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.VerifyCardEntity
 
 interface KtorService {
 
@@ -52,6 +54,8 @@ interface KtorService {
     suspend fun getCards(): CardsDTO
 
     suspend fun postAddCard(addCardEntity: AddCardEntity): AddCardDTO
+
+    suspend fun postVerifyCard(verifyCardEntity: VerifyCardEntity): VerifyCardDTO
 
     fun close()
 }

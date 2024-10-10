@@ -30,12 +30,14 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.PaymentDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.ResetDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.SignUpDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.TransportDTO
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.VerifyCardDTO
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.AddCardEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CalculatorEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.CreateOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.PayOrderEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.VerifyCardEntity
 import uz.toshshahartransxizmat.toshbustravel.share.SettingsSource
 import uz.toshshahartransxizmat.toshbustravel.util.ACCESS_TOKEN_KEY
 import uz.toshshahartransxizmat.toshbustravel.util.API_CALCULATOR
@@ -304,6 +306,25 @@ class KtorClient(
             }
             contentType(ContentType.Application.Json)
             setBody(addCardEntity)
+        }
+
+        if (r.contentType() != ContentType.Application.Json) {
+            throw IllegalArgumentException("Unexpected content type: ${r.contentType()}")
+        }
+
+        return r.body()
+    }
+
+    override suspend fun postVerifyCard(verifyCardEntity: VerifyCardEntity): VerifyCardDTO {
+        val url = "$BASE_URL$API_CARD/verify"
+        val token = settings.getValue(ACCESS_TOKEN_KEY)
+
+        val r = client.post(url) {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+            contentType(ContentType.Application.Json)
+            setBody(verifyCardEntity)
         }
 
         if (r.contentType() != ContentType.Application.Json) {

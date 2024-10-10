@@ -14,6 +14,7 @@ import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataOrder
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataPayment
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataReset
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataSignUp
+import uz.toshshahartransxizmat.toshbustravel.data.model.response.DataVerifyCard
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.LogInDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.OrderDTO
 import uz.toshshahartransxizmat.toshbustravel.data.model.response.SignUpDTO
@@ -36,6 +37,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.response.PaymentData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.SignData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.TransportDetailsData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.VerifyCardData
 
 fun Vehicles.toTransports(): Transports {
     return Transports(
@@ -208,5 +210,21 @@ fun DataAddCard.toAddCardData(): AddCardData{
     return AddCardData(
         cardToken = cardToken,
         smsNotificationNumber = smsNotificationNumber
+    )
+}
+
+fun DataVerifyCard.toVerifyCardData(): VerifyCardData{
+    return VerifyCardData(
+        token = token,
+        cardNumber = cardNumber,
+        balance = balance,
+        expiryDate = expiryDate,
+        externalToken = externalToken,
+        smsNotificationNumber = smsNotificationNumber,
+        type = type,
+        holderFullName = holderFullName,
+        externalStatus = externalStatus,
+        bankName = bankName,
+        cvv = cvv
     )
 }

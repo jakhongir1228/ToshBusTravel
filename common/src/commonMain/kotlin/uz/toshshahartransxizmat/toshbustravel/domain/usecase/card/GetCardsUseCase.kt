@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Cards
+import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
 import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepository
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.BaseUseCase
 

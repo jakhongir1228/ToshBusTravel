@@ -16,6 +16,7 @@ import uz.toshshahartransxizmat.toshbustravel.data.mapper.toOrders
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toPaymentData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toResetData
 import uz.toshshahartransxizmat.toshbustravel.data.mapper.toTransports
+import uz.toshshahartransxizmat.toshbustravel.data.mapper.toVerifyCardData
 import uz.toshshahartransxizmat.toshbustravel.data.network.KtorService
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Cards
 import uz.toshshahartransxizmat.toshbustravel.domain.model.Orders
@@ -28,6 +29,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.VerifyCardEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ActiveOrderData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AddCardData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
@@ -39,6 +41,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderContent
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.PaymentData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.VerifyCardData
 import uz.toshshahartransxizmat.toshbustravel.domain.repository.NetworkRepository
 
 class NetworkRepositoryImpl(
@@ -111,12 +114,17 @@ class NetworkRepositoryImpl(
 
     override suspend fun getCards(): Flow<List<Cards>> = flow {
         val r = ktorService.getCards()
-        r.data.map { it.toCards() }
+        emit(r.data.map { it.toCards() })
     }
 
     override suspend fun postAddCard(addCardEntity: AddCardEntity): Flow<AddCardData> = flow {
         val r = ktorService.postAddCard(addCardEntity)
         emit(r.data.toAddCardData())
+    }
+
+    override suspend fun postVerifyCard(verifyCardEntity: VerifyCardEntity): Flow<VerifyCardData> = flow {
+        val r = ktorService.postVerifyCard(verifyCardEntity)
+        emit(r.data.toVerifyCardData())
     }
 
 }

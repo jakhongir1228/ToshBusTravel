@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.AddCardEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.VerifyCardEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.AllUseCases
 import uz.toshshahartransxizmat.toshbustravel.ui.card.state.CardState
 
@@ -24,15 +25,17 @@ class CardViewModel(
     }
 
     fun loadGetCards(){
+        println("@@@dddddd--->>")
         viewModelScope.launch {
             useCases.getCardsUseCase()
                 .onStart {
+                    println("onStart--->>")
                     _state.update {
                         it.copy(isLoading = true, isLoaded = false)
                     }
                 }
                 .catch {t->
-                    println("getCardError-->> $t")
+                    println("getCardsError-->> $t")
                     _state.update { res->
                         res.copy(
                             isLoading = false,
@@ -41,6 +44,7 @@ class CardViewModel(
                         )
                     }
                 }.collectLatest { result->
+                    println("result--->>$result")
                     _state.update {
                         it.copy(
                             isLoading = false,
@@ -74,6 +78,35 @@ class CardViewModel(
                         it.copy(
                             isLoading = false,
                             addCardData = result,
+                            isLoaded = true
+                        )
+                    }
+                }
+        }
+    }
+
+    fun loadVerifyCard(verifyCardEntity: VerifyCardEntity){
+        viewModelScope.launch {
+            useCases.verifyCardUseCase(verifyCardEntity)
+                .onStart {
+                    _state.update {
+                        it.copy(isLoading = true, isLoaded = false)
+                    }
+                }
+                .catch {t->
+                    println("verifyCardError-->> $t")
+                    _state.update { res->
+                        res.copy(
+                            isLoading = false,
+                            error = "Нет доступа",
+                            isLoaded = false
+                        )
+                    }
+                }.collectLatest { result->
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            verifyCardData = result,
                             isLoaded = true
                         )
                     }

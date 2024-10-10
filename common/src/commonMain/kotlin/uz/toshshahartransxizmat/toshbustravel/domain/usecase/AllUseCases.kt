@@ -3,6 +3,7 @@ package uz.toshshahartransxizmat.toshbustravel.domain.usecase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.amount.CalculatorUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.card.AddCardUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.card.GetCardsUseCase
+import uz.toshshahartransxizmat.toshbustravel.domain.usecase.card.VerifyCardUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.ActiveOrderUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.CreateOrderUseCase
 import uz.toshshahartransxizmat.toshbustravel.domain.usecase.order.GetOrdersUseCase
@@ -25,5 +26,6 @@ data class AllUseCases(
     val getOrdersUseCase: GetOrdersUseCase,
     val calculatorUseCase: CalculatorUseCase,
     val getCardsUseCase: GetCardsUseCase,
-    val addCardUseCase: AddCardUseCase
+    val addCardUseCase: AddCardUseCase,
+    val verifyCardUseCase: VerifyCardUseCase
 )

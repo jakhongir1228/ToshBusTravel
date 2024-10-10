@@ -34,7 +34,7 @@ class ActiveOrderViewModel(
                     _state.update { res->
                         res.copy(
                             isLoading = false,
-                            error = "Xatolik yuz berdi",
+                            error = "Техническая ошибка, попробуйте позже",
                             isLoaded = false
                         )
                     }

@@ -43,13 +43,14 @@ fun Application(
             } else {
 
                 Navigator(
-//                     LanguageScreen()
+                    // LanguageScreen()
                     //  LogInScreen()
                     //  AuthScreen()
                     //  ForgotPasswordScreen()
                     //  OtpConfirmationScreen()
                     //   HomeScreen()
-                    ApplyForScreen(21)
+                   // ApplyForScreen(21)
+                    ChooseCardScreen()
                 )
             }
         }

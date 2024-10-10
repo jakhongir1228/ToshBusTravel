@@ -37,6 +37,7 @@ import uz.toshshahartransxizmat.toshbustravel.ui.card.component.addCard.CardCvvI
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.addCard.CardExpiryInput
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.addCard.CardNumberInput
 import uz.toshshahartransxizmat.toshbustravel.ui.card.component.addCard.CardTypeSelector
+import uz.toshshahartransxizmat.toshbustravel.ui.card.component.otp.OtpAddCardScreen
 import uz.toshshahartransxizmat.toshbustravel.ui.card.viewModel.CardViewModel
 import uz.toshshahartransxizmat.toshbustravel.util.getStrings
 
@@ -184,7 +185,10 @@ internal class AddCardScreen: Screen {
             }
             if (state.value.isLoaded){
                 navigator.push(
-                    ChooseCardScreen()
+                    OtpAddCardScreen(
+                        cardToken = state.value.addCardData.cardToken,
+                        smsNotificationNumber = state.value.addCardData.smsNotificationNumber!!
+                    )
                 )
             }
         }

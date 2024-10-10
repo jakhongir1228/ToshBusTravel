@@ -12,6 +12,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.request.ResetEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignInEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.SignUpEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.request.UserProfileEntity
+import uz.toshshahartransxizmat.toshbustravel.domain.model.request.VerifyCardEntity
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ActiveOrderData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AddCardData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.AuthResponseData
@@ -23,6 +24,7 @@ import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderContent
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.OrderResponseData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.PaymentData
 import uz.toshshahartransxizmat.toshbustravel.domain.model.response.ResetData
+import uz.toshshahartransxizmat.toshbustravel.domain.model.response.VerifyCardData
 
 interface NetworkRepository {
     suspend fun getVehicles(query: String, page: Int, size: Int): Flow<List<Transports>>
@@ -51,7 +53,9 @@ interface NetworkRepository {
 
     suspend fun getOrders(): Flow<List<Orders>>
 
-    suspend fun getCards():Flow<List<Cards>>
+    suspend fun getCards(): Flow<List<Cards>>
 
     suspend fun postAddCard(addCardEntity: AddCardEntity): Flow<AddCardData>
+
+    suspend fun postVerifyCard(verifyCardEntity: VerifyCardEntity): Flow<VerifyCardData>
 }
